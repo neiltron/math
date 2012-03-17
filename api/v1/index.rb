@@ -13,17 +13,67 @@ module Doctothorpem
     version '1'
     prefix 'api'
     
+    helpers do
+      def current_user
+        accesskey = AccessKey.find_by_token(params[:accesskey])
+      
+        accesskey.nil? ? false : accesskey.user
+      end
+        
+      def authenticate!
+        error!('401 Unauthorized', 401) unless current_user
+      end
+    end
+    
     resource :users do
+      before{ authenticate! }
+      
       get do
+        error!('401 Unauthorized', 401) unless current_user.is_admin
+        
         User.all.map do |user|
           Boxer.ship(:user, user)
         end
       end
       
-      get ':id' do
-        user = User.where( :id => params[:id] ).first
+      resource ':user_id' do
+        before do
+          @user = User.where( :_id => params[:user_id] ).first
+
+          error!('401 Unauthorized', 401) unless current_user == @user || current_user.is_admin
+        end
         
-        Boxer.ship(:user, user)
+        get do
+          Boxer.ship(:user, @user)
+        end
+        
+        resource :items do
+          get do
+            @user.items.map do |item|
+              Boxer.ship(:item, item)
+            end``
+          end
+        end
+        
+        resource :records do
+          get do
+            @user.items.map do |item|
+              item.records.map do |record|
+                Boxer.ship(:record, record)
+              end
+            end
+          end
+          
+          post do
+            item = Item.find_or_create_by( :name => params[:item_name].downcase )
+            @user.items.push item unless @user.items.include? item
+            
+            record = Record.create!( :amount => params[:amount] )
+
+            item.records.push record
+            item.save
+          end
+        end
       end
     end
   end
