@@ -17,7 +17,7 @@ class User
 	index :email, :unique => true
 	
 	has_one :accesskey, :class_name => 'AccessKey'
-	#has_many :entries
+	has_many :items
 	
   before_create :process_on_create
   
