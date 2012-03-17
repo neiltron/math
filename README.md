@@ -1,7 +1,7 @@
 # Doctothorpem
-A open source version of Daytum from **THE FUTURE**! A future which isn't at all the present that we currently live in and selfishly expect to support our meager existence. Bottom-line: this thing isn't yet functional, has no tests, and no clear-cut goals besides:
+An open source version of Daytum from **THE FUTURE**! A future which isn't at all the present that we currently live in and selfishly expect to support our meager existence. Bottom-line: this thing isn't yet functional, has no tests, and no clear-cut goals besides:
 
-* A First-class API
+* Solid API
 * Clients for many platforms
 * Easy deployablity for private installations
 * Data portability
