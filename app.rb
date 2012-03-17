@@ -56,4 +56,6 @@ module Doctothorpem
       haml :index, { :layout => false }
     end
   end
+  
+  require_relative 'models/init'
 end
