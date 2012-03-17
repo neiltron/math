@@ -14,10 +14,10 @@ end
 Boxer.box(:record) do |box, record|
   box.view(:base) do
     {
-      :id => record.id.to_s
-      :item => record.item.id.to_s
-      :amount => record.amount
-      :timestamp :record.created_at.to_i
+      :id => record.id.to_s,
+      :item => record.item.id.to_s,
+      :amount => record.amount,
+      :timestamp => record.created_at.to_i
     }
   end
 end

@@ -15,7 +15,7 @@ end
 Boxer.box(:item) do |box, item|
   box.view(:base) do
     {
-      :id => item.id.to_s
+      :id => item.id.to_s,
       :name => item.name
     }
   end

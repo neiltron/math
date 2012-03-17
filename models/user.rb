@@ -104,7 +104,7 @@ end
 Boxer.box(:user) do |box, user|
   box.view(:base) do
     {
-      :id => user.id.to_s
+      :id => user.id.to_s,
       :name => user.name
     }
   end
