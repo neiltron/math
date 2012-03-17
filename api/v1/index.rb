@@ -51,7 +51,7 @@ module Doctothorpem
           get do
             @user.items.map do |item|
               Boxer.ship(:item, item)
-            end``
+            end
           end
         end
         
