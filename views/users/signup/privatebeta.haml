@@ -1,0 +1,5 @@
+#signup
+	- if flash.has?(:error)
+		.alert-message.error
+			= flash[:error]
+	<h1>We're in private beta. You will need an invite to join.</h1>

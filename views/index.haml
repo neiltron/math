@@ -1,1 +1,11 @@
 %h1 D#M
+
+%form{ :method => 'POST', :action => '/api/1/users/' + @user.id.to_s + '/records' }
+	%input{ :type => 'hidden', :name => 'accesskey', :value => @user.accesskey.token.to_s }
+	
+	%p
+		%input{ :type => 'text', :name => 'item', :placeholder => 'Item' }
+	%p
+		%input{ :type => 'text', :name => 'amount', :placeholder => 'Amount' }
+	%p
+		%input{ :type => 'submit', :value => 'Save' }
