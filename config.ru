@@ -14,6 +14,8 @@ require 'api/v1/index'
 #configs
 require 'config/mongoid'
 
+use Rack::Session::Cookie, :key => 'rack.session', :secret => ENV['SESSION_SECRET'] || 'octothorps'
+use Rack::Flash
 
 Bundler.setup
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)

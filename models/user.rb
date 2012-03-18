@@ -54,7 +54,15 @@ class User
   end
 
   def send_confirmation
-    Resque.enqueue(WorkHQ::SignupConfirmation, self.id.to_s)
+    subject = 'Signup confirmation'
+    body = "You recently signed up for DOCTOTHORPEM. <br><br><a href='http://doctothorp.em/confirm?key=" + self.confirm_token + "'>Click here to confirm your account</a>."
+    
+    Pony.mail :to => self.email,
+              :from => 'no-reply@doctothorp.em',
+              :subject => subject,
+              :body => body,
+              :headers => { 'Content-Type' => 'text/html' },
+              :via_options => PONY_CONFIG
   end
   
   def send_forgot_pass_email

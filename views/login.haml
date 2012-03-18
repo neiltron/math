@@ -1,0 +1,22 @@
+- if flash.has?(:notice)
+	.alert-message.notice.login
+		= flash[:notice]
+- elsif flash.has?(:error)
+	.alert-message.error.login
+		= flash[:error]
+					
+#login
+	%h1 D#M
+	%form{ :method => 'post', :action => '/login' }
+		%p
+			%label{ :for => 'email' }
+			%input#email{ :type => 'text', :name => 'email', :placeholder => 'Email' }
+
+		%p
+			%label{ :for => 'password' }
+			%input#password{ :type => 'password', :name => 'password', :placeholder => 'Password' }
+
+		%p
+			%label{ :for => 'submit' }
+			%input#submit.btn.primary{ :type => 'submit', :name => 'submit', :value => 'Login' }
+			%a{ :href => '/forgot' } Forgot password?

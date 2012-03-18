@@ -1,0 +1,36 @@
+%form#signup{ :method => 'post', :action => '/signup' }
+	- if flash.has?(:error)
+		.alert-message.error
+			= flash[:error]
+
+	%h1 Sign Up For Branding HQ
+	%input{ :type => 'hidden', :name => 'invite', :value => params[:invite] }
+
+	%p
+		%input{ :type => 'text', :id => 'first_name', :name => 'first_name', :required => '', :placeholder => 'First Name' }
+	
+	%p
+		%input{ :type => 'text', :id => 'last_name', :name => 'last_name', :required => '', :placeholder => 'Last Name' }
+
+	%p
+		%input{ :type => 'email', :id => 'email', :name => 'email', :required => '', :placeholder => 'Email' }
+
+	%p
+		%input{ :type => 'password', :id => 'password', :name => 'password', :required => '', :placeholder => 'Password' }
+
+	%p#agreement_container
+		%input.left{ :type => 'checkbox', :id => 'agreement', :name => 'agreement', :value => 'Agreement', :required => '' }
+		%label.left{ :for => 'agreement' }
+			I agree to the
+			%a{ :href => '/terms', :target => '_blank' } terms and conditions
+
+	%p#submit_container
+		%input#submit.btn.primary{ :type => 'submit', :name => 'submit', :value => 'Create Account' }
+		
+
+%script{ :type => 'text/javascript', :src => '/js/H5F.js' }
+%script{ :type => 'text/javascript' }
+	:plain
+		H5F.listen(window,"load",function () {
+			H5F.setup(document.getElementById("signup"));
+		},false);

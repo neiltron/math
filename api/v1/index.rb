@@ -72,6 +72,8 @@ module Doctothorpem
 
             item.records.push record
             item.save
+            
+            Boxer.ship(:record, record)
           end
         end
       end

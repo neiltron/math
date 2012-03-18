@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 %w{
-  sinatra haml bson mongoid json mongoid_taggable_with_context warden
+  sinatra haml bson mongoid json mongoid_taggable_with_context warden rack-flash
 }.each do |lib|
   require lib
 end
@@ -46,16 +46,20 @@ module Doctothorpem
       manager.failure_app = Doctothorpem::Web
     end
     
-    not_found do
-      haml :'404'
+    helpers do
+      def current_user
+        User.where( :email => session[:uid] ).first
+      end
     end
 
     get '/' do
       redirect '/login' if session[:accesskey].nil?
       
+      @user = current_user
       haml :index, { :layout => false }
     end
   end
   
   require_relative 'models/init'
+  require_relative 'routes/users'
 end
