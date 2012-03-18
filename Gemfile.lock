@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/ChrisCauser/rack-flash.git
+  revision: d8fd1d2c0b176d04bcb904a22cd84debe85f2061
+  specs:
+    rack-flash (0.1.2)
+      rack
+
+GIT
   remote: https://github.com/brynary/rack-test.git
   revision: cab8eb929b45d9e32474fad1b6806c2ab8f6bea8
   specs:
@@ -113,6 +120,7 @@ DEPENDENCIES
   mongoid_taggable_with_context!
   mongoid_token
   rack
+  rack-flash!
   rack-test!
   rake
   rspec

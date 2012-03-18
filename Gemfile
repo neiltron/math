@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 gem "rack"
+gem 'rack-flash', :git => 'https://github.com/ChrisCauser/rack-flash.git'
 gem 'rake'
 gem "thin"
 gem "sinatra"
