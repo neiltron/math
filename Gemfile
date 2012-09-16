@@ -1,3 +1,4 @@
+ruby '1.9.3'
 source "http://rubygems.org"
 gem "rack"
 gem 'rack-flash', :git => 'https://github.com/chy-causer/rack-flash'
