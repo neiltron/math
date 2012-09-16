@@ -20,7 +20,7 @@ module Doctothorpem
 
         user.save
         user.send_confirmation
-        
+
         haml :'users/signup/confirmation_sent'
       else
         flash[:error] = 'A user with that email address already exists. If you already have an account, please use the <a href="/forgot">forgot password</a> form.'
@@ -38,7 +38,7 @@ module Doctothorpem
         haml :'users/signup/confirm_fail'
       else
         user.confirm!
-        
+
         flash[:notice] = 'Your account has been confirmed. You may now login.'
         redirect '/login'
       end
@@ -54,15 +54,15 @@ module Doctothorpem
 
     post '/forgot' do
       user = User.where( :email => params[:email] ).first
-      
+
       if user.nil?
         flash[:error] = "No account could be found with that email address."
         redirect '/forgot'
       end
-      
+
       user.forgot_pass!
       user.send_forgot_pass_email
-      
+
       haml :'users/forgot_pass_sent'
     end
 
@@ -86,41 +86,41 @@ module Doctothorpem
       end
 
       user.password = params[:password] if params[:password] == params[:confirm_password] && params[:password] != ''
-      user.encrypt_pass
+      user.save
 
       flash[:notice] = "Your password has been successfully reset. You may now login."
       redirect '/login'
     end
-    
+
     get '/auth/failure/?' do
       haml :auth_failure
     end
-    
+
     get '/login/?' do
       haml :login, { :layout => false }
     end
-    
+
     post '/login/?' do
       user = User.authenticate(params['email'],params['password'],params['accesskey'])
 
       flash[:error] = 'Invalid username or password.'
       redirect '/login' if user.nil?
-      
+
       if user
         session[:accesskey] = user.accesskey.token
         session[:uid] = user.email
 
         redirect '/'
       end
-      
+
       haml :index
     end
-    
+
     post '/unauthenticated/?' do
       status 401
       haml :login, { :layout => false }
     end
-    
+
     get '/logout/?' do
       session[:uid] = nil
       session.clear
