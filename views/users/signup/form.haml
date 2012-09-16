@@ -3,12 +3,12 @@
 		.alert-message.error
 			= flash[:error]
 
-	%h1 Sign Up For Branding HQ
+	%h1 Sign Up For MATH
 	%input{ :type => 'hidden', :name => 'invite', :value => params[:invite] }
 
 	%p
 		%input{ :type => 'text', :id => 'first_name', :name => 'first_name', :required => '', :placeholder => 'First Name' }
-	
+
 	%p
 		%input{ :type => 'text', :id => 'last_name', :name => 'last_name', :required => '', :placeholder => 'Last Name' }
 
@@ -26,7 +26,7 @@
 
 	%p#submit_container
 		%input#submit.btn.primary{ :type => 'submit', :name => 'submit', :value => 'Create Account' }
-		
+
 
 %script{ :type => 'text/javascript', :src => '/js/H5F.js' }
 %script{ :type => 'text/javascript' }
