@@ -13,6 +13,7 @@ require 'api/v1/index'
 
 #configs
 require 'config/mongoid'
+require 'config/pony'
 
 use Rack::Session::Cookie, :key => 'rack.session', :secret => ENV['SESSION_SECRET'] || 'octothorps'
 use Rack::Flash
