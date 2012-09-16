@@ -5,12 +5,11 @@ class Record
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	include Mongoid::Paranoia
-	
 	field :amount, :type => Float
-
-	belongs_to :item
+  belongs_to :item, :touch => true
+  belongs_to :user, :touch => true
 end
-  
+
 Boxer.box(:record) do |box, record|
   box.view(:base) do
     {

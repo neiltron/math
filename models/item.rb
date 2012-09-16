@@ -5,13 +5,12 @@ class Item
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	include Mongoid::Paranoia
-	
-	field :name, :type => String
 
+	field :name, :type => String
 	has_many :records
-	belongs_to :user
+	belongs_to :user, :touch =>  true
 end
-  
+
 Boxer.box(:item) do |box, item|
   box.view(:base) do
     {
