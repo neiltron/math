@@ -71,7 +71,6 @@ module Doctothorpem
             @user.items.push item unless @user.items.include? item
 
             record = Record.create!( :amount => params[:amount], :user => current_user, :item => item )
-            invalidate( User, current_user.id.to_s )
 
             Boxer.ship(:record, record)
           end
