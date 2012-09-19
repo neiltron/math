@@ -59,11 +59,9 @@ module Doctothorpem
 
         resource :records do
           get do
-            cache({ :bind => [User, @user.id.to_s], :identity => @user.id.to_s }) do
-              @user.items.map do |item|
-                item.records.map do |record|
-                  Boxer.ship(:record, record)
-                end
+            @user.items.map do |item|
+              item.records.map do |record|
+                Boxer.ship(:record, record)
               end
             end
           end
