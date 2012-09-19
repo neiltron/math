@@ -1,17 +1,24 @@
+html {
+  background: #aaa;
+}
 body {
   background: #fefeff;
   font-family: helvetica, arial, sans-serif;
   padding: 20px 5px 5px 60px;
   color: #333;
+  margin: 0;
+
+  height: 100%;
+  overflow: hidden;
 }
 
-#record_form,#records {
-  display: none;
-}
+  #container {
+    width: 100%;
+  }
 
-#records.active,#record_form.active {
+#records {
   display: block;
-  padding: 0;
+  padding-left: 0;
 }
 
   #records li.block {
@@ -76,9 +83,12 @@ body {
       }
 
 
-#record_form input {
-  border: 1px solid #aaa;
-  padding: 10px;
-  width: 400px;
-  font-size: 16pt;
+#form_container {
+  padding: 10px 10px 35px;
 }
+  #record_form input {
+    border: 1px solid #aaa;
+    padding: 10px;
+    width: 100%;
+    font-size: 16pt;
+  }

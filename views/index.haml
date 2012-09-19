@@ -5,24 +5,29 @@
 <![endif]-->
 
 %link{ :rel => 'stylesheet', :href => '/css/style.css' }
+%link{ :rel => 'stylesheet', :href => '/css/avgrund.css' }
 %link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
 
-%h1 Math
 
-%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
-	%p
-		%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :placeholder => 'Item' }
-	%p
-		%input{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
-	%p
-		%input{ :type => 'submit', :value => 'Save' }
+#container.avgrund-contents
+	%h1 Math
+	%ul#records
 
-%ul#records.active
+#form_container.avgrund-popup
+	%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
+		%p
+			%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :placeholder => 'Item' }
+		%p
+			%input{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
+		%p
+			%input{ :type => 'submit', :value => 'Save' }
+
 
 %script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
 %script{ :type => 'text/javascript', :src => '/js/chartwell.min.js' }
 %script{ :type => 'text/javascript', :src => '/js/chartwell_lines.min.js' }
 %script{ :type => 'text/javascript', :src => '/js/keymaster.min.js' }
+%script{ :type => 'text/javascript', :src => '/js/avgrund.js' }
 
 :javascript
 	var items = [];
@@ -34,14 +39,21 @@
 		  return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
 		}
 
+		function showModal() {
+			Avgrund.show( "#form_container" );
+		}
+		function closeModal() {
+			Avgrund.hide();
+		}
+
 		//switch to record form with ` key
 	  key('`', function(e){
-	    form_active();
+	    showModal();
 	  })
 
 	  //switch to records list with escape
 	  key('esc', function(){
-	    list_active();
+	    closeModal();
 	  })
 
 	  form_active = function () {
