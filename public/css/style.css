@@ -4,9 +4,15 @@ body {
   padding: 20px 5px 5px 60px;
 }
 
-#records {
+#record_form,#records {
+  display: none;
+}
+
+#records.active,#record_form.active {
+  display: block;
   padding: 0;
 }
+
   #records li.block {
     float: left;
     display: block;
@@ -32,4 +38,13 @@ body {
     font-family: OtariRegular, helvetica, sans-serif;
     font-weight: 100;
     font-size: 60pt;
+    margin: 0;
   }
+
+
+#record_form input {
+  border: 1px solid #aaa;
+  padding: 10px;
+  width: 400px;
+  font-size: 16pt;
+}
