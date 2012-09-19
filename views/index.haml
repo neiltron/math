@@ -70,7 +70,7 @@
 
 	  //get records
 	  $.getJSON(
-	    '/api/1/users/#{@user.id.to_s}/records?accesskey=#{@user.accesskey.token.to_s}',
+	    '/api/1/users/#{@user.id.to_s}/records?accesskey=#{@user.accesskey.token.to_s}&per=14',
 	    function (e) {
 	      $(e).each(function (i, recs) {
 	        records[recs[0].item] = recs
