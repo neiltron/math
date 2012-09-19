@@ -2,6 +2,7 @@ body {
   background: #fefeff;
   font-family: helvetica, arial, sans-serif;
   padding: 20px 5px 5px 60px;
+  color: #333;
 }
 
 #record_form,#records {
@@ -26,6 +27,8 @@ body {
     #records li.block h2 {
       text-align: center;
       font-weight: 100;
+      font-size: 20pt;
+      margin-bottom: 5px;
     }
 
     #records li.block span.graph {
@@ -40,6 +43,37 @@ body {
     font-size: 60pt;
     margin: 0;
   }
+
+  h3 {
+    font-weight: 200;
+    font-size: 12pt;
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: #777;
+  }
+    h3 span {
+      position: relative;
+    }
+
+      h3 span.hidden {
+        display: none;
+        color: #999;
+        font-size: 10pt;
+        margin-top: 1pt;
+
+        position: absolute;
+        top: 0;
+      }
+      h3 span.hidden.left {
+        right: 102%;
+      }
+      h3 span.hidden.right {
+        left: 102%;
+      }
+
+      h3 span:hover .hidden {
+        display: inline;
+      }
 
 
 #record_form input {

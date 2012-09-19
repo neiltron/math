@@ -87,38 +87,37 @@
 	      var total = 0,
 	          entries = recs.length,
 	          item = recs[0].item,
-	          numbers = [];
-
+	          numbers = [],
+	          output = '',
+	          max = 0;
 
 	      $(recs).each(function (b, record) {
 	        amount = parseInt(record.amount, 10)
 
 	        //we shouldn't need to check this if we're doing integer validation on entry
 	        if (!isNaN(amount)) {
-	          total += parseInt(record.amount, 10)
-	          numbers.push(record.amount)
+	          total += amount;
+
+	          if (amount > max) {
+	          	max = amount;
+	          }
+
+	          numbers.push(amount)
 	        }
 	      })
 
-	      var data = numbers.slice(numbers.length - 14, numbers.length)
-	      var max = 0;
+	      for (var i in numbers) {
+	        var amount = numbers[i];
 
-	      for (var i in data) {
-	        var amount = data[i];
-
-	        if (amount > max) {
-	          max = amount;
-	        }
-
-	        if ((parseFloat(amount) == parseInt(amount)) && !isNaN(amount)) {
-	          numbers += "<span>" + amount + "</span>"
+	        if (!isNaN(amount)) {
+	          output += "<span" + (amount == max ? '' : " class='max'") + ">" + amount + "</span>";
 	        }
 	      }
 
-	      $('#records').append('<li id="' + item + '" class="block"><h2>' + items[item] + '</h2> ' + total + ' (' + entries + ' records)<div style="font-size: 62px"><span class="graph chartwell lines"></span></div>')
+	      $('#records').append('<li id="' + item + '" class="block"><h2>' + items[item] + '</h2><h3><span><span class="hidden left">TOTAL</span>' + total + '</span> / <span>' + entries + ' <span class="hidden right">RECORDS</span></span></h3><div style="font-size: 62px"><span class="graph chartwell lines"></span></div>')
 
 	      var graph = $('#' + item).find('span.graph');
-	      $(graph).html(numbers.substr(0,numbers.length - 1))
+	      $(graph).html(output.substr(0,output.length - 1))
 	    }
 
 	    FFChartwell();
