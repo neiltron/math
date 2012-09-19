@@ -1,0 +1,35 @@
+body {
+  background: #fefeff;
+  font-family: helvetica, arial, sans-serif;
+  padding: 20px 5px 5px 60px;
+}
+
+#records {
+  padding: 0;
+}
+  #records li.block {
+    float: left;
+    display: block;
+    width: 400px;
+    padding: 20px;
+    margin: 0 10px 10px 0;
+
+    border: 1px solid #eee;
+    border-radius: 3px;
+  }
+    #records li.block h2 {
+      text-align: center;
+      font-weight: 100;
+    }
+
+    #records li.block span.graph {
+      display: block;
+      width: 100%;
+      color: #d88;
+    }
+
+  h1 {
+    font-family: OtariRegular, helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 60pt;
+  }

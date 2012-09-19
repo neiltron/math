@@ -1,4 +1,13 @@
-%h1 D#M
+<!--[if lt IE 9]>
+<!-- For compatibility with older IEs -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<script src="/js/excanvas.min.js"></script>
+<![endif]-->
+
+%link{ :rel => 'stylesheet', :href => '/css/style.css' }
+%link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
+
+%h1 Math
 
 %form{ :id => 'record_form', :method => 'POST', :action => '/records' }
 	%p
@@ -10,6 +19,8 @@
 
 %ul#records
 
+%script{ :type => 'text/javascript', :src => '/js/chartwell.min.js' }
+%script{ :type => 'text/javascript', :src => '/js/chartwell_lines.min.js' }
 :javascript
 	//     Zepto.js
 	//     (c) 2010, 2011 Thomas Fuchs
@@ -47,8 +58,10 @@
 				var recs = records[i]
 
 				var total = 0,
-					entries = recs.length,
-					item = recs[0].item
+						entries = recs.length,
+						item = recs[0].item,
+						numbers = [];
+
 
 				$(recs).each(function (b, record) {
 					amount = parseInt(record.amount, 10)
@@ -56,11 +69,33 @@
 					//we shouldn't need to check this if we're doing integer validation on entry
 					if (!isNaN(amount)) {
 						total += parseInt(record.amount, 10)
+						numbers.push(record.amount)
 					}
 				})
 
-				$('#records').append('<li>' + items[item] + ': ' + total + ' (' + entries + ' entries)</li>')
+				var data = numbers.slice(numbers.length - 14, numbers.length)
+				console.log(data)
+				var max = 0;
+
+				for (var i in data) {
+					var amount = data[i];
+
+					if (amount > max) {
+						max = amount;
+					}
+
+					if ((parseFloat(amount) == parseInt(amount)) && !isNaN(amount)) {
+						numbers += "<span>" + amount + "</span>"
+					}
+				}
+
+				$('#records').append('<li id="' + item + '" class="block"><h2>' + items[item] + '</h2> ' + total + ' (' + entries + ' records)<div style="font-size: 62px"><span class="graph chartwell lines"></span></div>')
+
+				var graph = $('#' + item).find('span.graph');
+				$(graph).html(numbers.substr(0,numbers.length - 1))
 			}
+
+			FFChartwell();
 		}
 
 		$('#record_form').bind('submit', function (e) {
