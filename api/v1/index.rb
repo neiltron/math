@@ -59,8 +59,11 @@ module Doctothorpem
 
         resource :records do
           get do
+            per = (params[:per] || 7).to_i
+            page = (params[:page] || 0).to_i
+
             @user.items.map do |item|
-              item.records.map do |record|
+              item.records.order_by([[:created_at, :desc]]).limit(per).skip(per * page).map do |record|
                 Boxer.ship(:record, record)
               end
             end
