@@ -17,7 +17,6 @@ body {
   }
 
 #records {
-  display: block;
   padding-left: 0;
 }
 
@@ -82,13 +81,74 @@ body {
         display: inline;
       }
 
-
-#form_container {
-  padding: 10px 10px 35px;
+#plus {
+  position: relative;
+  top: -100%;
+  display: inline;
+  margin: 0 auto;
+  width: 41px;
+  color: #666;
+  text-decoration: none;
 }
-  #record_form input {
-    border: 1px solid #aaa;
+
+  #plus #record_form {
+    position: absolute;
+    top: 100px;
+    left: -115px;
+    width: 250px;
     padding: 10px;
-    width: 100%;
-    font-size: 16pt;
+    display: none;
+
+    position: absolute;
+    background: #fcfcfc;
+    z-index: 300;
+    border: 6px solid rgba(30, 30, 30, .1);
+    border-radius: 3px;
+    box-shadow: 0 2px 2px 0 rgba(20, 20, 20, .2);
   }
+
+  #plus:hover #record_form, #plus:hover span.arrow {
+    display: block;
+  }
+
+    #record_form p {
+      padding: 0;
+      margin: 10px 0 0;
+    }
+    #record_form p:nth-child(1) {
+      margin: 0;
+    }
+      #record_form p input {
+        border: 1px solid #fbfbfb;
+        font-weight: 200;
+        background: #fefefe;
+        color: #333;
+        padding: 10px;
+        width: 100%;
+        font-size: 14pt;
+        border-radius: 3px;
+      }
+
+.arrow {
+  content: '';
+  position: absolute;
+  z-index: 100;
+
+  bottom: -15px;
+  left: 11px;
+
+  background: rgba(30, 30, 30, .2);
+  display: none;
+  width: 20px;
+  height: 20px;
+
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
