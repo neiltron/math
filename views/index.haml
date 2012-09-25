@@ -40,19 +40,24 @@
 		}
 
 		function showModal() {
-			// Avgrund.show( "#form_container" );
+			$('#plus').addClass('active');
+			$('#item_name').focus();
 		}
 		function closeModal() {
-			// Avgrund.hide();
+			$('#plus').removeClass('active');
 		}
 
 		//switch to record form with ` key
-	  key('`', function(e){
+	  key('=', function(e){
+	  	e.preventDefault();
+
 	    showModal();
 	  })
 
 	  //switch to records list with escape
-	  key('esc', function(){
+	  key('esc', function(e){
+	  	e.preventDefault();
+
 	    closeModal();
 	  })
 
@@ -128,6 +133,14 @@
 
 	    FFChartwell();
 	  }
+
+	  $('#plus').bind('mouseover', function (e) {
+	  	$('#plus').addClass('active');
+	  })
+
+	  $('#plus').bind('mouseout', function (e) {
+	  	$('#plus').removeClass('active');
+	  })
 
 	  $('#record_form').bind('submit', function (e) {
 	    e.preventDefault();
