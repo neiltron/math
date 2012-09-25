@@ -20,7 +20,7 @@
 				%p
 					%input{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
 				%p
-					%input{ :type => 'submit', :value => 'Save' }
+					%input{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
 
 	%ul#records
 
@@ -144,6 +144,7 @@
 
 	  $('#record_form').bind('submit', function (e) {
 	    e.preventDefault();
+	    $('#submit_item').val('Saving...').css('background-color', '#eee')
 
 	    $.ajax({
 	      type: 'post',
@@ -158,10 +159,14 @@
 	        records[e.item].push(e)
 
 	        $('#amount').val('');
+	        $('#submit_item').val('Save').css('background-color', '#fefefe')
 
 	        $('#records').empty()
 	        displayRecords()
 	        list_active();
+	      },
+	      error: function () {
+	      	$('#submit_item').val('Save').css('background-color', '#fefefe')
 	      }
 	    })
 	  })
