@@ -150,12 +150,14 @@
 	      url: '/api/1/users/#{@user.id.to_s}/records',
 	      dataType: 'json',
 	      data: {
-	        accesskey: '#{@user.accesskey.token.to_s}',
-	        item_name: $('#record_form #item_name').val(),
-	        amount: $('#record_form #amount').val()
+	        accesskey: 	'#{@user.accesskey.token.to_s}',
+	        item_name: 	$('#record_form #item_name').val(),
+	        amount: 		$('#record_form #amount').val()
 	      },
 	      success: function (e) {
 	        records[e.item].push(e)
+
+	        $('#amount').val('');
 
 	        $('#records').empty()
 	        displayRecords()
