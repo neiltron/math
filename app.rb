@@ -19,13 +19,13 @@ module Doctothorpem
     set :logging, true
     set :raise_errors, true
     set :haml, {:format => :html5 }
-    
+
     enable :methodoverride
-    
+
     Warden::Manager.serialize_into_session { |user| user.id }
     Warden::Manager.serialize_from_session { |id| User.where( :_id => id).first }
     #Warden::Manager.before_failure { |env,opts| env['REQUEST_METHOD'] = "POST" }
-    
+
     Warden::Strategies.add(:password) do
       def valid?
         params[:username] || params[:password]
@@ -45,7 +45,7 @@ module Doctothorpem
       manager.default_strategies :password
       manager.failure_app = Doctothorpem::Web
     end
-    
+
     helpers do
       def current_user
         User.where( :email => session[:uid] ).first
@@ -54,12 +54,21 @@ module Doctothorpem
 
     get '/' do
       redirect '/login' if session[:accesskey].nil?
-      
+
       @user = current_user
       haml :index, { :layout => false }
     end
+
+    get '/item/:id' do
+      redirect '/login' if session[:accesskey].nil?
+
+      @user = current_user
+      @item = Item.find(params[:id])
+
+      haml :item, { :layout => false }
+    end
   end
-  
+
   require_relative 'models/init'
   require_relative 'routes/users'
 end

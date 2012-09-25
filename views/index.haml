@@ -126,10 +126,10 @@
 	        }
 	      }
 
-	      $('#records').append('<li id="' + item + '" class="block"><h2>' + items[item] + '</h2><h3><span><span class="hidden left">TOTAL</span>' + total + '</span> / <span>' + entries + ' <span class="hidden right">RECORDS</span></span></h3><div style="font-size: 62px"><span class="graph chartwell lines"></span></div>')
+	      $('#records').append('<li id="' + item + '" class="block"><h2><a href="/item/' + item + '">' + items[item] + '</a></h2><h3><span><span class="hidden left">TOTAL</span>' + total + '</span> / <span>' + entries + ' <span class="hidden right">RECORDS</span></span></h3><div style="font-size: 62px"><span class="graph chartwell lines"></span></div>')
 
 	      var graph = $('#' + item).find('span.graph');
-	      $(graph).html(output.substr(0,output.length - 1))
+	      $(graph).html(output)
 	    }
 
 	    FFChartwell();
