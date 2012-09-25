@@ -117,8 +117,9 @@
 	        }
 	      })
 
-	      for (var i in numbers) {
-	        var amount = numbers[i];
+	      set = numbers.length > 14 ? numbers.slice(numbers.length - 14, numbers.length) : numbers;
+	      for (var i in set) {
+	        var amount = set[i];
 
 	        if (!isNaN(amount)) {
 	          output += "<span" + (amount == max ? '' : " class='max'") + ">" + amount + "</span>";
