@@ -56,7 +56,7 @@ module Doctothorpem
       redirect '/login' if session[:accesskey].nil?
 
       @user = current_user
-      haml :index, { :layout => false }
+      haml :index
     end
 
     get '/item/:id' do
@@ -65,7 +65,7 @@ module Doctothorpem
       @user = current_user
       @item = Item.find(params[:id])
 
-      haml :item, { :layout => false }
+      haml :item
     end
   end
 

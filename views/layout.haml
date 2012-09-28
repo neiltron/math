@@ -2,11 +2,186 @@
 %html
 	%head
 		%title D#M
-		
+		%link{ :rel => 'stylesheet', :href => '/css/style.css' }
+		%link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
+
 	%body
+		#sidebar
+			%h1
+				Math
+				%a#plus{ :href => '#' }
+					+
+					%span.arrow
+					%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
+						%p
+							%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :placeholder => 'Item' }
+						%p
+							%input{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
+						%p
+							%input{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
+
+			%ul#items
+				- @user.items.each do |item|
+					%li
+						%a{ :href => '/item/' + item.id.to_s } #{item.name}
 		#container
 			#content
-				
+
 				= yield
-		
+
 			#footer
+
+		<!--[if lt IE 9]>
+		<!-- For compatibility with older IEs -->
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+		<script src="/js/excanvas.min.js"></script>
+		<![endif]-->
+
+		%script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
+		%script{ :type => 'text/javascript', :src => '/js/chartwell.min.js' }
+		%script{ :type => 'text/javascript', :src => '/js/chartwell_lines.min.js' }
+		%script{ :type => 'text/javascript', :src => '/js/keymaster.min.js' }
+
+		:javascript
+			var items = [];
+			var records = {};
+
+			$(document).ready(function ($) {
+				key.filter = function (event) {
+				  var tagName = (event.target || event.srcElement).tagName;
+				  return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
+				}
+
+				function showModal() {
+					$('#plus').addClass('active');
+					$('#item_name').focus();
+				}
+				function closeModal() {
+					$('#plus').removeClass('active');
+				}
+
+				//switch to record form with ` key
+			  key('=', function(e){
+			  	e.preventDefault();
+
+			    showModal();
+			  })
+
+			  //switch to records list with escape
+			  key('esc', function(e){
+			  	e.preventDefault();
+
+			    closeModal();
+			  })
+
+
+			  list_active = function () {
+			  	if (!$('#records').hasClass('active')) {
+			      $('#record_form').removeClass('active');
+			      $('#records').addClass('active');
+			    }
+			  }
+
+			  //get items
+			  $.getJSON(
+			    '/api/1/users/#{@user.id.to_s}/items?accesskey=#{@user.accesskey.token.to_s}',
+			    function (e) {
+			      $(e).each(function (i, item) {
+			        items[item.id] = item.name
+			      })
+			    }
+			  )
+
+			  //get records
+			  $.getJSON(
+			    '/api/1/users/#{@user.id.to_s}/records?accesskey=#{@user.accesskey.token.to_s}&per=14',
+			    function (e) {
+			      $(e).each(function (i, recs) {
+			        records[recs[0].item] = recs
+			      })
+
+			      displayRecords();
+			    }
+			  )
+
+			  displayRecords = function () {
+			    for (var i in records) {
+			      var recs = records[i]
+
+			      var total = 0,
+			          entries = recs.length,
+			          item = recs[0].item,
+			          numbers = [],
+			          output = '',
+			          max = 0;
+
+			      $(recs).each(function (b, record) {
+			        amount = parseInt(record.amount, 10)
+
+			        //we shouldn't need to check this if we're doing integer validation on entry
+			        if (!isNaN(amount)) {
+			          total += amount;
+
+			          if (amount > max) {
+			          	max = amount;
+			          }
+
+			          numbers.push(amount)
+			        }
+			      })
+
+			      set = numbers.length > 14 ? numbers.slice(numbers.length - 14, numbers.length) : numbers;
+			      for (var i in set) {
+			        var amount = set[i];
+
+			        if (!isNaN(amount)) {
+			          output += "<span" + (amount == max ? '' : " class='max'") + ">" + amount + "</span>";
+			        }
+			      }
+
+			      $('#records').append('<li id="' + item + '" class="block"><h2><a href="/item/' + item + '">' + items[item] + '</a></h2><h3><span><span class="hidden left">TOTAL</span>' + total + '</span> / <span>' + entries + ' <span class="hidden right">RECORDS</span></span></h3><div style="font-size: 62px"><span class="graph chartwell lines"></span></div>')
+
+			      var graph = $('#' + item).find('span.graph');
+			      $(graph).html(output)
+			    }
+
+			    FFChartwell();
+			  }
+
+			  $('#plus').bind('mouseover', function (e) {
+			  	$('#plus').addClass('active');
+			  })
+
+			  $('#plus').bind('mouseout', function (e) {
+			  	$('#plus').removeClass('active');
+			  })
+
+			  $('#record_form').bind('submit', function (e) {
+			    e.preventDefault();
+			    $('#submit_item').val('Saving...').css('background-color', '#eee')
+
+			    $.ajax({
+			      type: 'post',
+			      url: '/api/1/users/#{@user.id.to_s}/records',
+			      dataType: 'json',
+			      data: {
+			        accesskey: 	'#{@user.accesskey.token.to_s}',
+			        item_name: 	$('#record_form #item_name').val(),
+			        amount: 		$('#record_form #amount').val()
+			      },
+			      success: function (e) {
+			        records[e.item].push(e)
+
+			        $('#amount').val('');
+			        $('#submit_item').val('Save').css('background-color', '#fefefe')
+
+			        $('#records').empty()
+			        displayRecords()
+			        list_active();
+			      },
+			      error: function () {
+			      	$('#submit_item').val('Save').css('background-color', '#fefefe')
+			      }
+			    })
+			  })
+			})
