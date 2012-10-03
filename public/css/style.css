@@ -320,4 +320,42 @@ table.records {
     margin: 0 10px;
     display: block;
   }
+
+  #login {
+    background: #f66;
+  }
+  #login h1 {
+    text-align: center;
+    font-weight: 600;
+    color: #d22;
+    padding-top: 20px;
+  }
+
+  #login form {
+    text-align: center;
+    padding-bottom: 20px;
+  }
+    #login form a {
+      color: #d44;
+      font-size: 10pt;
+    }
+
+  #login p input {
+    width: 230px;
+    display: block;
+    background: #e33;
+    border: 0;
+    color: #fcfcfc;
+    outline: 0;
+    font-size: 14pt;
+    padding: 5px;
+    margin: 0 auto;
+  }
+
+  #login p input.disabled {
+    background-color: #d66;
+  }
+
+  #login p input::-webkit-input-placeholder { color: #ddd; }
+  #login p input::-moz-placeholder { color: #ddd; }
 }
