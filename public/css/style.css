@@ -219,3 +219,105 @@ table.records {
   }
     table.records tr td:first-child {
       width: 50%;
+    }
+
+
+.clear {
+  display: block;
+  height: 0;
+  width: 100%;
+  clear: both;
+  float: none;
+}
+
+@media screen, all and (min-width: 300px) {
+  #container {
+    padding-top: 25px;
+    padding-left: 0;
+    padding: 25px 0;
+  }
+  #content {
+    padding-left: 60px;
+  }
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: -317px;
+    width: 280px;
+    z-index: 100;
+
+    -moz-transition: left .1s ease-in-out;
+    -webkit-transition: left .1s ease-in-out;
+  }
+
+  #sidebar.active {
+    left: 0;
+  }
+
+  #plus {
+    display: block;
+    position: absolute;
+    top: 37px;
+    right: -42px;
+    font-size: 36pt;
+    background-color: #F66;
+    color: #FDFDFD;
+    padding: 0 0 10px;
+    text-align: center;
+    line-height: 41px;
+    height: auto;
+    width: 45px;
+    vertical-align: middle;
+    border-radius: 3px;
+  }
+
+  #record_form {
+    clear: both;
+    margin-top: 20px;
+  }
+
+  #record_form p {
+    display: inline;
+    float: left;
+  }
+
+  #record_form p input {
+    width: auto;
+    background: #e33;
+    border: 0;
+    color: #fcfcfc;
+    outline: 0;
+  }
+
+  #record_form p input.disabled {
+    background-color: #d66;
+  }
+
+  #record_form p input::-webkit-input-placeholder { color: #ddd; }
+  #record_form p input::-moz-placeholder { color: #ddd; }
+
+  #sidebar.active #record_form {
+    display: block;
+    width: 100%;
+  }
+
+  #sidebar #items, #record_form input {
+    font-size: 14pt;
+  }
+
+  #sidebar #items {
+    padding: 0;
+    line-height: 24pt;
+  }
+
+  #records li.block {
+    width: 100%;
+    padding: 0;
+  }
+
+  #records li.block .graph {
+    font-size: 34pt;
+    margin: 0 10px;
+    display: block;
+  }
+}

@@ -7,25 +7,26 @@
 
 	%body
 		#sidebar
-			%h1
-				Math
-				%a#plus{ :href => '#' }
-					+
-					%span.arrow
-					%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
-						%p
-							%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :placeholder => 'Item' }
-						%p
-							%input{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
-						%p
-							%input{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
+			%a#plus{ :href => '#' }
+				+
+
+			%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
+				%p
+					%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :placeholder => 'Item' }
+				%p
+					%input{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
+				%p
+					%input{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
+				.clear
 
 			%ul#items
 				- @user.items.each do |item|
 					%li
 						%a{ :href => '/item/' + item.id.to_s } #{item.name}
+
 		#container
 			#content
+				%h1 Math
 
 				= yield
 
@@ -139,7 +140,7 @@
 			        }
 			      }
 
-			      $('#records').append('<li id="' + item + '" class="block"><h2><a href="/item/' + item + '">' + items[item] + '</a></h2><h3><span><span class="hidden left">TOTAL</span>' + total + '</span> / <span>' + entries + ' <span class="hidden right">RECORDS</span></span></h3><div style="font-size: 62px"><span class="graph chartwell lines"></span></div>')
+			      $('#records').append('<li id="' + item + '" class="block"><h2><a href="/item/' + item + '">' + items[item] + '</a></h2><h3><span><span class="hidden left">TOTAL</span>' + total + '</span> / <span>' + entries + ' <span class="hidden right">RECORDS</span></span></h3><div><span class="graph chartwell lines"></span></div>')
 
 			      var graph = $('#' + item).find('span.graph');
 			      $(graph).html(output)
@@ -148,17 +149,25 @@
 			    FFChartwell();
 			  }
 
-			  $('#plus').bind('mouseover', function (e) {
-			  	$('#plus').addClass('active');
-			  })
 
-			  $('#plus').bind('mouseout', function (e) {
-			  	$('#plus').removeClass('active');
+			  $('#plus').bind('click', function (e) {
+			  	var sidebar = $('#sidebar');
+
+			  	if (!sidebar.hasClass('active')) {
+			  		$('#sidebar').addClass('active');
+			  	} else {
+			  		$('#sidebar').removeClass('active');
+			  	}
 			  })
 
 			  $('#record_form').bind('submit', function (e) {
 			    e.preventDefault();
-			    $('#submit_item').val('Saving...').css('background-color', '#eee')
+
+			    if ($('#record_form #amount').val() == '' || $('#record_form #item_name').val() == '') {
+			    	return false;
+			    }
+
+			    $('#submit_item').val('Saving...').addClass('disabled')
 
 			    $.ajax({
 			      type: 'post',
@@ -173,14 +182,14 @@
 			        records[e.item].push(e)
 
 			        $('#amount').val('');
-			        $('#submit_item').val('Save').css('background-color', '#fefefe')
+			        $('#submit_item').val('Save').removeClass('disabled')
 
 			        $('#records').empty()
 			        displayRecords()
 			        list_active();
 			      },
 			      error: function () {
-			      	$('#submit_item').val('Save').css('background-color', '#fefefe')
+			      	$('#submit_item').val('Save').removeClass('disabled')
 			      }
 			    })
 			  })
