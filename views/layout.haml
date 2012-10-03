@@ -150,15 +150,21 @@
 			    FFChartwell();
 			  }
 
+				var sidebar = $('#sidebar');
+				var toggle_sidebar = function () {
+					if (!sidebar.hasClass('active')) {
+						$('#sidebar').addClass('active');
+					} else {
+						$('#sidebar').removeClass('active');
+					}
+				}
 
 			  $('#plus').bind('click', function (e) {
-			  	var sidebar = $('#sidebar');
+			  	toggle_sidebar();
+			  })
 
-			  	if (!sidebar.hasClass('active')) {
-			  		$('#sidebar').addClass('active');
-			  	} else {
-			  		$('#sidebar').removeClass('active');
-			  	}
+			  $('#plus').tap(function () {
+			  	toggle_sidebar();
 			  })
 
 			  $('#record_form').bind('submit', function (e) {
