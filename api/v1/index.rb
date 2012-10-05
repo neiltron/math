@@ -71,7 +71,7 @@ module Doctothorpem
           end
         end
 
-        post '/resources' do
+        post '/records' do
           item = Item.find_or_create_by( :name => params[:item_name].downcase )
           @user.items.push item unless @user.items.include? item
 
