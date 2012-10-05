@@ -46,30 +46,32 @@ body {
 
 #records {
   padding-left: 0;
+  position: relative;
+  left: -20px;
 }
 
-  #records li.block {
+  #records div {
     float: left;
     display: block;
     width: 400px;
     padding: 20px;
-    margin: 0 10px 10px 0;
+    margin: 0 10px 0 0;
 
     border: 1px solid #eee;
     border-radius: 3px;
   }
-    #records li.block h2 {
+    #records div h2 {
       text-align: center;
       font-weight: 100;
       font-size: 20pt;
       margin-bottom: 5px;
     }
-      #records li.block h2 a {
+      #records div h2 a {
         color: inherit;
         text-decoration: none;
       }
 
-    #records li.block span.graph {
+    #records div span.graph {
       display: block;
       width: 100%;
       color: #d88;
@@ -310,12 +312,12 @@ table.records {
     line-height: 24pt;
   }
 
-  #records li.block {
+  #records div {
     width: 100%;
     padding: 0;
   }
 
-  #records li.block .graph {
+  #records div .graph {
     font-size: 34pt;
     margin: 0 10px;
     display: block;

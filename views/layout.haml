@@ -3,6 +3,7 @@
 	%head
 		%title D#M
 		%link{ :rel => 'stylesheet', :href => '/css/style.css' }
+		%link{ :rel => 'stylesheet', :href => '/css/nv.d3.css' }
 		%link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
 		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
 
@@ -40,8 +41,15 @@
 		<![endif]-->
 
 		%script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
-		%script{ :type => 'text/javascript', :src => '/js/chartwell.min.js' }
-		%script{ :type => 'text/javascript', :src => '/js/chartwell_lines.min.js' }
+		%script{ :type => 'text/javascript', :src => '/js/d3.v2.min.js' }
+		%script{ :type => 'text/javascript', :src => '/js/nv.d3.js' }
+		%script{ :type => 'text/javascript', :src => '/js/utils.js' }
+		%script{ :type => 'text/javascript', :src => '/js/tooltip.js' }
+		%script{ :type => 'text/javascript', :src => '/js/models/legend.js' }
+		%script{ :type => 'text/javascript', :src => '/js/models/axis.js' }
+		%script{ :type => 'text/javascript', :src => '/js/models/scatter.js' }
+		%script{ :type => 'text/javascript', :src => '/js/models/line.js' }
+		%script{ :type => 'text/javascript', :src => '/js/models/lineChart.js' }
 		%script{ :type => 'text/javascript', :src => '/js/keymaster.min.js' }
 
 		:javascript
@@ -84,71 +92,68 @@
 			    }
 			  }
 
+			  isNumber = function (value) {
+					if ((undefined === value) || (null === value)) {
+						return false;
+					}
+					if (typeof value == 'number') {
+						return true;
+					}
+					return !isNaN(value - 0);
+				}
+
 			  //get items
 			  $.getJSON(
-			    '/api/1/users/#{@user.id.to_s}/items?accesskey=#{@user.accesskey.token.to_s}',
+			    '/api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@user.accesskey.token.to_s}',
 			    function (e) {
+			    	var values = '';
+
 			      $(e).each(function (i, item) {
-			        items[item.id] = item.name
+							$("<div><h2>" + item.name + "</h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
+
+			        d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
+			        	values = $(data.values).map(function(i, value) {
+			        		if (isNumber(value)) {
+			        			return { x: i, y: value };
+			        		}
+			        	})
+
+			        	nv.addGraph(function() {
+								  var chart = nv.models.lineChart();
+
+								  chart.yAxis
+								      .tickFormat('');
+
+								  chart.yAxis
+								      .tickFormat(d3.format(',.1f'))
+
+								  d3.select('#chart_' + item.id + ' svg')
+								    .datum(return_values(values))
+								    .transition().duration(500)
+								    .call(chart);
+
+								  //TODO: Figure out a good way to do this automatically
+								  nv.utils.windowResize(chart.update);
+
+								  return chart;
+								});
+							})
 			      })
 			    }
 			  )
 
-			  //get records
-			  $.getJSON(
-			    '/api/1/users/#{@user.id.to_s}/records?accesskey=#{@user.accesskey.token.to_s}&per=14',
-			    function (e) {
-			      $(e).each(function (i, recs) {
-			        records[recs[0].item] = recs
-			      })
 
-			      displayRecords();
-			    }
-			  )
+				function return_values (data) {
+					console.log('return', data)
+					return [
+				    {
+				    	area: true,
+				      values: data,
+				      color: "#faa"
+				    }
+				   ]
+				}
 
-			  displayRecords = function () {
-			    for (var i in records) {
-			      var recs = records[i]
-
-			      var total = 0,
-			          entries = recs.length,
-			          item = recs[0].item,
-			          numbers = [],
-			          output = '',
-			          max = 0;
-
-			      $(recs).each(function (b, record) {
-			        amount = parseInt(record.amount, 10)
-
-			        //we shouldn't need to check this if we're doing integer validation on entry
-			        if (!isNaN(amount)) {
-			          total += amount;
-
-			          if (amount > max) {
-			          	max = amount;
-			          }
-
-			          numbers.push(amount)
-			        }
-			      })
-
-			      set = numbers.length > 14 ? numbers.slice(numbers.length - 14, numbers.length) : numbers;
-			      for (var i in set) {
-			        var amount = set[i];
-
-			        if (!isNaN(amount)) {
-			          output += "<span" + (amount == max ? '' : " class='max'") + ">" + amount + "</span>";
-			        }
-			      }
-
-			      $('#records').append('<li id="' + item + '" class="block"><h2><a href="/item/' + item + '">' + items[item] + '</a></h2><h3><span><span class="hidden left">TOTAL</span>' + total + '</span> / <span>' + entries + ' <span class="hidden right">RECORDS</span></span></h3><div><span class="graph chartwell lines"></span></div>')
-
-			      var graph = $('#' + item).find('span.graph');
-			      $(graph).html(output)
-			    }
-
-			    FFChartwell();
-			  }
 
 				var sidebar = $('#sidebar');
 				var toggle_sidebar = function () {

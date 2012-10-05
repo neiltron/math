@@ -55,28 +55,29 @@ module Doctothorpem
               Boxer.ship(:item, item)
             end
           end
-        end
 
-        resource :records do
-          get do
+          get ':id/records' do
             per = (params[:per] || 7).to_i
             page = (params[:page] || 0).to_i
+            item = Item.find(params[:id])
 
-            @user.items.map do |item|
-              item.records.order_by([[:created_at, :desc]]).limit(per).skip(per * page).map do |record|
-                Boxer.ship(:record, record)
-              end
+            records = item.records.order_by([[:created_at, :desc]]).limit(per).skip(per * page).map do |record|
+              record.amount
             end
+
+            {
+              values: records
+            }
           end
+        end
 
-          post do
-            item = Item.find_or_create_by( :name => params[:item_name].downcase )
-            @user.items.push item unless @user.items.include? item
+        post '/resources' do
+          item = Item.find_or_create_by( :name => params[:item_name].downcase )
+          @user.items.push item unless @user.items.include? item
 
-            record = Record.create!( :amount => params[:amount], :user => current_user, :item => item )
+          record = Record.create!( :amount => params[:amount], :user => current_user, :item => item )
 
-            Boxer.ship(:record, record)
-          end
+          Boxer.ship(:record, record)
         end
       end
     end
