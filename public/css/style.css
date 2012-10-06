@@ -205,6 +205,8 @@ body {
   width: 100%;
   color: #d88;
   font-size: 24pt;
+  position: relative;
+  left: -60px;
 }
 
 table.records {
@@ -361,3 +363,26 @@ table.records {
   #login p input::-webkit-input-placeholder { color: #ddd; }
   #login p input::-moz-placeholder { color: #ddd; }
 }
+
+.nv-axis text { fill: #d66; opacity: 0; }
+.nvd3 .nv-axis .nv-axisMaxMin text { opacity: 0; font-weight: 100; }
+
+.nvd3 .nv-axis line {
+  fill: #d88;
+  stroke: #d88;
+  stroke-opacity: .1; /changed from .25 to 0/
+  shape-rendering: crispEdges;
+}
+
+.nvd3 .nv-axis path {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1px;
+  stroke-opacity: 0;
+  shape-rendering: crispEdges;
+}
+
+.nvd3 .nv-axis path.domain {
+  opacity: 0;
+}
+.nvd3.nv-legend { display: none; }

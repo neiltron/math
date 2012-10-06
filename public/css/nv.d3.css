@@ -144,7 +144,7 @@ svg .title {
 
 .nvd3 .nv-axis path {
   fill: none;
-  stroke: #000;
+  stroke: #f0f;
   stroke-opacity: .75;
   shape-rendering: crispEdges;
 }
