@@ -60,7 +60,7 @@ module Doctothorpem
             item = Item.find(params[:id])
 
             item.display_type = params[:display_type] unless params[:display_type].nil?
-            item.display_frequency = params[:display_type] unless params[:display_frequency].nil?
+            item.display_frequency = params[:display_frequency] unless params[:display_frequency].nil?
 
             item.save
           end
