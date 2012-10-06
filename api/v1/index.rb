@@ -56,6 +56,15 @@ module Doctothorpem
             end
           end
 
+          put ':id' do
+            item = Item.find(params[:id])
+
+            item.display_type = params[:display_type] unless params[:display_type].nil?
+            item.display_frequency = params[:display_type] unless params[:display_frequency].nil?
+
+            item.save
+          end
+
           get ':id/records' do
             per = (params[:per] || 7).to_i
             page = (params[:page] || 0).to_i
