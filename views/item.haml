@@ -20,5 +20,5 @@
       %td #{record.created_at}
 
 %script{ :type => 'text/javascript' }
-  var graph_data = { values: [#{@item.records.map{ |record| record.amount if !record.amount.nil? }.join(',')}] };
+  var graph_data = { values: #{@records.to_a} };
   var item_id = '#{@item.id.to_s}';

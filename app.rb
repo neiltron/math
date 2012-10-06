@@ -64,6 +64,11 @@ module Doctothorpem
 
       @user = current_user
       @item = Item.find(params[:id])
+      @records = @item.records.map do |record|
+        [record.created_at.to_i, record.amount.to_f] unless record.amount.nil?
+      end
+
+      pp @records
 
       haml :item
     end

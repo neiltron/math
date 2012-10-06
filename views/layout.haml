@@ -116,8 +116,13 @@
 									nv.addGraph(function() {
 										var chart = nv.models.lineChart();
 
+										chart.xAxis
+								      .tickFormat(function(d) {
+								        return d3.time.format('%x')(new Date(d))
+								      });
+
 										chart.yAxis
-											.tickFormat(d3.format(',.1f'))
+											.tickFormat(d3.format())
 
 										d3.select('#chart_' + item.id + ' svg')
 											.datum(return_values(data))
@@ -137,9 +142,15 @@
 					nv.addGraph(function() {
 						var chart = nv.models.lineChart();
 
+						chart.xAxis
+				      .tickFormat(function(d) {
+				        return d3.time.format('%x')(new Date(d))
+				      });
+
 						chart.yAxis
 							.tickFormat(d3.format(',.1f'))
-
+							console.log(graph_data)
+							console.log(return_values(graph_data))
 						d3.select('#graph svg')
 							.datum(return_values(graph_data))
 							.transition().duration(500)
@@ -155,8 +166,8 @@
 
 				function return_values (data) {
 					data = $(data.values).map(function(i, value) {
-						if (isNumber(value)) {
-						  return { x: i, y: value };
+						if (isNumber(value[1])) {
+						  return { x: value[0] + '000', y: value[1] };
 						}
 					})
 
