@@ -7,6 +7,9 @@ class Item
 	include Mongoid::Paranoia
 
 	field :name, :type => String
+  field :display_frequency, :type => String, :default => 'daily'
+  field :display_type, :type => String, :default => 'total'
+
 	has_many :records
 	belongs_to :user, :touch =>  true
 end
