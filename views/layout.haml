@@ -58,41 +58,41 @@
 
 			$(document).ready(function ($) {
 				key.filter = function (event) {
-				  var tagName = (event.target || event.srcElement).tagName;
-				  return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
+					var tagName = (event.target || event.srcElement).tagName;
+					return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
 				}
 
-				function showModal() {
-					$('#plus').addClass('active');
+				function showSidebar() {
+					$('#sidebar').addClass('active');
 					$('#item_name').focus();
 				}
-				function closeModal() {
-					$('#plus').removeClass('active');
+				function closeSidebar() {
+					$('#sidebar').removeClass('active');
 				}
 
 				//switch to record form with ` key
-			  key('=', function(e){
-			  	e.preventDefault();
+				key('=', function(e){
+					e.preventDefault();
 
-			    showModal();
-			  })
+					showSidebar();
+				})
 
-			  //switch to records list with escape
-			  key('esc', function(e){
-			  	e.preventDefault();
+				//switch to records list with escape
+				key('esc', function(e){
+					e.preventDefault();
 
-			    closeModal();
-			  })
+					closeSidebar();
+				})
 
 
-			  list_active = function () {
-			  	if (!$('#records').hasClass('active')) {
-			      $('#record_form').removeClass('active');
-			      $('#records').addClass('active');
-			    }
-			  }
+				list_active = function () {
+					if (!$('#records').hasClass('active')) {
+						$('#record_form').removeClass('active');
+						$('#records').addClass('active');
+					}
+				}
 
-			  isNumber = function (value) {
+				isNumber = function (value) {
 					if ((undefined === value) || (null === value)) {
 						return false;
 					}
@@ -102,52 +102,71 @@
 					return !isNaN(value - 0);
 				}
 
-			  //get items
-			  $.getJSON(
-			    '/api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@user.accesskey.token.to_s}',
-			    function (e) {
-			    	var values = '';
+				//get items
+				if ($('#records').length) {
+					$.getJSON(
+						'/api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@user.accesskey.token.to_s}',
+						function (e) {
+							var values = '';
 
-			      $(e).each(function (i, item) {
-							$("<div><h2>" + item.name + "</h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
+						$(e).each(function (i, item) {
+								$("<div><h2>" + item.name + "</h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
 
-			        d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
-			        	values = $(data.values).map(function(i, value) {
-			        		if (isNumber(value)) {
-			        			return { x: i, y: value };
-			        		}
-			        	})
+									d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
+									nv.addGraph(function() {
+										var chart = nv.models.lineChart();
 
-			        	nv.addGraph(function() {
-								  var chart = nv.models.lineChart();
+										chart.yAxis
+											.tickFormat(d3.format(',.1f'))
 
-								  chart.yAxis
-								      .tickFormat(d3.format(',.1f'))
+										d3.select('#chart_' + item.id + ' svg')
+											.datum(return_values(data))
+											.transition().duration(500)
+											.call(chart);
 
-								  d3.select('#chart_' + item.id + ' svg')
-								    .datum(return_values(values))
-								    .transition().duration(500)
-								    .call(chart);
+										//TODO: Figure out a good way to do this automatically
+										nv.utils.windowResize(chart.update);
 
-								  //TODO: Figure out a good way to do this automatically
-								  nv.utils.windowResize(chart.update);
-
-								  return chart;
-								});
+										return chart;
+									});
+								})
 							})
-			      })
-			    }
-			  )
+						}
+					)
+				} else if ($('#graph').length) {
+					nv.addGraph(function() {
+						var chart = nv.models.lineChart();
+
+						chart.yAxis
+							.tickFormat(d3.format(',.1f'))
+
+						d3.select('#graph svg')
+							.datum(return_values(graph_data))
+							.transition().duration(500)
+							.call(chart);
+
+						//TODO: Figure out a good way to do this automatically
+						nv.utils.windowResize(chart.update);
+
+						return chart;
+					});
+				}
 
 
 				function return_values (data) {
+					data = $(data.values).map(function(i, value) {
+						if (isNumber(value)) {
+						  return { x: i, y: value };
+						}
+					})
+
 					return [
-				    {
-				    	area: true,
-				      values: data,
-				      color: "#faa"
-				    }
-				   ]
+						{
+							area: true,
+							values: data,
+							color: "#faa"
+						}
+					]
 				}
 
 
@@ -160,45 +179,45 @@
 					}
 				}
 
-			  $('#plus').bind('click', function (e) {
-			  	toggle_sidebar();
-			  })
+				$('#plus').bind('click', function (e) {
+					toggle_sidebar();
+				})
 
-			  $('#plus').tap(function () {
-			  	toggle_sidebar();
-			  })
+				$('#plus').tap(function () {
+					toggle_sidebar();
+				})
 
-			  $('#record_form').bind('submit', function (e) {
-			    e.preventDefault();
+				$('#record_form').bind('submit', function (e) {
+					e.preventDefault();
 
-			    if ($('#record_form #amount').val() == '' || $('#record_form #item_name').val() == '') {
-			    	return false;
-			    }
+					if ($('#record_form #amount').val() == '' || $('#record_form #item_name').val() == '') {
+						return false;
+					}
 
-			    $('#submit_item').val('Saving...').addClass('disabled')
+					$('#submit_item').val('Saving...').addClass('disabled')
 
-			    $.ajax({
-			      type: 'post',
-			      url: '/api/1/users/#{@user.id.to_s}/records',
-			      dataType: 'json',
-			      data: {
-			        accesskey: 	'#{@user.accesskey.token.to_s}',
-			        item_name: 	$('#record_form #item_name').val(),
-			        amount: 		$('#record_form #amount').val()
-			      },
-			      success: function (e) {
-			        records[e.item].push(e)
+					$.ajax({
+						type: 'post',
+						url: '/api/1/users/#{@user.id.to_s}/records',
+						dataType: 'json',
+						data: {
+							accesskey: 	'#{@user.accesskey.token.to_s}',
+							item_name: 	$('#record_form #item_name').val(),
+							amount: 		$('#record_form #amount').val()
+						},
+						success: function (e) {
+							records[e.item].push(e)
 
-			        $('#amount').val('');
-			        $('#submit_item').val('Save').removeClass('disabled')
+							$('#amount').val('');
+							$('#submit_item').val('Save').removeClass('disabled')
 
-			        $('#records').empty()
-			        displayRecords()
-			        list_active();
-			      },
-			      error: function () {
-			      	$('#submit_item').val('Save').removeClass('disabled')
-			      }
-			    })
-			  })
+							$('#records').empty()
+							displayRecords()
+							list_active();
+						},
+						error: function () {
+							$('#submit_item').val('Save').removeClass('disabled')
+						}
+					})
+				})
 			})

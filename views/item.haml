@@ -1,8 +1,7 @@
-#graph.chartwell.lines
-  - @item.records.each do |record|
-    %span #{record.amount}
-
 %h2 #{@item.name}
+
+#graph.lines
+  %svg{ :style => 'height: 200px' }
 
 %table.records
   - @item.records.each do |record|
@@ -10,5 +9,5 @@
       %td #{record.amount}
       %td #{record.created_at}
 
-:javascript
-  FFChartwell();
+%script{ :type => 'text/javascript' }
+  graph_data = { values: [#{@item.records.map{ |record| record.amount if !record.amount.nil? }.join(',')}] }
