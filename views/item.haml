@@ -1,4 +1,14 @@
 %h2 #{@item.name}
+%small
+  Displaying:
+  %span#settings_link{ :href => '#' }
+    Daily Total
+    %span.arrow &#x25BE;
+    %ul#settings_menu
+      %li
+        %a{ :href => '/hello' } Daily Total
+      %li
+        %a{ :href => '/hello' } Daily Average
 
 #graph.lines
   %svg{ :style => 'height: 200px' }
