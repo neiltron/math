@@ -18,7 +18,9 @@ Boxer.box(:item) do |box, item|
   box.view(:base) do
     {
       :id => item.id.to_s,
-      :name => item.name
+      :name => item.name,
+      :display_type => item.display_type,
+      :display_frequency => item.display_frequency
     }
   end
 end
