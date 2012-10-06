@@ -220,4 +220,17 @@
 						}
 					})
 				})
+
+				$('#settings_menu li a').bind('click', function (e) {
+			    e.preventDefault();
+
+			    $.ajax({
+			      type: 'put',
+			      url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '?accesskey=#{@user.accesskey.token.to_s}',
+			      data: {
+			        display_type: $(e.target).data('display-type'),
+			        display_frequency: $(e.target).data('display-frequency'),
+			      }
+			    })
+			  })
 			})

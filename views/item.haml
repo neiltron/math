@@ -2,13 +2,13 @@
 %small
   Displaying:
   %span#settings_link{ :href => '#' }
-    Daily Total
+    #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
     %span.arrow &#x25BE;
     %ul#settings_menu
       %li
-        %a{ :href => '/hello' } Daily Total
+        %a{ :href => '#', :'data-display-type' => 'total', :'data-display-frequency' => 'daily' } Daily Total
       %li
-        %a{ :href => '/hello' } Daily Average
+        %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
 
 #graph.lines
   %svg{ :style => 'height: 200px' }
@@ -20,4 +20,5 @@
       %td #{record.created_at}
 
 %script{ :type => 'text/javascript' }
-  graph_data = { values: [#{@item.records.map{ |record| record.amount if !record.amount.nil? }.join(',')}] }
+  var graph_data = { values: [#{@item.records.map{ |record| record.amount if !record.amount.nil? }.join(',')}] };
+  var item_id = '#{@item.id.to_s}';
