@@ -149,8 +149,7 @@
 
 						chart.yAxis
 							.tickFormat(d3.format(',.1f'))
-							console.log(graph_data)
-							console.log(return_values(graph_data))
+
 						d3.select('#graph svg')
 							.datum(return_values(graph_data))
 							.transition().duration(500)
