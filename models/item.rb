@@ -17,7 +17,7 @@ class Item
     map = <<-EOS
       function() {
         var timestamp = this.created_at.getFullYear() + '-' + this.created_at.getMonth() + '-' + this.created_at.getDate();
-        emit(timestamp, this.amount)
+        emit(timestamp, Math.floor(parseFloat(this.amount, 10) * 10) / 10)
       }
     EOS
     reduce = <<-EOS
@@ -39,7 +39,7 @@ class Item
     map = <<-EOS
       function() {
         var timestamp = this.created_at.getFullYear() + '-' + this.created_at.getMonth() + '-' + this.created_at.getDate();
-        emit(timestamp, this.amount)
+        emit(timestamp, Math.floor(parseFloat(this.amount, 10) * 10) / 10)
       }
     EOS
     reduce = <<-EOS
