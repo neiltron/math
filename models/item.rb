@@ -13,7 +13,7 @@ class Item
 	has_many :records
 	belongs_to :user, :touch =>  true
 
-  def records_daily
+  def records_total_daily
     map = <<-EOS
       function() {
         var timestamp = this.created_at.getFullYear() + '-' + this.created_at.getMonth() + '-' + this.created_at.getDate();
