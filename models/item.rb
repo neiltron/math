@@ -12,6 +12,28 @@ class Item
 
 	has_many :records
 	belongs_to :user, :touch =>  true
+
+  def records_daily
+    map = <<-EOS
+      function() {
+        var timestamp = this.created_at.getFullYear() + '-' + this.created_at.getMonth() + '-' + this.created_at.getDate();
+        emit(timestamp, this.amount)
+      }
+    EOS
+    reduce = <<-EOS
+      function(key, values) {
+        var count = 0;
+        values.forEach(function(value) {
+          count += value;
+        });
+        return(count);
+      }
+    EOS
+
+    self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
+      [item['_id'].to_datetime.to_i, item['value']]
+    end
+  end
 end
 
 Boxer.box(:item) do |box, item|

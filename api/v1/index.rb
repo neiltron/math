@@ -70,9 +70,7 @@ module Doctothorpem
             page = (params[:page] || 0).to_i
             item = Item.find(params[:id])
 
-            records = item.records.order_by([[:created_at, :desc]]).limit(per).skip(per * page).map do |record|
-              [record.created_at.to_i.to_s, record.amount]
-            end
+            records = item.records_daily
 
             {
               values: records
