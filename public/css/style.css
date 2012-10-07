@@ -187,12 +187,13 @@ body {
   #content #settings_link .arrow {
     display: none;
     text-decoration: none;
+    color: #fdd;
   }
 
   #content #settings_link #settings_menu {
     display: none;
     width: 100px;
-    background: #d66;
+    background: #f66;
     position: absolute;
     top: 96%;
     right: 0;
@@ -211,7 +212,7 @@ body {
 
   #content #settings_link:hover {
     text-decoration: none;
-    background: #d66;
+    background: #f66;
     color: #fcfcfc;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
