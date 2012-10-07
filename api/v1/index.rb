@@ -70,7 +70,11 @@ module Doctothorpem
             page = (params[:page] || 0).to_i
             item = Item.find(params[:id])
 
-            records = item.records_daily
+            if item.display_type == 'total'
+              records = item.records_total_daily
+            elsif item.display_type == 'average'
+              records = item.records_avg_daily
+            end
 
             {
               values: records

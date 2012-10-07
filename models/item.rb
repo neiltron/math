@@ -34,6 +34,30 @@ class Item
       [item['_id'].to_datetime.to_i, item['value']]
     end
   end
+
+  def records_avg_daily
+    map = <<-EOS
+      function() {
+        var timestamp = this.created_at.getFullYear() + '-' + this.created_at.getMonth() + '-' + this.created_at.getDate();
+        emit(timestamp, this.amount)
+      }
+    EOS
+    reduce = <<-EOS
+      function(key, values) {
+        var total = 0,
+            count = values.length;
+
+        values.forEach(function(value) {
+          total += value;
+        });
+        return(total / count);
+      }
+    EOS
+
+    self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
+      [item['_id'].to_datetime.to_i, item['value']]
+    end
+  end
 end
 
 Boxer.box(:item) do |box, item|
