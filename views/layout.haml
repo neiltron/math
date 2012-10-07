@@ -84,14 +84,6 @@
 					closeSidebar();
 				})
 
-
-				list_active = function () {
-					if (!$('#records').hasClass('active')) {
-						$('#record_form').removeClass('active');
-						$('#records').addClass('active');
-					}
-				}
-
 				isNumber = function (value) {
 					if ((undefined === value) || (null === value)) {
 						return false;
@@ -216,14 +208,8 @@
 							amount: 		$('#record_form #amount').val()
 						},
 						success: function (e) {
-							records[e.item].push(e)
-
 							$('#amount').val('');
 							$('#submit_item').val('Save').removeClass('disabled')
-
-							$('#records').empty()
-							displayRecords()
-							list_active();
 						},
 						error: function () {
 							$('#submit_item').val('Save').removeClass('disabled')
