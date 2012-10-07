@@ -64,11 +64,12 @@ module Doctothorpem
 
       @user = current_user
       @item = Item.find(params[:id])
-      @records = @item.records.map do |record|
-        [record.created_at.to_i, record.amount.to_f] unless record.amount.nil?
-      end
 
-      pp @records
+      if @item.display_type == 'total'
+        @records = @item.records_total_daily
+      elsif @item.display_type == 'average'
+        @records = @item.records_avg_daily
+      end
 
       haml :item
     end
