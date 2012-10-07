@@ -390,6 +390,12 @@ table.records {
   #login p input::-moz-placeholder { color: #ddd; }
 }
 
+@media screen, all and (max-width: 480px) {
+  #records div svg {
+    max-height: 120px;
+  }
+}
+
 .nv-axis text { fill: #d66; }
 #content .nvd3 .nv-axis .nv-axisMaxMin text { opacity: 0; font-weight: 100; }
 
