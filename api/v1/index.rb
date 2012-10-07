@@ -51,7 +51,7 @@ module Doctothorpem
 
         resource :items do
           get do
-            @user.items.map do |item|
+            @user.items.order_by([[:updated_at, :desc]]).map do |item|
               Boxer.ship(:item, item)
             end
           end
@@ -87,6 +87,7 @@ module Doctothorpem
           @user.items.push item unless @user.items.include? item
 
           record = Record.create!( :amount => params[:amount], :user => current_user, :item => item )
+          item.touch
 
           Boxer.ship(:record, record)
         end
