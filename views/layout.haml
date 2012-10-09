@@ -20,7 +20,7 @@
 
 			%ul#items
 				%li.hide Select an item
-				- @user.items.each do |item|
+				- @user.items.order_by([[:updated_at, :desc]]).each do |item|
 					%li
 						%a{ :href => '/items/' + item.id.to_s } #{item.name}
 
