@@ -97,9 +97,7 @@
 
 				var items = $('#items');
 				items.find('a').bind('click', function (e) {
-					if (!items.hasClass('active')) {
-						return false;
-					} else {
+					if (items.hasClass('active')) {
 						e.preventDefault();
 
 						$('#item_name').val($(e.target).text());
