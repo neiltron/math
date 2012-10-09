@@ -272,16 +272,18 @@ table.records {
   #sidebar {
     position: fixed;
     top: 0;
-    left: -317px;
+    transform: translate3d(-317px,0,0);
+    -webkit-transform: translate3d(-317px,0,0);
     width: 280px;
     z-index: 100;
 
-    -moz-transition: left .1s ease-in-out;
-    -webkit-transition: left .1s ease-in-out;
+    -moz-transition: transform .1s ease-in-out;
+    -webkit-transition: -webkit-transform .1s ease-in-out;
   }
 
   #sidebar.active {
-    left: 0;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
   }
 
   #plus {
