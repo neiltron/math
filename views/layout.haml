@@ -13,16 +13,14 @@
 				+
 
 			%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
-				%p
-					%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :placeholder => 'Item' }
-				%p
-					%input{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
-				%p
-					%input{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
+				%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :autocapitalize => 'off', :placeholder => 'Search or add an item' }
+				%input.hide{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
+				%input.hide{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
 				.clear
 
 			%ul#items
-				- @user.items.each do |item|
+				%li.hide Select an item
+				- @user.items.order_by([[:updated_at, :desc]]).each do |item|
 					%li
 						%a{ :href => '/item/' + item.id.to_s } #{item.name}
 
@@ -82,6 +80,29 @@
 					e.preventDefault();
 
 					closeSidebar();
+				})
+
+				var item_form_timer = '';
+				$('#record_form').bind('focusin', function (e) {
+					clearTimeout(item_form_timer);
+
+					$('#record_form').addClass('active')
+					$('#items').addClass('active')
+				}).bind('focusout', function (e) {
+					item_form_timer = setTimeout(function () {
+						$('#record_form').removeClass('active')
+						$('#items').removeClass('active')
+					}, 300)
+				})
+
+				var items = $('#items');
+				items.find('a').bind('click', function (e) {
+					if (items.hasClass('active')) {
+						e.preventDefault();
+
+						$('#item_name').val($(e.target).text());
+						$('#amount').focus();
+					}
 				})
 
 				isNumber = function (value) {
@@ -181,12 +202,10 @@
 					}
 				}
 
-				$('#plus').bind('click', function (e) {
+				var tap_event = (typeof document.body.ontouchstart === "undefined" ? 'click' : 'tap');
+				$('#plus').bind(tap_event, function (e) {
 					toggle_sidebar();
-				})
-
-				$('#plus').tap(function () {
-					toggle_sidebar();
+					return false;
 				})
 
 				$('#record_form').bind('submit', function (e) {
