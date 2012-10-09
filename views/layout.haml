@@ -13,7 +13,7 @@
 				+
 
 			%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
-				%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :placeholder => 'Search or add an item' }
+				%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :autocapitalize => 'off', :placeholder => 'Search or add an item' }
 				%input.hide{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
 				%input.hide{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
 				.clear
