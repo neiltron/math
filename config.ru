@@ -17,7 +17,12 @@ require 'config/pony'
 
 use Rack::Session::Cookie, :key => 'rack.session', :secret => ENV['SESSION_SECRET'] || 'octothorps'
 use Rack::Flash
-use Rack::SSL
+
+#only force ssl in production
+if ENV['RACK_ENV'] == 'production'
+  require 'rack/ssl'
+  use Rack::SSL
+end
 
 Bundler.setup
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)

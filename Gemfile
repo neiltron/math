@@ -19,7 +19,10 @@ gem 'mongoid_token'
 gem 'boxer'
 gem 'heroku'
 gem 'pony'
-gem 'rack-ssl'
+
+group :production do
+  gem 'rack-ssl'
+end
 
 group :test do
 	gem 'rack-test', :git => 'https://github.com/brynary/rack-test.git'
