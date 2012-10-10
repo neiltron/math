@@ -17,6 +17,7 @@ require 'config/pony'
 
 use Rack::Session::Cookie, :key => 'rack.session', :secret => ENV['SESSION_SECRET'] || 'octothorps'
 use Rack::Flash
+use Rack::SSL
 
 Bundler.setup
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)
