@@ -10,7 +10,7 @@ end
 require 'pp'
 
 
-module Doctothorpem
+module Math
   class Web < Sinatra::Application
     set :app_file, __FILE__
     set :root, File.dirname(__FILE__)
@@ -43,7 +43,7 @@ module Doctothorpem
 
     use Warden::Manager do |manager|
       manager.default_strategies :password
-      manager.failure_app = Doctothorpem::Web
+      manager.failure_app = Math::Web
     end
 
     helpers do

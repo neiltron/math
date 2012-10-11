@@ -2,7 +2,7 @@
 #////        USERS
 #/////////////////
 
-module Doctothorpem
+module Math
   class Web < Sinatra::Application
     get '/signup/?' do
       haml :'users/signup/form'

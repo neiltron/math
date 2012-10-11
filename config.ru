@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-$0 = 'Doctothorpem'
+$0 = 'Math'
 $LOAD_PATH.unshift ::File.dirname(__FILE__)
 
 ENV['RACK_ENV'] ||= "development"
@@ -28,6 +28,6 @@ Bundler.setup
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)
 
 run Rack::Cascade.new([
-	Doctothorpem::API,
-	Doctothorpem::Web
+	Math::API,
+	Math::Web
 ])

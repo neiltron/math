@@ -7,7 +7,7 @@ require 'bundler/setup'
   require lib
 end
 
-module Doctothorpem
+module Math
   class API < Grape::API
     use Garner::Middleware::Cache::Bust
     helpers Garner::Mixins::Grape::Cache
