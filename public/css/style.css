@@ -250,7 +250,7 @@ table.records {
     position: fixed;
     top: 0;
     transform: translate3d(-277px,0,0);
-    -webkit-transform: translate3d(-317px,0,0);
+    -webkit-transform: translate3d(-277px,0,0);
     width: 240px;
     z-index: 100;
 
@@ -284,8 +284,8 @@ table.records {
     clear: both;
     margin-top: 30px;
     position: relative;
-    -moz-transition: height .5s ease-in-out;
-    -webkit-transition: height .5s ease-in-out;
+    -moz-transition: height .4s ease-in-out;
+    -webkit-transition: height .4s ease-in-out;
     min-height: 58px;
   }
 
@@ -305,8 +305,8 @@ table.records {
     outline: 0;
     padding: 6px;
 
-    -moz-transition: top .5s ease-in-out;
-    -webkit-transition: top .5s ease-in-out;
+    -moz-transition: top .2s ease-in-out;
+    -webkit-transition: top .2s ease-in-out;
   }
 
   #record_form input.disabled {
@@ -315,6 +315,11 @@ table.records {
 
   #record_form input.hide {
     z-index: 10;
+  }
+
+  #record_form.active input {
+    -moz-transition:    top .4s ease-in-out;
+    -webkit-transition: top .4s ease-in-out;
   }
 
   #record_form.active input#amount {
