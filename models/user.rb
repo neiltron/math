@@ -33,12 +33,16 @@ class User
     user = nil unless user.nil? || user.authenticated?(password)
 
     if user.nil?
-      key = AccessKey.find_by_token(accesskey)
-
-      if key.nil?
+      if accesskey.nil?
         false
       else
-        user = key.user
+        key = AccessKey.find_by_token(accesskey)
+
+        if key.nil?
+          false
+        else
+          user = key.user
+        end
       end
     else
       user.remembered_pass! if !user.confirm_token.nil? #clear confirm token if user has logged in

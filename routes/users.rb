@@ -103,17 +103,15 @@ module Math
     post '/login/?' do
       user = User.authenticate(params['email'],params['password'],params['accesskey'])
 
-      flash[:error] = 'Invalid username or password.'
-      redirect '/login' if user.nil?
-
       if user
         session[:accesskey] = user.accesskey.token
         session[:uid] = user.email
 
         redirect '/'
+      else
+        flash[:error] = 'Invalid username or password.'
+        redirect '/login'
       end
-
-      haml :index
     end
 
     post '/unauthenticated/?' do

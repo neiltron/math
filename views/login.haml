@@ -7,15 +7,14 @@
 		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
 
 	%body
-		- if flash.has?(:notice)
-			.alert-message.notice.login
-				= flash[:notice]
-		- elsif flash.has?(:error)
-			.alert-message.error.login
-				= flash[:error]
-
 		#login
 			%h1 Math
+			- if flash.has?(:notice)
+				.alert-message.notice.login
+					= flash[:notice]
+			- elsif flash.has?(:error)
+				.alert-message.error.login
+					= flash[:error]
 			%form{ :method => 'post', :action => '/login' }
 				%p
 					%label{ :for => 'email' }

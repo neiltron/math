@@ -388,6 +388,13 @@ table.records {
     min-height: 100%;
     background: #f66;
   }
+
+  #login .alert-message {
+    text-align: center;
+    color: white;
+    font-weight: 100;
+  }
+
   #login h1 {
     text-align: center;
     font-weight: 600;
