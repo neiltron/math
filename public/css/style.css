@@ -249,9 +249,9 @@ table.records {
   #sidebar {
     position: fixed;
     top: 0;
-    transform: translate3d(-317px,0,0);
+    transform: translate3d(-277px,0,0);
     -webkit-transform: translate3d(-317px,0,0);
-    width: 280px;
+    width: 240px;
     z-index: 100;
 
     -moz-transition: transform .1s ease-in-out;
