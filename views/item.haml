@@ -1,24 +1,27 @@
-%h2 #{@item.name}
-%small
-  Displaying:
-  %span#settings_link{ :href => '#' }
-    #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
-    %span.arrow &#x25BE;
-    %ul#settings_menu
-      %li
-        %a{ :href => '#', :'data-display-type' => 'total', :'data-display-frequency' => 'daily' } Daily Total
-      %li
-        %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
+#container
+  #content
+    %h1 Math
+    %h2 #{@item.name}
+    %small
+      Displaying:
+      %span#settings_link{ :href => '#' }
+        #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
+        %span.arrow &#x25BE;
+        %ul#settings_menu
+          %li
+            %a{ :href => '#', :'data-display-type' => 'total', :'data-display-frequency' => 'daily' } Daily Total
+          %li
+            %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
 
-#graph.lines
-  %svg{ :style => 'height: 200px' }
+    #graph.lines
+      %svg{ :style => 'height: 200px' }
 
-%table.records
-  - @item.records.each do |record|
-    %tr
-      %td #{record.amount}
-      %td #{record.created_at}
+    %table.records
+      - @item.records.each do |record|
+        %tr
+          %td #{record.amount}
+          %td #{record.created_at}
 
-%script{ :type => 'text/javascript' }
-  var graph_data = { values: #{@records.to_a} };
-  var item_id = '#{@item.id.to_s}';
+    %script{ :type => 'text/javascript' }
+      var graph_data = { values: #{@records.to_a} };
+      var item_id = '#{@item.id.to_s}';

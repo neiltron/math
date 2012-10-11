@@ -1,12 +1,11 @@
-%form#forgot_password{ :method => 'post' }
+%form#login{ :method => 'post' }
 	%h3 Forgot Password
-	
+
 	%p
-		%label{ :for => 'email' } Email address
-		%input{ :type => 'email', :name => 'email', :id => 'email' }
-	
+		%input{ :type => 'email', :name => 'email', :id => 'email', :placeholder => 'Email address' }
+
 	%p
 		%input{ :type => 'submit', :class => 'btn primary' }
-	
+
 	%p
 		Enter your email address above. We'll send you a message with a confirmation link you can use to reset your password.

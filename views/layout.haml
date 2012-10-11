@@ -1,251 +1,248 @@
 !!!
 %html
-	%head
-		%title D#M
-		%link{ :rel => 'stylesheet', :href => '/css/nv.d3.css' }
-		%link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
-		%link{ :rel => 'stylesheet', :href => '/css/style.css' }
-		%meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
+  %head
+    %title D#M
+    %link{ :rel => 'stylesheet', :href => '/css/nv.d3.css' }
+    %link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
+    %link{ :rel => 'stylesheet', :href => '/css/style.css' }
+    %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
 
-	%body
-		#sidebar
-			%a#plus{ :href => '#' }
-				+
+  %body
+    - unless @user.nil?
+      #sidebar
+        %a#plus{ :href => '#' }
+          +
 
-			%form{ :id => 'record_form', :method => 'POST', :action => '/records' }
-				%input{ :type => 'text', :name => 'item_name', :id => 'item_name', :autocapitalize => 'off', :placeholder => 'Search or add an item' }
-				%input.hide{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
-				%input.hide{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
-				.clear
+        %form{ :id => 'record_form', :method => 'POST', :action => '/records' }
+          %input{ :type => 'text', :name => 'item_name', :id => 'item_name', :autocapitalize => 'off', :placeholder => 'Search or add an item' }
+          %input.hide{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
+          %input.hide{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
+          .clear
 
-			%ul#items
-				%li.hide Select an item
-				- @user.items.order_by([[:updated_at, :desc]]).each do |item|
-					%li
-						%a{ :href => '/item/' + item.id.to_s } #{item.name}
+        %ul#items
+          %li.hide Select an item
+          - @user.items.order_by([[:updated_at, :desc]]).each do |item|
+            %li
+              %a{ :href => '/item/' + item.id.to_s } #{item.name}
 
-		#container
-			#content
-				%h1 Math
-
-				= yield
-
-			#footer
-
-		<!--[if lt IE 9]>
-		<!-- For compatibility with older IEs -->
-		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
-		<script src="/js/excanvas.min.js"></script>
-		<![endif]-->
-
-		%script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
-		%script{ :type => 'text/javascript', :src => '/js/d3.v2.min.js' }
-		%script{ :type => 'text/javascript', :src => '/js/nv.d3.js' }
-		%script{ :type => 'text/javascript', :src => '/js/utils.js' }
-		%script{ :type => 'text/javascript', :src => '/js/tooltip.js' }
-		%script{ :type => 'text/javascript', :src => '/js/models/legend.js' }
-		%script{ :type => 'text/javascript', :src => '/js/models/axis.js' }
-		%script{ :type => 'text/javascript', :src => '/js/models/scatter.js' }
-		%script{ :type => 'text/javascript', :src => '/js/models/line.js' }
-		%script{ :type => 'text/javascript', :src => '/js/models/lineChart.js' }
-		%script{ :type => 'text/javascript', :src => '/js/keymaster.min.js' }
-
-		:javascript
-			var items = [];
-			var records = {};
-
-			$(document).ready(function ($) {
-				key.filter = function (event) {
-					var tagName = (event.target || event.srcElement).tagName;
-					return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
-				}
-
-				function showSidebar() {
-					$('#sidebar').addClass('active');
-					$('#item_name').focus();
-				}
-				function closeSidebar() {
-					$('#sidebar').removeClass('active');
-				}
-
-				//switch to record form with ` key
-				key('=', function(e){
-					e.preventDefault();
-
-					showSidebar();
-				})
-
-				//switch to records list with escape
-				key('esc', function(e){
-					e.preventDefault();
-
-					closeSidebar();
-				})
-
-				var item_form_timer = '';
-				$('#record_form').bind('focusin', function (e) {
-					clearTimeout(item_form_timer);
-
-					$('#record_form').addClass('active')
-					$('#items').addClass('active')
-				}).bind('focusout', function (e) {
-					item_form_timer = setTimeout(function () {
-						$('#record_form').removeClass('active')
-						$('#items').removeClass('active')
-					}, 300)
-				})
-
-				var items = $('#items');
-				items.find('a').bind('click', function (e) {
-					if (items.hasClass('active')) {
-						e.preventDefault();
-
-						$('#item_name').val($(e.target).text());
-						$('#amount').focus();
-					}
-				})
-
-				isNumber = function (value) {
-					if ((undefined === value) || (null === value)) {
-						return false;
-					}
-					if (typeof value == 'number') {
-						return true;
-					}
-					return !isNaN(value - 0);
-				}
-
-				//get items
-				if ($('#records').length) {
-					$.getJSON(
-						'/api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@user.accesskey.token.to_s}',
-						function (e) {
-							var values = '';
-
-						$(e).each(function (i, item) {
-								$("<div><h2>" + item.name + "</h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
-
-									d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
-									nv.addGraph(function() {
-										var chart = nv.models.lineChart();
-
-										chart.xAxis
-								      .tickFormat(function(d) {
-								        return d3.time.format('%x')(new Date(d))
-								      });
-
-										chart.yAxis
-											.tickFormat(d3.format())
-
-										d3.select('#chart_' + item.id + ' svg')
-											.datum(return_values(data))
-											.transition().duration(500)
-											.call(chart);
-
-										//TODO: Figure out a good way to do this automatically
-										nv.utils.windowResize(chart.update);
-
-										return chart;
-									});
-								})
-							})
-						}
-					)
-				} else if ($('#graph').length) {
-					nv.addGraph(function() {
-						var chart = nv.models.lineChart();
-
-						chart.xAxis
-				      .tickFormat(function(d) {
-				        return d3.time.format('%x')(new Date(d))
-				      });
-
-						chart.yAxis
-							.tickFormat(d3.format(',.1f'))
-
-						d3.select('#graph svg')
-							.datum(return_values(graph_data))
-							.transition().duration(500)
-							.call(chart);
-
-						//TODO: Figure out a good way to do this automatically
-						nv.utils.windowResize(chart.update);
-
-						return chart;
-					});
-				}
+    = yield
 
 
-				function return_values (data) {
-					data = $(data.values).map(function(i, value) {
-						if (isNumber(value[1])) {
-						  return { x: value[0] + '000', y: value[1] };
-						}
-					})
+    - unless @user.nil?
+      <!--[if lt IE 9]>
+      <!-- For compatibility with older IEs -->
+      <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+      <script src="/js/excanvas.min.js"></script>
+      <![endif]-->
 
-					return [
-						{
-							area: true,
-							values: data,
-							color: "#faa"
-						}
-					]
-				}
+      %script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
+      %script{ :type => 'text/javascript', :src => '/js/d3.v2.min.js' }
+      %script{ :type => 'text/javascript', :src => '/js/nv.d3.js' }
+      %script{ :type => 'text/javascript', :src => '/js/utils.js' }
+      %script{ :type => 'text/javascript', :src => '/js/tooltip.js' }
+      %script{ :type => 'text/javascript', :src => '/js/models/legend.js' }
+      %script{ :type => 'text/javascript', :src => '/js/models/axis.js' }
+      %script{ :type => 'text/javascript', :src => '/js/models/scatter.js' }
+      %script{ :type => 'text/javascript', :src => '/js/models/line.js' }
+      %script{ :type => 'text/javascript', :src => '/js/models/lineChart.js' }
+      %script{ :type => 'text/javascript', :src => '/js/keymaster.min.js' }
+
+      :javascript
+        var items = [];
+        var records = {};
+
+        $(document).ready(function ($) {
+          key.filter = function (event) {
+            var tagName = (event.target || event.srcElement).tagName;
+            return !(tagName == 'SELECT' || tagName == 'TEXTAREA');
+          }
+
+          function showSidebar() {
+            $('#sidebar').addClass('active');
+            $('#item_name').focus();
+          }
+          function closeSidebar() {
+            $('#sidebar').removeClass('active');
+          }
+
+          //switch to record form with ` key
+          key('=', function(e){
+            e.preventDefault();
+
+            showSidebar();
+          })
+
+          //switch to records list with escape
+          key('esc', function(e){
+            e.preventDefault();
+
+            closeSidebar();
+          })
+
+          var item_form_timer = '';
+          $('#record_form').bind('focusin', function (e) {
+            clearTimeout(item_form_timer);
+
+            $('#record_form').addClass('active')
+            $('#items').addClass('active')
+          }).bind('focusout', function (e) {
+            item_form_timer = setTimeout(function () {
+              $('#record_form').removeClass('active')
+              $('#items').removeClass('active')
+            }, 300)
+          })
+
+          var items = $('#items');
+          items.find('a').bind('click', function (e) {
+            if (items.hasClass('active')) {
+              e.preventDefault();
+
+              $('#item_name').val($(e.target).text());
+              $('#amount').focus();
+            }
+          })
+
+          isNumber = function (value) {
+            if ((undefined === value) || (null === value)) {
+              return false;
+            }
+            if (typeof value == 'number') {
+              return true;
+            }
+            return !isNaN(value - 0);
+          }
+
+          //get items
+          if ($('#records').length) {
+            $.getJSON(
+              '/api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@user.accesskey.token.to_s}',
+              function (e) {
+                var values = '';
+
+              $(e).each(function (i, item) {
+                  $("<div><h2>" + item.name + "</h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
+
+                    d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
+                    nv.addGraph(function() {
+                      var chart = nv.models.lineChart();
+
+                      chart.xAxis
+                        .tickFormat(function(d) {
+                          return d3.time.format('%x')(new Date(d))
+                        });
+
+                      chart.yAxis
+                        .tickFormat(d3.format())
+
+                      d3.select('#chart_' + item.id + ' svg')
+                        .datum(return_values(data))
+                        .transition().duration(500)
+                        .call(chart);
+
+                      //TODO: Figure out a good way to do this automatically
+                      nv.utils.windowResize(chart.update);
+
+                      return chart;
+                    });
+                  })
+                })
+              }
+            )
+          } else if ($('#graph').length) {
+            nv.addGraph(function() {
+              var chart = nv.models.lineChart();
+
+              chart.xAxis
+                .tickFormat(function(d) {
+                  return d3.time.format('%x')(new Date(d))
+                });
+
+              chart.yAxis
+                .tickFormat(d3.format(',.1f'))
+
+              d3.select('#graph svg')
+                .datum(return_values(graph_data))
+                .transition().duration(500)
+                .call(chart);
+
+              //TODO: Figure out a good way to do this automatically
+              nv.utils.windowResize(chart.update);
+
+              return chart;
+            });
+          }
 
 
-				var sidebar = $('#sidebar');
-				var toggle_sidebar = function () {
-					if (!sidebar.hasClass('active')) {
-						$('#sidebar').addClass('active');
-					} else {
-						$('#sidebar').removeClass('active');
-					}
-				}
+          function return_values (data) {
+            data = $(data.values).map(function(i, value) {
+              if (isNumber(value[1])) {
+                return { x: value[0] + '000', y: value[1] };
+              }
+            })
 
-				var tap_event = (typeof document.body.ontouchstart === "undefined" ? 'click' : 'tap');
-				$('#plus').bind(tap_event, function (e) {
-					toggle_sidebar();
-					return false;
-				})
+            return [
+              {
+                area: true,
+                values: data,
+                color: "#faa"
+              }
+            ]
+          }
 
-				$('#record_form').bind('submit', function (e) {
-					e.preventDefault();
 
-					if ($('#record_form #amount').val() == '' || $('#record_form #item_name').val() == '') {
-						return false;
-					}
+          var sidebar = $('#sidebar');
+          var toggle_sidebar = function () {
+            if (!sidebar.hasClass('active')) {
+              $('#sidebar').addClass('active');
+            } else {
+              $('#sidebar').removeClass('active');
+            }
+          }
 
-					$('#submit_item').val('Saving...').addClass('disabled')
+          var tap_event = (typeof document.body.ontouchstart === "undefined" ? 'click' : 'tap');
+          $('#plus').bind(tap_event, function (e) {
+            toggle_sidebar();
+            return false;
+          })
 
-					$.ajax({
-						type: 'post',
-						url: '/api/1/users/#{@user.id.to_s}/records',
-						dataType: 'json',
-						data: {
-							accesskey: 	'#{@user.accesskey.token.to_s}',
-							item_name: 	$('#record_form #item_name').val(),
-							amount: 		$('#record_form #amount').val()
-						},
-						success: function (e) {
-							$('#amount').val('');
-							$('#submit_item').val('Save').removeClass('disabled')
-						},
-						error: function () {
-							$('#submit_item').val('Save').removeClass('disabled')
-						}
-					})
-				})
+          $('#record_form').bind('submit', function (e) {
+            e.preventDefault();
 
-				$('#settings_menu li a').bind('click', function (e) {
-			    e.preventDefault();
+            if ($('#record_form #amount').val() == '' || $('#record_form #item_name').val() == '') {
+              return false;
+            }
 
-			    $.ajax({
-			      type: 'put',
-			      url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '?accesskey=#{@user.accesskey.token.to_s}',
-			      data: {
-			        display_type: $(e.target).data('display-type'),
-			        display_frequency: $(e.target).data('display-frequency'),
-			      }
-			    })
-			  })
-			})
+            $('#submit_item').val('Saving...').addClass('disabled')
+
+            $.ajax({
+              type: 'post',
+              url: '/api/1/users/#{@user.id.to_s}/records',
+              dataType: 'json',
+              data: {
+                accesskey:  '#{@user.accesskey.token.to_s}',
+                item_name:  $('#record_form #item_name').val(),
+                amount:     $('#record_form #amount').val()
+              },
+              success: function (e) {
+                $('#amount').val('');
+                $('#submit_item').val('Save').removeClass('disabled')
+              },
+              error: function () {
+                $('#submit_item').val('Save').removeClass('disabled')
+              }
+            })
+          })
+
+          $('#settings_menu li a').bind('click', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+              type: 'put',
+              url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '?accesskey=#{@user.accesskey.token.to_s}',
+              data: {
+                display_type: $(e.target).data('display-type'),
+                display_frequency: $(e.target).data('display-frequency'),
+              }
+            })
+          })
+        })
