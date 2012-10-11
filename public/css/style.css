@@ -430,7 +430,19 @@ table.records {
 
   #login p input::-webkit-input-placeholder { color: #ddd; }
   #login p input::-moz-placeholder { color: #ddd; }
+
+  #login p.about {
+    font-size: 11pt;
+    margin: 0 auto;
+    font-weight: 200;
+    color: #844;
+  }
+    #login p.about a {
+      color: #a44;
+    }
 }
+
+
 
 @media screen, all and (max-width: 480px) {
   #records div svg {
