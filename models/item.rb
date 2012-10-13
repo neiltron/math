@@ -16,8 +16,9 @@ class Item
   def records_total_daily
     map = <<-EOS
       function() {
-        var timestamp = this.created_at.getFullYear() + '-' + this.created_at.getMonth() + '-' + this.created_at.getDate();
-        emit(timestamp, Math.floor(parseFloat(this.amount, 10) * 10) / 10)
+        var value = Math.floor(parseFloat(this.amount, 10) * 10) / 10,
+            timestamp = parseInt(new Date(this.created_at).getTime(), 10);
+        emit(timestamp, value)
       }
     EOS
     reduce = <<-EOS
@@ -31,15 +32,17 @@ class Item
     EOS
 
     self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
-      [item['_id'].to_datetime.to_i, item['value']]
+      [item['_id'].to_i, item['value']]
     end
   end
 
   def records_avg_daily
     map = <<-EOS
       function() {
-        var timestamp = this.created_at.getFullYear() + '-' + this.created_at.getMonth() + '-' + this.created_at.getDate();
-        emit(timestamp, Math.floor(parseFloat(this.amount, 10) * 10) / 10)
+        var value = Math.floor(parseFloat(this.amount, 10) * 10) / 10,
+            timestamp = parseInt(new Date(this.created_at).getTime(), 10);
+
+        emit(timestamp,  value)
       }
     EOS
     reduce = <<-EOS
@@ -55,7 +58,7 @@ class Item
     EOS
 
     self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
-      [item['_id'].to_datetime.to_i, item['value']]
+      [item['_id'].to_i, item['value']]
     end
   end
 end
