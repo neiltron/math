@@ -216,6 +216,7 @@ body {
 table.records {
   border: 1px solid #bbb;
   padding: 0;
+  width: 90%;
 }
   table.records tr {
     border-bottom: 1px solid #bbb;
