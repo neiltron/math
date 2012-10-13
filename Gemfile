@@ -12,7 +12,7 @@ gem 'mongoid_taggable_with_context', :git => 'https://github.com/neiltron/mongoi
 gem "haml"
 gem 'json'
 gem "metaid"
-gem 'grape', :git => 'https://github.com/intridea/grape.git', :branch => 'frontier'
+gem 'grape'
 gem 'garner'
 gem 'warden'
 gem 'mongoid_token'
