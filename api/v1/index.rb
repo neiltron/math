@@ -65,20 +65,25 @@ module Math
             item.save
           end
 
-          get ':id/records' do
-            per = (params[:per] || 7).to_i
-            page = (params[:page] || 0).to_i
-            item = Item.find(params[:id])
+          resource ':id/records' do
+            get do
+              per = (params[:per] || 7).to_i
+              page = (params[:page] || 0).to_i
+              item = Item.find(params[:id])
 
-            if item.display_type == 'total'
-              records = item.records_total_daily
-            elsif item.display_type == 'average'
-              records = item.records_avg_daily
+              if item.display_type == 'total'
+                records = item.records_total_daily
+              elsif item.display_type == 'average'
+                records = item.records_avg_daily
+              end
+
+              { values: records.to_a }
             end
 
-            {
-              values: records
-            }
+            delete ':record_id' do
+              record = Record.find(params[:record_id])
+              record.delete
+            end
           end
         end
 

@@ -113,6 +113,7 @@
           }
 
           //get items
+          var chart;
           if ($('#records').length) {
             $.getJSON(
               '/api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@user.accesskey.token.to_s}',
@@ -124,7 +125,7 @@
 
                     d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
                     nv.addGraph(function() {
-                      var chart = nv.models.lineChart();
+                      chart = nv.models.lineChart();
 
                       chart.xAxis
                         .tickFormat(function(d) {
@@ -150,7 +151,7 @@
             )
           } else if ($('#graph').length) {
             nv.addGraph(function() {
-              var chart = nv.models.lineChart();
+              chart = nv.models.lineChart();
 
               chart.xAxis
                 .tickFormat(function(d) {
@@ -174,9 +175,10 @@
 
 
           function return_values (data) {
+            console.log(data)
             data = $(data.values).map(function(i, value) {
               if (isNumber(value[1])) {
-                return { x: value[0] + '000', y: value[1] };
+                return { x: value[0], y: value[1] };
               }
             })
 
@@ -242,6 +244,31 @@
               data: {
                 display_type: $(e.target).data('display-type'),
                 display_frequency: $(e.target).data('display-frequency'),
+              }
+            })
+          })
+
+          $('table.records a.delete_record').bind('click', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+              type: 'delete',
+              url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '/records/' + $(e.target).attr('rel') + '?accesskey=#{@user.accesskey.token.to_s}',
+              success: function () {
+                $(e.target).parent().parent().remove()
+              }
+            })
+
+            $.ajax({
+              type: 'get',
+              url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '/records.json?accesskey=#{@user.accesskey.token.to_s}',
+              dataType: 'json',
+              success: function (data) {
+              console.log(data, return_values(data))
+                d3.select('#graph svg')
+                  .datum(return_values(data))
+                  .transition().duration(0)
+                  .call(chart);
               }
             })
           })

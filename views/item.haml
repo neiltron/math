@@ -21,6 +21,8 @@
         %tr
           %td #{record.amount}
           %td #{record.created_at}
+          %td
+            %a.delete_record{ :href => '#', :rel => "#{record.id.to_s}" } Delete
 
     %script{ :type => 'text/javascript' }
       var graph_data = { values: #{@records.to_a} };
