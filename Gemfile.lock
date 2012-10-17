@@ -132,6 +132,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   boxer
   bson
   bson_ext
