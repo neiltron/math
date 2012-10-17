@@ -17,8 +17,12 @@ class Item
     map = <<-EOS
       function() {
         var value = Math.floor(parseFloat(this.amount, 10) * 10) / 10,
-            timestamp = parseInt(new Date(this.created_at).getTime(), 10);
-        emit(timestamp, value)
+            timestamp = this.created_at,
+            month = ("0" + (timestamp.getUTCMonth() + 1)).slice(-2),
+            day = ("0" + (timestamp.getDate() + 1)).slice(-2),
+            date = timestamp.getUTCFullYear() + "-" +  month + "-" + day;
+
+        emit(date, value)
       }
     EOS
     reduce = <<-EOS
@@ -31,8 +35,9 @@ class Item
       }
     EOS
 
-    self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
-      [item['_id'].to_i, item['value']]
+    require 'pp'
+    data = self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
+      [DateTime.parse(item['_id']).to_i, item['value']]
     end
   end
 
