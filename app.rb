@@ -19,6 +19,7 @@ module Math
     set :logging, true
     set :raise_errors, true
     set :haml, {:format => :html5 }
+    set :protection, :except => :frame_options
 
     enable :methodoverride
 
