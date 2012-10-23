@@ -476,8 +476,9 @@ table.records {
 }
 .nvd3.nv-legend { display: none; }
 
+#container.embed { padding: 0; }
 #container.embed #content {
-  padding: 0;
+  padding: 25px 0 0;
   position: relative;
 }
 
