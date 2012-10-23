@@ -71,7 +71,12 @@ module Math
         @records = @item.records_avg_daily
       end
 
-      haml :item
+      #return embeddable-specific layout if embed=1
+      if params[:embed]
+        haml :item_embed
+      else
+        haml :item
+      end
     end
   end
 
