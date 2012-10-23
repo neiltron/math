@@ -451,6 +451,8 @@ table.records {
   }
 }
 
+
+
 .nv-axis text { fill: #d66; }
 #content .nvd3 .nv-axis .nv-axisMaxMin text { opacity: 0; font-weight: 100; }
 
@@ -473,3 +475,42 @@ table.records {
   opacity: 0;
 }
 .nvd3.nv-legend { display: none; }
+
+#container.embed #content {
+  padding: 0;
+  position: relative;
+}
+
+  #container.embed #graph {
+    left: 0;
+  }
+    #container.embed, #container.embed svg {
+      background: #f66;
+      height: 100%;
+    }
+
+#container.embed h2 {
+  font-family: helvetica neue, helvetica, arial, sans-serif;
+  font-weight: 100;
+  position: relative;
+  font-size: 42pt;
+  text-align: center;
+  z-index: 10;
+  color: #fdd;
+  letter-spacing: 5px;
+}
+#container.embed #display_type {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  font-weight: 100;
+  color: #fbb;
+  text-align: center;
+  z-index: 10;
+}
+
+#container.embed .nv-axis text {
+  fill: #fbb;
+  font-weight: 100;
+}
