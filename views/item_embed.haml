@@ -1,14 +1,14 @@
 #container.embed
   #content
-    %h2 #{@item.name}
+    %h2 #{item.name}
     %small#display_type
       Displaying:
       %strong
-        #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
+        #{item.display_frequency.capitalize} #{item.display_type.capitalize}
 
     #graph.lines
       %svg{ :style => 'height: 60%' }
 
     %script{ :type => 'text/javascript' }
-      var graph_data = { values: #{@records.to_a} };
-      var item_id = '#{@item.id.to_s}';
+      var graph_data = { values: #{records.to_a} };
+      var item_id = '#{item.id.to_s}';
