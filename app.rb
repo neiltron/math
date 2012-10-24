@@ -89,7 +89,7 @@ module Math
 
       #return embeddable-specific layout if embed=1
       if params[:embed]
-        haml :item_embed
+        haml :item_embed, :locals => { item: @item, records: @records }
       else
         haml :item
       end
