@@ -64,15 +64,15 @@ module Math
       path = URI(params[:url]).path.split('/') # => ["", "item", "<item_id>"]
       item_id = path[path.count - 1]
 
-      item = Item.find(item_id)
+      @item = Item.find(item_id)
 
-      if item.display_type == 'total'
+      if @item.display_type == 'total'
         records = item.records_total_daily
-      elsif item.display_type == 'average'
+      elsif @item.display_type == 'average'
         records = item.records_avg_daily
       end
 
-      Boxer.ship(:item, item, current_user, { view: :oembed, records: records }).to_json
+      Boxer.ship(:item, @item, current_user, { view: :oembed, records: records }).to_json
     end
 
     get '/item/:id' do
