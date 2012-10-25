@@ -28,7 +28,7 @@
       %svg{ :style => 'height: 200px' }
 
     %table.records
-      - @item.records.each do |record|
+      - @item.records.order_by([[:created_at, :desc]]).each do |record|
         %tr
           %td #{record.amount}
           %td #{record.created_at}
