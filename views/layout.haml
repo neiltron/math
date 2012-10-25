@@ -252,6 +252,18 @@
             })
           })
 
+          $('#privacy_menu li a').bind('click', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+              type: 'put',
+              url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '?accesskey=#{@user.accesskey.token.to_s}',
+              data: {
+                privacy: $(e.target).data('privacy')
+              }
+            })
+          })
+
           $('table.records a.delete_record').bind('click', function (e) {
             e.preventDefault();
 

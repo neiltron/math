@@ -154,21 +154,22 @@ body {
   margin: 10px 0 0;
 }
 
-#content #settings_link {
+#content #settings_link,#content #privacy_link strong {
   color: #888;
   padding: 3px 5px;
   border-radius: 3px;
   position: relative;
+  left: -5px;
   z-index: 100;
   text-decoration: underline;
 }
-  #content #settings_link .arrow {
+  #content #settings_link .arrow,#content #privacy_link .arrow {
     display: none;
     text-decoration: none;
     color: #fdd;
   }
 
-  #content #settings_link #settings_menu {
+  #content #settings_link #settings_menu,#content #privacy_link #privacy_menu {
     display: none;
     width: 100px;
     background: #f66;
@@ -182,23 +183,23 @@ body {
     border-radius: 3px;
     border-top-right-radius: 0;
   }
-    #content #settings_link #settings_menu li { padding: 2px 12px 2px 0; }
-    #content #settings_link #settings_menu li a {
+    #content #settings_link #settings_menu li, #content #privacy_link #privacy_menu li { padding: 2px 12px 2px 0; }
+    #content #settings_link #settings_menu li a, #content #privacy_link #privacy_menu li a {
       color: #fff;
       font-weight: 100;
     }
 
-  #content #settings_link:hover {
+  #content #settings_link:hover, #content #privacy_link strong:hover {
     text-decoration: none;
     background: #f66;
     color: #fcfcfc;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  #content #settings_link:hover .arrow {
+  #content #settings_link:hover .arrow, #content #privacy_link strong:hover .arrow {
     display: inline;
   }
-  #content #settings_link:hover #settings_menu {
+  #content #settings_link:hover #settings_menu, #content #privacy_link strong:hover #privacy_menu {
     display: block;
     text-align: right;
   }

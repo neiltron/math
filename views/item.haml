@@ -13,6 +13,17 @@
           %li
             %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
 
+      This item is
+      %span#privacy_link{ :href => '#' }
+        %strong
+          #{(@item.privacy? ? 'Private' : 'Public')}
+          %span.arrow &#x25BE;
+          %ul#privacy_menu
+            %li
+              %a{ :href => '#', :'data-privacy' => 'false' } Public
+            %li
+              %a{ :href => '#', :'data-privacy' => 'true' } Private
+
     #graph.lines
       %svg{ :style => 'height: 200px' }
 
