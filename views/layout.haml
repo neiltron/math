@@ -153,7 +153,10 @@
             )
           } else if ($('#graph').length) {
             nv.addGraph(function() {
-              chart = nv.models.lineChart();
+              chart = nv.models.lineChart()
+                        .tooltipContent(function (key, x, y, e, graph) {
+                          return y + ' at ' + x;
+                        });
 
               chart.xAxis
                 .tickFormat(function(d) {
