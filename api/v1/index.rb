@@ -61,6 +61,7 @@ module Math
 
             item.display_type = params[:display_type] unless params[:display_type].nil?
             item.display_frequency = params[:display_frequency] unless params[:display_frequency].nil?
+            item.privacy = params[:privacy] unless params[:privacy].nil?
 
             item.save
           end
