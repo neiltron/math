@@ -490,6 +490,11 @@ table.records {
       background: #f66;
       height: 100%;
     }
+  #container.embed #privacy_lock {
+    display: block;
+    margin: 40px auto 20px;
+    opacity: .7;
+  }
 
 #container.embed h2 {
   font-family: helvetica neue, helvetica, arial, sans-serif;

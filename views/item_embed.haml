@@ -1,14 +1,18 @@
 #container.embed
   #content
-    %h2 #{item.name}
-    %small#display_type
-      Displaying:
-      %strong
-        #{item.display_frequency.capitalize} #{item.display_type.capitalize}
+    - if item.privacy?
+      %h2 Item is private.
+      %img#privacy_lock{ :src => '/img/lock.png' }
+    - else
+      %h2 #{item.name}
+      %small#display_type
+        Displaying:
+        %strong
+          #{item.display_frequency.capitalize} #{item.display_type.capitalize}
 
-    #graph.lines
-      %svg{ :style => 'height: 60%' }
+      #graph.lines
+        %svg{ :style => 'height: 60%' }
 
-    %script{ :type => 'text/javascript' }
-      var graph_data = { values: #{records.to_a} };
-      var item_id = '#{item.id.to_s}';
+      %script{ :type => 'text/javascript' }
+        var graph_data = { values: #{records.to_a} };
+        var item_id = '#{item.id.to_s}';
