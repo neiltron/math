@@ -12,9 +12,14 @@ class Item
 	field :name, :type => String
   field :display_frequency, :type => String, :default => 'daily'
   field :display_type, :type => String, :default => 'total'
+  field :privacy, :type => Boolean, :default => false
 
 	has_many :records
 	belongs_to :user, :touch =>  true
+
+  def pricy?
+    !!privacy
+  end
 
   def records_total_daily
     map = <<-EOS
