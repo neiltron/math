@@ -307,8 +307,8 @@ table.records {
     outline: 0;
     padding: 6px;
 
-    -moz-transition: top .2s ease-in-out;
-    -webkit-transition: top .2s ease-in-out;
+    -moz-transition: transform .2s ease-in-out;
+    -webkit-transition: -webkit-transform .2s ease-in-out;
   }
 
   #record_form input.disabled {
@@ -320,16 +320,18 @@ table.records {
   }
 
   #record_form.active input {
-    -moz-transition:    top .4s ease-in-out;
-    -webkit-transition: top .4s ease-in-out;
+    -moz-transition: transform .4s ease-in-out;
+    -webkit-transition: -webkit-transform .4s ease-in-out;
   }
 
   #record_form.active input#amount {
-    top: 58px;
+    transform: translate3d(0,58px,0);
+    -webkit-transform: translate3d(0,58px,0);
   }
 
   #record_form.active input#submit_item {
-    top: 116px;
+    transform: translate3d(0,116px,0);
+    -webkit-transform: translate3d(0,116px,0);
   }
 
   #record_form input#submit_item {
