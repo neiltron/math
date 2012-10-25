@@ -76,7 +76,7 @@ module Math
     end
 
     get '/item/:id' do
-      redirect '/login' if session[:accesskey].nil?
+      redirect '/login' if session[:accesskey].nil? && params[:embed].nil?
 
       @user = current_user
       @item = Item.find(params[:id])
