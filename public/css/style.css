@@ -159,7 +159,9 @@ body {
   top: -10px;
 }
 
-#content #settings_link,#content #privacy_link {
+#content #settings_link,
+#content #privacy_link,
+#content #embed_link {
   color: #888;
   padding: 3px 4px;
   margin-left: 1px;
@@ -169,12 +171,16 @@ body {
   z-index: 100;
   text-decoration: none;
 }
-  #content #settings_link .arrow,#content #privacy_link .arrow {
+  #content #settings_link .arrow,
+  #content #privacy_link .arrow,
+  #content #embed_link .arrow {
     text-decoration: none;
     color: #baa;
   }
 
-  #content #settings_link #settings_menu,#content #privacy_link #privacy_menu {
+  #content #settings_link #settings_menu,
+  #content #privacy_link #privacy_menu,
+  #content #embed_link #embed_menu {
     display: none;
     width: 110px;
     background: #f66;
@@ -194,22 +200,38 @@ body {
       font-weight: 100;
     }
 
-  #content #settings_link:hover, #content #privacy_link:hover {
+  #content #settings_link:hover,
+  #content #privacy_link:hover,
+  #content #embed_link:hover {
     text-decoration: none;
     background: #f66;
     color: #fcfcfc;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  #content #settings_link:hover .arrow, #content #privacy_link:hover .arrow {
-    color: #fdd;
-  }
-  #content #settings_link:hover #settings_menu, #content #privacy_link:hover #privacy_menu {
-    display: block;
-    text-align: right;
-  }
 
+    #content #settings_link:hover .arrow,
+    #content #privacy_link:hover .arrow,
+    #content #embed_link:hover .arrow {
+      color: #fdd;
+    }
 
+    #content #settings_link:hover #settings_menu,
+    #content #privacy_link:hover #privacy_menu,
+    #content #embed_link:hover #embed_menu {
+      display: block;
+      text-align: right;
+    }
+
+  #content #options #embed_menu #embed_code {
+    width: 95%;
+    height: 70px;
+    font-size: 8pt;
+  }
+  #content #options #embed_menu #clippy {
+    position: relative;
+    top: 2px;
+  }
 
 #content #graph {
   width: 100%;
