@@ -2,20 +2,24 @@
   #content
     %h1 Math
     %h2 #{@item.name}
-    %small
-      Displaying:
-      %span#settings_link{ :href => '#' }
-        #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
-        %span.arrow &#x25BE;
-        %ul#settings_menu
-          %li
-            %a{ :href => '#', :'data-display-type' => 'total', :'data-display-frequency' => 'daily' } Daily Total
-          %li
-            %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
 
-      This item is
-      %span#privacy_link{ :href => '#' }
-        %strong
+    #graph.lines
+      %svg{ :style => 'height: 200px' }
+
+    #options
+      %small
+        Displaying as
+        %strong#settings_link{ :href => '#' }
+          #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
+          %span.arrow &#x25BE;
+          %ul#settings_menu
+            %li
+              %a{ :href => '#', :'data-display-type' => 'total', :'data-display-frequency' => 'daily' } Daily Total
+            %li
+              %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
+
+        This item is
+        %strong#privacy_link{ :href => '#' }
           #{(@item.privacy? ? 'Private' : 'Public')}
           %span.arrow &#x25BE;
           %ul#privacy_menu
@@ -23,9 +27,6 @@
               %a{ :href => '#', :'data-privacy' => 'false' } Public
             %li
               %a{ :href => '#', :'data-privacy' => 'true' } Private
-
-    #graph.lines
-      %svg{ :style => 'height: 200px' }
 
     %table.records
       - @item.records.order_by([[:created_at, :desc]]).each do |record|

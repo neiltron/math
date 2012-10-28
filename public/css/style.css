@@ -154,24 +154,29 @@ body {
   margin: 10px 0 0;
 }
 
-#content #settings_link,#content #privacy_link strong {
+#content #options {
+  position: relative;
+  top: -10px;
+}
+
+#content #settings_link,#content #privacy_link {
   color: #888;
-  padding: 3px 5px;
+  padding: 3px 4px;
+  margin-left: 1px;
   border-radius: 3px;
   position: relative;
   left: -5px;
   z-index: 100;
-  text-decoration: underline;
+  text-decoration: none;
 }
   #content #settings_link .arrow,#content #privacy_link .arrow {
-    display: none;
     text-decoration: none;
-    color: #fdd;
+    color: #baa;
   }
 
   #content #settings_link #settings_menu,#content #privacy_link #privacy_menu {
     display: none;
-    width: 100px;
+    width: 110px;
     background: #f66;
     position: absolute;
     top: 96%;
@@ -189,17 +194,17 @@ body {
       font-weight: 100;
     }
 
-  #content #settings_link:hover, #content #privacy_link strong:hover {
+  #content #settings_link:hover, #content #privacy_link:hover {
     text-decoration: none;
     background: #f66;
     color: #fcfcfc;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  #content #settings_link:hover .arrow, #content #privacy_link strong:hover .arrow {
-    display: inline;
+  #content #settings_link:hover .arrow, #content #privacy_link:hover .arrow {
+    color: #fdd;
   }
-  #content #settings_link:hover #settings_menu, #content #privacy_link strong:hover #privacy_menu {
+  #content #settings_link:hover #settings_menu, #content #privacy_link:hover #privacy_menu {
     display: block;
     text-align: right;
   }
