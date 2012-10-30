@@ -1,4 +1,13 @@
 GIT
+  remote: git@github.com:neiltron/oauth2-provider.git
+  revision: 00aca21d40663b9b28b327c1bc103ef0f6292250
+  specs:
+    oauth2-provider (0.1.0)
+      bcrypt-ruby
+      json
+      rack
+
+GIT
   remote: https://github.com/brynary/rack-test.git
   revision: 5080d1e99de825bdd3b2b7bba34e5ac61cedd876
   specs:
@@ -30,6 +39,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.3.2)
     backports (2.6.4)
+    bcrypt-ruby (3.0.1)
     boxer (1.0.2)
       activesupport (>= 3.0.0)
     bson (1.7.0)
@@ -145,6 +155,7 @@ DEPENDENCIES
   mongoid
   mongoid_taggable_with_context!
   mongoid_token
+  oauth2-provider!
   pony
   rack
   rack-flash!

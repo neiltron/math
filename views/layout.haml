@@ -8,7 +8,7 @@
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
 
   %body
-    - unless @user.nil?
+    - unless @user.nil? || @page == 'oauth'
       #sidebar
         %a#plus{ :href => '#' }
           +
@@ -123,7 +123,7 @@
               $(e).each(function (i, item) {
                   $("<div><h2><a href='/item/" + item.id + "'>" + item.name + "</a></h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
 
-                    d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
+                  d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
                     nv.addGraph(function() {
                       chart = nv.models.lineChart();
 
@@ -175,7 +175,6 @@
 
 
           function return_values (data) {
-            console.log(data)
             data = $(data.values).map(function(i, value) {
               if (isNumber(value[1])) {
                 return { x: value[0], y: value[1] };
@@ -264,7 +263,6 @@
               url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '/records.json?accesskey=#{@user.accesskey.token.to_s}',
               dataType: 'json',
               success: function (data) {
-              console.log(data, return_values(data))
                 d3.select('#graph svg')
                   .datum(return_values(data))
                   .transition().duration(0)

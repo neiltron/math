@@ -1,5 +1,7 @@
 require 'mongoid'
 require 'boxer'
+require 'date'
+require 'active_support/all'
 
 class Item
 	include Mongoid::Document
@@ -35,9 +37,14 @@ class Item
       }
     EOS
 
-    require 'pp'
-    data = self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
-      [DateTime.parse(item['_id']).to_i, item['value']]
+    data = {}
+
+    self.records.map_reduce(map, reduce).out(inline: 1).each do |item|
+      data[item['_id']] = item['value']
+    end
+
+    1.month.ago.to_date.upto(Date.today.to_date).map do |date|
+      [date.to_datetime.to_i, (data[date.to_s] || 0)]
     end
   end
 
@@ -63,7 +70,7 @@ class Item
     EOS
 
     self.records.map_reduce(map, reduce).out(inline: 1).map do |item|
-      [item['_id'].to_i, item['value']]
+      [item['_id'].to_i / 1000, item['value']]
     end
   end
 end

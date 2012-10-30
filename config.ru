@@ -10,6 +10,7 @@ require 'rubygems'
 require 'bundler'
 require 'app'
 require 'api/v1/index'
+require 'oauth2/provider'
 
 #configs
 require 'config/mongoid'
@@ -17,6 +18,15 @@ require 'config/pony'
 
 use Rack::Session::Cookie, :key => 'rack.session', :secret => ENV['SESSION_SECRET'] || 'octothorps'
 use Rack::Flash
+
+OAuth2::Provider.realm = 'Mathematics'
+
+PERMISSIONS = {
+  'read_records' => 'Read all items and records',
+  'write_records' => 'Create new records'
+}
+ERROR_RESPONSE = JSON.unparse('error' => 'No soup for you!')
+
 
 #only force ssl in production
 if ENV['RACK_ENV'] == 'production'
