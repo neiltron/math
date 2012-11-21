@@ -22,6 +22,17 @@ GIT
       rack
 
 GIT
+  remote: https://github.com/dblock/garner.git
+  revision: 38ae99a318ecb1467dba629f10a95704ad3674ac
+  branch: mongoid-3.0
+  specs:
+    garner (0.1.3)
+      activesupport
+      json
+      multi_json (>= 1.3.0)
+      rack
+
+GIT
   remote: https://github.com/neiltron/mongoid_taggable_with_context.git
   revision: 8403672d8e0c3f6af2d20bb63c4381a941ff30ee
   specs:
@@ -47,14 +58,10 @@ GEM
       bson (~> 1.7.0)
     builder (3.0.3)
     daemons (1.1.9)
+    dalli (2.2.1)
     diff-lcs (1.1.3)
     eventmachine (1.0.0)
     excon (0.16.4)
-    garner (0.1.3)
-      activesupport
-      json
-      multi_json (>= 1.3.0)
-      rack
     grape (0.2.2)
       activesupport
       hashie (~> 1.2)
@@ -146,7 +153,8 @@ DEPENDENCIES
   boxer
   bson
   bson_ext
-  garner
+  dalli
+  garner!
   grape
   haml
   heroku

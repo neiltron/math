@@ -14,13 +14,14 @@ gem "haml"
 gem 'json'
 gem "metaid"
 gem 'grape'
-gem 'garner'
+gem 'garner', :git => 'https://github.com/dblock/garner.git', :branch => 'mongoid-3.0'
 gem 'warden'
 gem 'oauth2-provider', :git => 'git@github.com:neiltron/oauth2-provider.git'
 gem 'mongoid_token'
 gem 'boxer'
 gem 'heroku'
 gem 'pony'
+gem 'dalli'
 
 group :production do
   gem 'rack-ssl'

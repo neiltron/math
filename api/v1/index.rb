@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 %w{
-  grape garner json date uri mongoid boxer
+  grape garner json date uri mongoid boxer dalli
 }.each do |lib|
   require lib
 end
@@ -67,17 +67,20 @@ module Math
 
           resource ':id/records' do
             get do
-              per = (params[:per] || 7).to_i
-              page = (params[:page] || 0).to_i
               item = Item.find(params[:id])
+              cache_or_304({ :bind => [[ User, current_user.id ], [Item, item.updated_at.to_i.to_s]] }) do
+                per = (params[:per] || 7).to_i
+                page = (params[:page] || 0).to_i
+                item = Item.find(params[:id])
 
-              if item.display_type == 'total'
-                records = item.records_total_daily
-              elsif item.display_type == 'average'
-                records = item.records_avg_daily
+                if item.display_type == 'total'
+                  records = item.records_total_daily
+                elsif item.display_type == 'average'
+                  records = item.records_avg_daily
+                end
+
+                { values: records.to_a }
               end
-
-              { values: records.to_a }
             end
 
             delete ':record_id' do
