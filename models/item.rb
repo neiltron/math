@@ -1,5 +1,7 @@
 require 'mongoid'
 require 'boxer'
+
+require 'haml'
 require 'date'
 require 'active_support/all'
 
@@ -11,9 +13,14 @@ class Item
 	field :name, :type => String
   field :display_frequency, :type => String, :default => 'daily'
   field :display_type, :type => String, :default => 'total'
+  field :privacy, :type => Boolean, :default => false
 
 	has_many :records
 	belongs_to :user, :touch =>  true
+
+  def pricy?
+    !!privacy
+  end
 
   def records_total_daily
     map = <<-EOS
@@ -75,13 +82,32 @@ class Item
   end
 end
 
-Boxer.box(:item) do |box, item|
+
+embed_template = File.read(File.join(settings.views, 'item_embed.haml'))
+
+Boxer.box(:item) do |box, item, viewer, opts|
   box.view(:base) do
     {
       :id => item.id.to_s,
       :name => item.name,
       :display_type => item.display_type,
       :display_frequency => item.display_frequency
+    }
+  end
+
+  box.view(:oembed) do
+    html = Haml::Engine.new(embed_template).render(Object.new, { item: item, records: opts[:records] })
+    escaped_html = Haml::Helpers.html_escape html
+
+    {
+      type: 'rich',
+      version: '1.0',
+      title: item.name,
+      provider_name: 'Math',
+      provider_url: 'http://www.mathematics.io',
+      html: escaped_html,
+      width: 400,
+      height: 300
     }
   end
 end

@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 %w{
-  sinatra haml bson mongoid json mongoid_taggable_with_context warden rack-flash oauth2/provider
+  sinatra haml bson mongoid json boxer mongoid_taggable_with_context warden rack-flash oauth2/provider
 }.each do |lib|
   require lib
 end
@@ -19,6 +19,7 @@ module Math
     set :logging, true
     set :raise_errors, true
     set :haml, {:format => :html5 }
+    set :protection, :except => :frame_options
 
     enable :methodoverride
 
@@ -59,8 +60,23 @@ module Math
       haml :index
     end
 
+    get '/oembed/?' do
+      path = URI(params[:url]).path.split('/') # => ["", "item", "<item_id>"]
+      item_id = path[path.count - 1]
+
+      @item = Item.find(item_id)
+
+      if @item.display_type == 'total'
+        records = item.records_total_daily
+      elsif @item.display_type == 'average'
+        records = item.records_avg_daily
+      end
+
+      Boxer.ship(:item, @item, current_user, { view: :oembed, records: records }).to_json
+    end
+
     get '/item/:id' do
-      redirect '/login' if session[:accesskey].nil?
+      redirect '/login' if session[:accesskey].nil? && params[:embed].nil?
 
       @user = current_user
       @item = Item.find(params[:id])
@@ -71,7 +87,12 @@ module Math
         @records = @item.records_avg_daily
       end
 
-      haml :item
+      #return embeddable-specific layout if embed=1
+      if params[:embed]
+        haml :item_embed, :locals => { item: @item, records: @records }
+      else
+        haml :item
+      end
     end
 
     #================================================================

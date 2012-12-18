@@ -2,22 +2,51 @@
   #content
     %h1 Math
     %h2 #{@item.name}
-    %small
-      Displaying:
-      %span#settings_link{ :href => '#' }
-        #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
-        %span.arrow &#x25BE;
-        %ul#settings_menu
-          %li
-            %a{ :href => '#', :'data-display-type' => 'total', :'data-display-frequency' => 'daily' } Daily Total
-          %li
-            %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
 
     #graph.lines
       %svg{ :style => 'height: 200px' }
 
+    #options
+      %small
+        Displaying as
+        %strong#settings_link{ :href => '#' }
+          #{@item.display_frequency.capitalize} #{@item.display_type.capitalize}
+          %span.arrow &#x25BE;
+          %ul#settings_menu
+            %li
+              %a{ :href => '#', :'data-display-type' => 'total', :'data-display-frequency' => 'daily' } Daily Total
+            %li
+              %a{ :href => '#', :'data-display-type' => 'average', :'data-display-frequency' => 'daily' } Daily Average
+
+        This item is
+        %strong#privacy_link{ :href => '#' }
+          #{(@item.privacy? ? 'Private' : 'Public')}
+          %span.arrow &#x25BE;
+          %ul#privacy_menu
+            %li
+              %a{ :href => '#', :'data-privacy' => 'false' } Public
+            %li
+              %a{ :href => '#', :'data-privacy' => 'true' } Private
+
+        - unless @item.privacy?
+          - text = "<iframe frameborder=0 height='400px' width='600px' src='http://mathematics.io/item/#{@item.id.to_s}?embed=1'></iframe>"
+          %span#embed_link{ :href => '#' }
+            Get embed code
+            %span.arrow &#x25BE;
+            %ul#embed_menu
+              %textarea#embed_code #{text}
+              %object{ :classid => "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000", :width => "110", :height => "14", :id => "clippy" }
+                %param{ :name => "movie", :value => "/swf/clippy.swf" }
+                %param{ :name => "allowScriptAccess", :value => "always" }
+                %param{ :name => "quality", :value => "high" }
+                %param{ :name => "scale", :value => "noscale" }
+                %param{ :name => "FlashVars", :value => "text=#{text}" }
+                %param{ :name => "bgcolor", :value => "transparent" }
+                %param{ :name => "wmode", :value => "transparent" }
+                %embed{ :src => "/swf/clippy.swf", :width => "110", :height => "14", :name => "clippy", :quality => "high", :allowScriptAccess => "always", :type => "application/x-shockwave-flash", :pluginspage => "http://www.macromedia.com/go/getflashplayer", :FlashVars => "#{text}", :bgcolor => "transparent", :wmode => 'transparent' }
+
     %table.records
-      - @item.records.each do |record|
+      - @item.records.order_by([[:created_at, :desc]]).each do |record|
         %tr
           %td #{record.amount}
           %td #{record.created_at}
