@@ -1,10 +1,11 @@
-%h3 Client app: #{@client.name}
+#oauth
+  %h1 #{@client.name}
 
-%table
-  %tbody
-    %tr
-      %th{ :scope => "row" } client_id
-      %td #{@client.client_id}
-    %tr
-      %th{ :scope => "row" } client_secret
-      %td #{@client_secret}
+  %table
+    %thead
+      %th{ :scope => "row" } client id
+      %th{ :scope => "row" } client secret
+    %tbody
+      %tr
+        %td #{@client.client_id}
+        %td #{@client_secret}

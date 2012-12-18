@@ -1,19 +1,20 @@
-%h3 Register you application
+#oauth
+  %h1 Register your application
 
-- if @client.errors.any?
-  %ul.errors
-    - @client.errors.full_messages.each do |message|
-      %li #{message}
+  - if @client.errors.any?
+    %ul.errors
+      - @client.errors.full_messages.each do |message|
+        %li #{message}
 
-%form{ :method => "post", :action => "/oauth/apps" }
-  %fieldset
-    %label{ :for => "name" } Application name
-    %input{ :type => "text", :name => "name", :id => "name" }
+  %form{ :method => "post", :action => "/oauth/apps" }
+    %p
+      %label{ :for => "name" }
+      %input{ :type => "text", :name => "name", :id => "name", :placeholder => "Application name" }
 
-  %fieldset
-    %label{ :for => "redirect_uri" } Callback URI
-    %input{ :type => "text", :name => "redirect_uri", :id => "redirect_uri" }
+    %p
+      %label{ :for => "redirect_uri" }
+      %input{ :type => "text", :name => "redirect_uri", :id => "redirect_uri", :placeholder => 'Redirect URI' }
 
-  %fieldset
-    %input{ :type => "submit", :value => "Register" }
+    %p
+      %input{ :type => "submit", :value => "Register" }
 
