@@ -6,9 +6,11 @@
     %link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
     %link{ :rel => 'stylesheet', :href => '/css/style.css' }
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
+    - unless @item.nil?
+      %link{ :rel => 'alternate', :type => 'application/json+oembed', :href => "https://mathematics.io/oembed?url=https://mathematics.io/item/#{@item.id.to_s}", :title => 'title oEmbed Profile' }
 
   %body
-    - unless @user.nil?
+    - unless @user.nil? || params[:embed]
       #sidebar
         %a#plus{ :href => '#' }
           +
@@ -151,7 +153,10 @@
             )
           } else if ($('#graph').length) {
             nv.addGraph(function() {
-              chart = nv.models.lineChart();
+              chart = nv.models.lineChart()
+                        .tooltipContent(function (key, x, y, e, graph) {
+                          return y + ' at ' + x;
+                        });
 
               chart.xAxis
                 .tickFormat(function(d) {
@@ -243,6 +248,18 @@
               data: {
                 display_type: $(e.target).data('display-type'),
                 display_frequency: $(e.target).data('display-frequency'),
+              }
+            })
+          })
+
+          $('#privacy_menu li a').bind('click', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+              type: 'put',
+              url: '/api/1/users/#{@user.id.to_s}/items/' + item_id + '?accesskey=#{@user.accesskey.token.to_s}',
+              data: {
+                privacy: $(e.target).data('privacy')
               }
             })
           })
