@@ -154,23 +154,35 @@ body {
   margin: 10px 0 0;
 }
 
-#content #settings_link {
+#content #options {
+  position: relative;
+  top: -10px;
+}
+
+#content #settings_link,
+#content #privacy_link,
+#content #embed_link {
   color: #888;
-  padding: 3px 5px;
+  padding: 3px 4px;
+  margin-left: 1px;
   border-radius: 3px;
   position: relative;
+  left: -5px;
   z-index: 100;
-  text-decoration: underline;
+  text-decoration: none;
 }
-  #content #settings_link .arrow {
-    display: none;
+  #content #settings_link .arrow,
+  #content #privacy_link .arrow,
+  #content #embed_link .arrow {
     text-decoration: none;
-    color: #fdd;
+    color: #baa;
   }
 
-  #content #settings_link #settings_menu {
+  #content #settings_link #settings_menu,
+  #content #privacy_link #privacy_menu,
+  #content #embed_link #embed_menu {
     display: none;
-    width: 100px;
+    width: 110px;
     background: #f66;
     position: absolute;
     top: 96%;
@@ -182,28 +194,44 @@ body {
     border-radius: 3px;
     border-top-right-radius: 0;
   }
-    #content #settings_link #settings_menu li { padding: 2px 12px 2px 0; }
-    #content #settings_link #settings_menu li a {
+    #content #settings_link #settings_menu li, #content #privacy_link #privacy_menu li { padding: 2px 12px 2px 0; }
+    #content #settings_link #settings_menu li a, #content #privacy_link #privacy_menu li a {
       color: #fff;
       font-weight: 100;
     }
 
-  #content #settings_link:hover {
+  #content #settings_link:hover,
+  #content #privacy_link:hover,
+  #content #embed_link:hover {
     text-decoration: none;
     background: #f66;
     color: #fcfcfc;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  #content #settings_link:hover .arrow {
-    display: inline;
-  }
-  #content #settings_link:hover #settings_menu {
-    display: block;
-    text-align: right;
-  }
 
+    #content #settings_link:hover .arrow,
+    #content #privacy_link:hover .arrow,
+    #content #embed_link:hover .arrow {
+      color: #fdd;
+    }
 
+    #content #settings_link:hover #settings_menu,
+    #content #privacy_link:hover #privacy_menu,
+    #content #embed_link:hover #embed_menu {
+      display: block;
+      text-align: right;
+    }
+
+  #content #options #embed_menu #embed_code {
+    width: 95%;
+    height: 70px;
+    font-size: 8pt;
+  }
+  #content #options #embed_menu #clippy {
+    position: relative;
+    top: 2px;
+  }
 
 #content #graph {
   width: 100%;
@@ -306,8 +334,8 @@ table.records {
     outline: 0;
     padding: 6px;
 
-    -moz-transition: top .2s ease-in-out;
-    -webkit-transition: top .2s ease-in-out;
+    -moz-transition: transform .2s ease-in-out;
+    -webkit-transition: -webkit-transform .2s ease-in-out;
   }
 
   #record_form input.disabled {
@@ -319,16 +347,18 @@ table.records {
   }
 
   #record_form.active input {
-    -moz-transition:    top .4s ease-in-out;
-    -webkit-transition: top .4s ease-in-out;
+    -moz-transition: transform .4s ease-in-out;
+    -webkit-transition: -webkit-transform .4s ease-in-out;
   }
 
   #record_form.active input#amount {
-    top: 58px;
+    transform: translate3d(0,58px,0);
+    -webkit-transform: translate3d(0,58px,0);
   }
 
   #record_form.active input#submit_item {
-    top: 116px;
+    transform: translate3d(0,116px,0);
+    -webkit-transform: translate3d(0,116px,0);
   }
 
   #record_form input#submit_item {
@@ -451,6 +481,8 @@ table.records {
   }
 }
 
+
+
 .nv-axis text { fill: #d66; }
 #content .nvd3 .nv-axis .nv-axisMaxMin text { opacity: 0; font-weight: 100; }
 
@@ -473,3 +505,48 @@ table.records {
   opacity: 0;
 }
 .nvd3.nv-legend { display: none; }
+
+#container.embed { padding: 0; }
+#container.embed #content {
+  padding: 25px 0 0;
+  position: relative;
+}
+
+  #container.embed #graph {
+    left: 0;
+  }
+    #container.embed, #container.embed svg {
+      background: #f66;
+      height: 100%;
+    }
+  #container.embed #privacy_lock {
+    display: block;
+    margin: 40px auto 20px;
+    opacity: .7;
+  }
+
+#container.embed h2 {
+  font-family: helvetica neue, helvetica, arial, sans-serif;
+  font-weight: 100;
+  position: relative;
+  font-size: 42pt;
+  text-align: center;
+  z-index: 10;
+  color: #fdd;
+  letter-spacing: 5px;
+}
+#container.embed #display_type {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  font-weight: 100;
+  color: #fbb;
+  text-align: center;
+  z-index: 10;
+}
+
+#container.embed .nv-axis text {
+  fill: #fbb;
+  font-weight: 100;
+}
