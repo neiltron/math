@@ -8,8 +8,16 @@ module Math
       haml :'clients/new_client'
     end
 
+    get '/oauth/apps/:id' do
+      @client = OAuth2::Model::Client.find(params[:id])
+      @client_secret = session[:client_secret]
+      haml :'clients/show_client'
+    end
+
     post '/oauth/apps' do
       @client = OAuth2::Model::Client.new(params)
+      @client.owner = current_user
+
       if @client.save
         session[:client_secret] = @client.client_secret
         redirect("/oauth/apps/#{@client.id}")
@@ -18,10 +26,10 @@ module Math
       end
     end
 
-    get '/oauth/apps/:id' do
-      @client = OAuth2::Model::Client.find(params[:id])
-      @client_secret = session[:client_secret]
-      haml :'clients/show_client'
+    get '/oauth/apps' do
+      @clients = OAuth2::Model::Client.where( :oauth2_client_owner => current_user.id.to_s )
+
+      haml :'clients/list_clients'
     end
 
 

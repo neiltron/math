@@ -1,0 +1,17 @@
+#oauth
+  %h1 Clients
+  %table
+    %thead
+      %th{ :scope => "row" } name
+      %th{ :scope => "row" } client_id
+      %th{ :scope => "row" } redirect uri
+      %th{ :scope => "row" } authorizations
+
+    %tbody
+      - @clients.each do |client|
+        %tr
+          %td #{client.name}
+          %td
+            %a{ :href => "/oauth/apps/#{client.id.to_s}" } #{client.client_id}
+          %td #{client.redirect_uri}
+          %td #{client.authorizations.count}
