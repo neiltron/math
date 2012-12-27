@@ -16,7 +16,7 @@ module Math
 
     get '/oauth/apps/:id/edit/?' do
       @client = OAuth2::Model::Client.find(params[:id])
-      haml :'clients/new_client'
+      haml :'clients/edit_client'
     end
 
     post '/oauth/apps' do
