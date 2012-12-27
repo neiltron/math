@@ -1,11 +1,20 @@
 #oauth
-  %h1 #{@client.name}
+  %h2 #{@client.name}
 
   %table
-    %thead
-      %th{ :scope => "row" } client id
-      %th{ :scope => "row" } client secret
     %tbody
       %tr
+        %td.label client id
         %td #{@client.client_id}
+      %tr
+        %td.label client secret
         %td #{@client_secret}
+      %tr
+        %td.label redirect uri
+        %td #{@client.redirect_uri}
+
+  %p.options
+    %a.btn{ :href => "./#{@client.id.to_s}/edit" } Edit
+    %a.btn{ :href => "./#{@client.id.to_s}/delete" } Delete
+    %small
+      %a{ :href => '/developer' } Back to your applications

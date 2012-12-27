@@ -78,11 +78,15 @@ body {
       color: #d88;
     }
 
-  h1 {
+  h1, #oauth h2 {
     font-family: OtariRegular, helvetica, sans-serif;
     font-weight: 100;
     font-size: 48pt;
     margin: 0;
+  }
+  #oauth h2 {
+    font-size: 32pt;
+    margin-bottom: 20px;
   }
 
   h3 {
@@ -426,7 +430,7 @@ table.records {
     font-weight: 100;
   }
 
-  #login h1, #oauth h1 {
+  #login h1, #oauth h2 {
     text-align: center;
     font-weight: 600;
     color: #FFFCFC;
@@ -445,6 +449,22 @@ table.records {
       color: #d44;
       font-size: 10pt;
     }
+
+    #oauth p.options {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      margin: 20px auto;
+    }
+      #oauth p.options .btn {
+        display: block;
+        float: left;
+        padding: 5px;
+        background: #f44;
+        width: 45%;
+        margin-left: 2.5%;
+        margin-bottom: 10px;
+      }
 
   #login p input, #oauth p input {
     width: 230px;
@@ -480,10 +500,23 @@ table.records {
 
   #oauth table {
     margin: 0 auto;
+    border-collapse:collapse;
   }
+    #oauth table tr {
+      border-bottom: 1px solid #faa;
+    }
+    #oauth table tr:last-child {
+      border-bottom: none;
+    }
     #oauth table td {
       min-width: 150px;
       text-align: center;
+      font-weight: 300;
+      padding: 5px 0;
+    }
+    #oauth table td.label {
+      text-align: left;
+      font-weight: 500;
     }
 
 
