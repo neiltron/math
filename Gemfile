@@ -24,6 +24,7 @@ gem 'pony'
 
 group :production do
   gem 'rack-ssl'
+  gem 'newrelic_rpm'
 end
 
 group :test do
