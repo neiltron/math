@@ -1,13 +1,4 @@
 GIT
-  remote: git@github.com:neiltron/oauth2-provider.git
-  revision: 00aca21d40663b9b28b327c1bc103ef0f6292250
-  specs:
-    oauth2-provider (0.1.0)
-      bcrypt-ruby
-      json
-      rack
-
-GIT
   remote: https://github.com/brynary/rack-test.git
   revision: 5080d1e99de825bdd3b2b7bba34e5ac61cedd876
   specs:
@@ -27,6 +18,15 @@ GIT
   specs:
     mongoid_taggable_with_context (0.7.2)
       mongoid
+
+GIT
+  remote: https://github.com/neiltron/oauth2-provider.git
+  revision: 00aca21d40663b9b28b327c1bc103ef0f6292250
+  specs:
+    oauth2-provider (0.1.0)
+      bcrypt-ruby
+      json
+      rack
 
 GEM
   remote: http://rubygems.org/
