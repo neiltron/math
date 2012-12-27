@@ -6,6 +6,8 @@ class User
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	include Mongoid::Paranoia
+  include OAuth2::Model::ResourceOwner
+  include OAuth2::Model::ClientOwner
 
 	field :name, :type => String
   field :email, :type => String
@@ -23,6 +25,11 @@ class User
 
   before_create :process_on_create
   after_save :encrypt_pass
+
+  #add username method to appease oath2-provider gem
+  def username
+    name
+  end
 
   def authenticated? (password)
     self.password_hash == encrypt(password)

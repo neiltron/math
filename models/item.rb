@@ -1,5 +1,6 @@
 require 'mongoid'
 require 'boxer'
+
 require 'haml'
 require 'date'
 require 'active_support/all'
