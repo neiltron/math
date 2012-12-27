@@ -78,11 +78,15 @@ body {
       color: #d88;
     }
 
-  h1 {
+  h1, #oauth h2 {
     font-family: OtariRegular, helvetica, sans-serif;
     font-weight: 100;
     font-size: 48pt;
     margin: 0;
+  }
+  #oauth h2 {
+    font-size: 32pt;
+    margin-bottom: 20px;
   }
 
   h3 {
@@ -414,19 +418,19 @@ table.records {
     display: block;
   }
 
-  #login {
+  #login,#oauth {
     height: 100%;
     min-height: 100%;
     background: #f66;
   }
 
-  #login .alert-message {
+  #login .alert-message, #oauth .alert-message {
     text-align: center;
     color: white;
     font-weight: 100;
   }
 
-  #login h1 {
+  #login h1, #oauth h2 {
     text-align: center;
     font-weight: 600;
     color: #FFFCFC;
@@ -434,16 +438,35 @@ table.records {
     padding-top: 20px;
   }
 
-  #login form {
+  #login form, #oauth form {
     text-align: center;
     padding-bottom: 20px;
   }
-    #login form a {
+    #oauth a {
+      color: #fafafa;
+    }
+    #login form a, #oauth form a {
       color: #d44;
       font-size: 10pt;
     }
 
-  #login p input {
+    #oauth p.options {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      margin: 20px auto;
+    }
+      #oauth p.options .btn {
+        display: block;
+        float: left;
+        padding: 5px;
+        background: #f44;
+        width: 45%;
+        margin-left: 2.5%;
+        margin-bottom: 10px;
+      }
+
+  #login p input, #oauth p input {
     width: 230px;
     display: block;
     background: #e33;
@@ -455,23 +478,46 @@ table.records {
     margin: 0 auto;
   }
 
-  #login p input.disabled {
+  #login p input.disabled, #oauth p input.disabled {
     background-color: #d66;
   }
 
-  #login p input::-webkit-input-placeholder { color: #ddd; }
-  #login p input::-moz-placeholder { color: #ddd; }
+  #login p input::-webkit-input-placeholder,
+    #oauth p input::-webkit-input-placeholder { color: #ddd; }
 
-  #login p.about {
+  #login p input::-moz-placeholder,
+    #oauth p input::-moz-placeholder { color: #ddd; }
+
+  #login p.about, #oauth p.about {
     font-size: 11pt;
     margin: 0 auto;
     font-weight: 200;
     color: #844;
   }
-    #login p.about a {
+    #login p.about a, #oauth p.about a {
       color: #a44;
     }
-}
+
+  #oauth table {
+    margin: 0 auto;
+    border-collapse:collapse;
+  }
+    #oauth table tr {
+      border-bottom: 1px solid #e55;
+    }
+    #oauth table tr:last-child {
+      border-bottom: none;
+    }
+    #oauth table td {
+      min-width: 150px;
+      text-align: center;
+      font-weight: 300;
+      padding: 5px 0;
+    }
+    #oauth table td.label {
+      text-align: left;
+      font-weight: 500;
+    }
 
 
 

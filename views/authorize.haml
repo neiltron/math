@@ -1,0 +1,20 @@
+#oauth
+  %h2 Authorize OAuth client
+
+  %p{ :style => 'text-align: center' }
+    This application
+    %strong #{@oauth2.client.name}
+    wants the following permissions:
+
+  %ul
+    - @oauth2.scopes.each do |scope|
+      - next unless PERMISSIONS[scope]
+      %li #{PERMISSIONS[scope]}
+
+  %form{ :method => 'post', :action => "/oauth/allow?allow=1" }
+    - @oauth2.params.each do |key, value|
+      %input{ :type => "hidden", :name => "#{key}", :value => "#{value}" }
+    %input{ :type => "hidden", :name => "user_id", :value => "#{@user.id}" }
+
+    %p
+      %input{ :type => "submit", :value => "Allow this application" }

@@ -15,7 +15,12 @@
 			- elsif flash.has?(:error)
 				.alert-message.error.login
 					= flash[:error]
-			%form{ :method => 'post', :action => '/login' }
+			%form{ :method => 'post', :action => (params[:client_id].nil? ? '/login' : '/oauth/login') }
+				- unless params[:redirect_uri].nil?
+					%input{ :type => 'hidden', :name => 'redirect_uri', :value => params[:redirect_uri] }
+					%input{ :type => 'hidden', :name => 'client_id', :value => params[:client_id] }
+					%input{ :type => 'hidden', :name => 'response_type', :value => params[:response_type] }
+
 				%p
 					%label{ :for => 'email' }
 					%input#email{ :type => 'text', :name => 'email', :placeholder => 'Email' }

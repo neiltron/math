@@ -1,0 +1,36 @@
+#oauth
+  %h2 #{@client.name}
+
+  %table
+    %tbody
+      %tr
+        %td.label client id
+        %td #{@client.client_id}
+      %tr
+        %td.label client secret
+        %td #{@client_secret}
+      %tr
+        %td.label redirect uri
+        %td #{@client.redirect_uri}
+
+  %p.options
+    %a.btn{ :href => "./#{@client.id.to_s}/edit" } Edit
+    %a.btn#delete{ :href => "./#{@client.id.to_s}/delete" } Delete
+    %small
+      %a{ :href => '/developer' } Back to your applications
+
+%script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
+:javascript
+  $('#delete').bind('click', function (e) {
+    e.preventDefault();
+
+    if (confirm("Are you sure you want to delete this application? This CANNOT be undone.")) {
+      $.ajax({
+        url: '/oauth/apps/#{@client.id.to_s}',
+        type: 'delete',
+        success: function (data) {
+          location.href = '/developer';
+        }
+      })
+    }
+  })

@@ -1,0 +1,16 @@
+- if @client.errors.any?
+  %ul.errors
+    - @client.errors.full_messages.each do |message|
+      %li #{message}
+
+%form{ :method => "post", :action => "/oauth/apps" }
+  %p
+    %label{ :for => "name" }
+    %input{ :type => "text", :name => "name", :id => "name", :placeholder => "Application name", :value => @client.name }
+
+  %p
+    %label{ :for => "redirect_uri" }
+    %input{ :type => "text", :name => "redirect_uri", :id => "redirect_uri", :placeholder => 'Redirect URI', :value => @client.redirect_uri }
+
+  %p
+    %input{ :type => "submit", :value => "Save" }

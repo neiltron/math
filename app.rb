@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 %w{
-  sinatra haml bson mongoid json boxer mongoid_taggable_with_context warden rack-flash
+  sinatra haml bson mongoid json boxer mongoid_taggable_with_context warden rack-flash oauth2/provider
 }.each do |lib|
   require lib
 end
@@ -98,4 +98,5 @@ module Math
 
   require_relative 'models/init'
   require_relative 'routes/users'
+  require_relative 'routes/oauth'
 end

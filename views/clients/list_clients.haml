@@ -1,0 +1,20 @@
+#oauth
+  %h2 Your Clients
+
+  %p.options
+    %a{ :href => '/oauth/apps/new' } Create a new application
+
+  %table
+    %thead
+      %tr
+        %th.label{ :scope => "row" } name
+        %th.label{ :scope => "row" } client_id
+        %th.label{ :scope => "row" } authorizations
+
+    %tbody
+      - @clients.each do |client|
+        %tr
+          %td.label #{client.name}
+          %td
+            %a{ :href => "/oauth/apps/#{client.id.to_s}" } #{client.client_id}
+          %td #{client.authorizations.count}
