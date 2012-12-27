@@ -26,7 +26,7 @@ module Math
       end
     end
 
-    get '/oauth/apps' do
+    get '/developer' do
       @clients = OAuth2::Model::Client.where( :oauth2_client_owner => current_user.id.to_s )
 
       haml :'clients/list_clients'
