@@ -19,6 +19,12 @@ module Math
       haml :'clients/edit_client'
     end
 
+    delete '/oauth/apps/:id/?' do
+      @client = OAuth2::Model::Client.find(params[:id])
+
+      @client.delete ? true : false
+    end
+
     post '/oauth/apps' do
       @client = OAuth2::Model::Client.new(params)
       @client.owner = current_user
