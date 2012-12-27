@@ -14,6 +14,11 @@ module Math
       haml :'clients/show_client'
     end
 
+    get '/oauth/apps/:id/edit/?' do
+      @client = OAuth2::Model::Client.find(params[:id])
+      haml :'clients/new_client'
+    end
+
     post '/oauth/apps' do
       @client = OAuth2::Model::Client.new(params)
       @client.owner = current_user
