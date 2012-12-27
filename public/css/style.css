@@ -503,7 +503,7 @@ table.records {
     border-collapse:collapse;
   }
     #oauth table tr {
-      border-bottom: 1px solid #faa;
+      border-bottom: 1px solid #e55;
     }
     #oauth table tr:last-child {
       border-bottom: none;
