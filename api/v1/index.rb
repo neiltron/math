@@ -17,9 +17,16 @@ module Math
 
     helpers do
       def current_user
-        accesskey = AccessKey.find_by_token(params[:accesskey])
+        accesskey = AccessKey.where( :token => params[:accesskey]).first
 
-        accesskey.nil? ? false : accesskey.user
+        if accesskey.nil?
+          accesskey = OAuth2::Model.find_access_token( params[:accesskey] )
+          user = accesskey.owner
+        else
+          user = accesskey.user
+        end
+
+        accesskey.nil? ? false : user
       end
 
       def authenticate!
