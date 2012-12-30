@@ -1,20 +1,29 @@
-#oauth
-  %h2 Authorize OAuth client
+!!!
+%html
+  %head
+    %title D#M
+    %link{ :rel => 'stylesheet', :href => '/css/style.css' }
+    %link{ :rel => 'stylesheet', :href => '/fonts/Otari-Regular-Web/stylesheet.css' }
+    %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
 
-  %p{ :style => 'text-align: center' }
-    This application
-    %strong #{@oauth2.client.name}
-    wants the following permissions:
+  %body
+    #oauth
+      %h2 Authorize OAuth client
 
-  %ul
-    - @oauth2.scopes.each do |scope|
-      - next unless PERMISSIONS[scope]
-      %li #{PERMISSIONS[scope]}
+      %p{ :style => 'text-align: center' }
+        This application
+        %strong #{@oauth2.client.name}
+        wants the following permissions:
 
-  %form{ :method => 'post', :action => "/oauth/allow?allow=1" }
-    - @oauth2.params.each do |key, value|
-      %input{ :type => "hidden", :name => "#{key}", :value => "#{value}" }
-    %input{ :type => "hidden", :name => "user_id", :value => "#{@user.id}" }
+      %ul
+        - @oauth2.scopes.each do |scope|
+          - next unless PERMISSIONS[scope]
+          %li #{PERMISSIONS[scope]}
 
-    %p
-      %input{ :type => "submit", :value => "Allow this application" }
+      %form{ :method => 'post', :action => "/oauth/allow?allow=1" }
+        - @oauth2.params.each do |key, value|
+          %input{ :type => "hidden", :name => "#{key}", :value => "#{value}" }
+        %input{ :type => "hidden", :name => "user_id", :value => "#{@user.id}" }
+
+        %p
+          %input{ :type => "submit", :value => "Allow this application" }

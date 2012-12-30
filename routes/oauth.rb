@@ -62,7 +62,7 @@ module Math
         headers @oauth2.response_headers
         status  @oauth2.response_status
 
-        haml(@user ? :authorize : :login)
+        haml(@user ? :authorize : :login, { :layout => false })
       end
     end
 
@@ -82,7 +82,6 @@ module Math
 
     post '/oauth/allow' do
       @user = current_user
-      pp @user
       @auth = OAuth2::Provider::Authorization.new(@user, params)
       @page = 'oauth'
 
