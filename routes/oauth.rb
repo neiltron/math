@@ -62,6 +62,8 @@ module Math
         headers @oauth2.response_headers
         status  @oauth2.response_status
 
+        content_type 'text/html', :charset => 'utf-8'
+
         haml(@user ? :authorize : :login, { :layout => false })
       end
     end
