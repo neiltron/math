@@ -116,7 +116,7 @@ module Math
           end
 
           resource ':category_id' do
-            before { @category = Category.find(category_id) }
+            before { @category = Category.find(params[:category_id]) }
 
             get do
               Boxer.ship(:category, @category)
@@ -133,6 +133,14 @@ module Math
               end
 
               @category.save
+            end
+
+            get 'records' do
+              per = (params[:per] || 7).to_i
+              page = (params[:page] || 0).to_i
+              category = Category.find(params[:category_id])
+
+              { values: category.records.to_a }
             end
           end
         end
