@@ -94,6 +94,20 @@ module Math
         haml :item
       end
     end
+
+    get '/categories/:id' do
+      redirect '/login' if session[:accesskey].nil? && params[:embed].nil?
+
+      @user = current_user
+      @category = Category.find(params[:id])
+
+      #return embeddable-specific layout if embed=1
+      if params[:embed]
+        haml :category_embed, :locals => { board: @category }
+      else
+        haml :category
+      end
+    end
   end
 
   require_relative 'models/init'
