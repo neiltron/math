@@ -30,12 +30,12 @@ body {
     left: 10px;
   }
 
-  #sidebar #items {
+  #sidebar #items,#sidebar #boards {
     list-style: none;
     padding: 0 0 0 15px;
     color: #fff;
   }
-    #sidebar #items li a {
+    #sidebar #items li a,#sidebar #boards li a {
       color: #fff;
       text-decoration: none;
     }
@@ -285,7 +285,7 @@ table.records {
     transform: translate3d(-277px,0,0);
     -webkit-transform: translate3d(-277px,0,0);
     width: 240px;
-    z-index: 100;
+    z-index: 200;
 
     -moz-transition: transform .1s ease-in-out;
     -webkit-transition: -webkit-transform .1s ease-in-out;
@@ -378,16 +378,16 @@ table.records {
     width: 100%;
   }
 
-  #sidebar #items, #record_form input {
+  #sidebar #items, #sidebar #boards, #record_form input {
     font-size: 14pt;
   }
 
-  #sidebar #items {
+  #sidebar #items, #sidebar #boards {
     padding: 0;
     line-height: 24pt;
   }
 
-  #sidebar #items li.hide {
+  #sidebar #items li.hide,#sidebar #boards li.hide {
     height: 0;
     opacity: 0;
     color: #333;
@@ -396,14 +396,14 @@ table.records {
     -webkit-transition: all .2s ease-in-out;
   }
 
-  #sidebar #items.active li.hide {
+  #sidebar #items.active li.hide,#sidebar #boards.active li.hide {
     height: 32px;
     opacity: 1;
     -moz-transition: height .3s ease-in-out, opacity .3s ease-in-out .3s;
     -webkit-transition: height .3s ease-in-out, opacity .3s ease-in-out .3s;
   }
 
-  #sidebar #items {
+  #sidebar #items, #sidebar #boards {
     font-weight: 300;
   }
 
