@@ -95,6 +95,27 @@ module Math
           end
         end
 
+        resource :categories do
+          get do
+            @user.categories
+          end
+
+          post do
+            category = Category.create!( :name => params[:name] )
+
+            #check for item existence, add to category
+            params[:item_ids].each do |item_id|
+              item = Item.find(item_id)
+              category.items.push item unless item.nil?
+            end unless params[:item_ids].nil?
+
+            @user.categories.push category
+            @user.save
+
+            Boxer.ship(:category, category)
+          end
+        end
+
         post '/records' do
           item = Item.find_or_create_by( :name => params[:item_name].downcase )
           @user.items.push item unless @user.items.include? item
