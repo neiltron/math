@@ -114,6 +114,27 @@ module Math
 
             Boxer.ship(:category, category)
           end
+
+          resource ':category_id' do
+            before { @category = Category.find(category_id) }
+
+            get do
+              Boxer.ship(:category, @category)
+            end
+
+            put do
+              @category.update_attributes!(params) if @category.user == current_user
+            end
+
+            post 'items' do
+              params[:items].each do |item_id|
+                item = Item.find(item_id)
+                @category.items.push item unless item.nil?
+              end
+
+              @category.save
+            end
+          end
         end
 
         post '/records' do
