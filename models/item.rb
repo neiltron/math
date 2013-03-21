@@ -23,6 +23,14 @@ class Item
     !!privacy
   end
 
+  def get_records
+    if display_type == 'total'
+      self.records_total_daily
+    elsif display_type == 'average'
+      self.records_avg_daily
+    end
+  end
+
   def records_total_daily
     map = <<-EOS
       function() {
