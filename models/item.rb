@@ -17,6 +17,7 @@ class Item
 
 	has_many :records
 	belongs_to :user, :touch =>  true
+  belongs_to :category, :touch =>  true
 
   def pricy?
     !!privacy
