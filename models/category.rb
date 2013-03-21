@@ -21,13 +21,9 @@ class Category
   end
 
   def records
-    values = items.map do |item|
-      item.records.map do |record|
-        Boxer.ship(:record, record)
-      end
+    items.map do |item|
+      { values: item.records.map { |record| [record.created_at.to_i, record.amount] } }
     end
-
-    { values: values }
   end
 end
 
