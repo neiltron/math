@@ -16,16 +16,27 @@
           +
 
         %form{ :id => 'record_form', :method => 'POST', :action => '/records' }
-          %input{ :type => 'text', :name => 'item_name', :id => 'item_name', :autocapitalize => 'off', :placeholder => 'Search or add an item' }
+          %input{ :type => 'text', :name => 'item_name', :id => 'item_name', :autocapitalize => 'off', :placeholder => 'Add an item' }
           %input.hide{ :type => 'text', :name => 'amount', :id => 'amount', :placeholder => 'Amount' }
           %input.hide{ :type => 'submit', :id => 'submit_item', :value => 'Save' }
           .clear
 
+        %h3 Items
         %ul#items
           %li.hide Select an item
-          - @user.items.order_by([[:updated_at, :desc]]).each do |item|
+          - @user.items.order_by([[:updated_at, :desc]]).limit(10).each do |item|
             %li
               %a{ :href => '/item/' + item.id.to_s } #{item.name}
+
+        %h3 Boards
+        %ul#boards
+          - @user.categories.order_by([[:updated_at, :desc]]).limit(10).each do |category|
+            %li
+              %a{ :href => '/categories/' + category.id.to_s } #{category.name}
+
+        %form#board_form{ :action => '/categories' }
+          %input{ :type => 'text', :name => 'board_name', :id => 'board_name'}
+          %input{ :type => 'submit', :value => 'Save' }
 
     = yield
 
@@ -166,33 +177,55 @@
               chart.yAxis
                 .tickFormat(d3.format(',.1f'))
 
+              if (typeof graph_data['values'] === 'undefined') {
+                graph_data = $.map(graph_data, function (item, i) {
+                  return return_values(item, i);
+                })
+
+              } else {
+                graph_data = [return_values(graph_data)];
+              }
+
               d3.select('#graph svg')
-                .datum(return_values(graph_data))
+                .datum(graph_data)
                 .transition().duration(500)
                 .call(chart);
 
               //TODO: Figure out a good way to do this automatically
               nv.utils.windowResize(chart.update);
 
+              //append legend dots to the items table
+              if (category_id) {
+                $('table.records tbody tr').each(function(i, item) {
+                  $(item).find('td').first().prepend("<td><span style='height:10px;width:10px;display:block;float:left;border-radius:5px;margin:5px 5px 0 0;background:" + graph_data[i].color + "'></span></td>")
+                });
+              }
+
               return chart;
             });
           }
 
 
-          function return_values (data) {
+          function return_values (data, i) {
             data = $(data.values).map(function(i, value) {
               if (isNumber(value[1])) {
                 return { x: value[0], y: value[1] };
               }
             })
 
-            return [
-              {
-                area: true,
-                values: data,
-                color: "#faa"
-              }
-            ]
+            var colors = [
+              '#faa',
+              '#afa',
+              '#aaf',
+              '#ffa',
+              '#aff'
+            ];
+
+            return {
+              area: false,
+              values: data,
+              color: colors[i] || '#faa'
+            }
           }
 
 
@@ -239,6 +272,32 @@
             })
           })
 
+          $('#board_form').bind('submit', function (e) {
+            e.preventDefault();
+
+            if ($('#board_form #name').val() == '') {
+              return false;
+            }
+
+            $.ajax({
+              type: 'post',
+              url: '/api/1/users/#{@user.id.to_s}/categories',
+              dataType: 'json',
+              data: {
+                accesskey:  '#{@user.accesskey.token.to_s}',
+                name:  $('#board_form #board_name').val(),
+              },
+              success: function (data) {
+                $('#board_name').val('');
+                $('#boards').prepend('<li><a href="/categories/' + data.id + '">' + data.name + '</a></li>')
+
+                if ($('#boards li').length >= 10) {
+                  $('#boards li').last().remove()
+                }
+              }
+            })
+          })
+
           $('#settings_menu li a').bind('click', function (e) {
             e.preventDefault();
 
@@ -263,6 +322,17 @@
               }
             })
           })
+
+          $('#add_items').on('change', function () {
+            $.ajax({
+              type: 'post',
+              url: '/api/1/users/4f68920ba85f1a0003000001/categories/' + category_id + '/items?accesskey=#{@user.accesskey.token.to_s}',
+              data: { items: [$(this).val()] },
+              success: function (data) {
+                location.reload();
+              }
+            })
+          });
 
           $('table.records a.delete_record').bind('click', function (e) {
             e.preventDefault();
