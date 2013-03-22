@@ -192,6 +192,8 @@
                 graph_data = [return_values(graph_data)];
               }
 
+              console.log(graph_data)
+
               d3.select('#graph svg')
                 .datum(graph_data)
                 .transition().duration(500)
@@ -230,7 +232,7 @@
             return {
               area: false,
               values: data,
-              color: colors[i] || '#faa'
+              key: colors[i] || '#faa'
             }
           }
 
