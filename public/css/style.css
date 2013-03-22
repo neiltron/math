@@ -140,6 +140,7 @@ body.sidebar {
   width: 41px;
   color: #f88;
   text-decoration: none;
+  outline: 0;
 
   -moz-transition: color .06s ease-out;
   -webkit-transition: color .06s ease-out;
@@ -280,6 +281,13 @@ table.records {
   width: 100%;
   clear: both;
   float: none;
+}
+
+@media screen, all and (min-width: 600px) {
+  #records div {
+    width: 32%;
+    padding: 0;
+  }
 }
 
 @media screen, all and (min-width: 300px) {
@@ -528,18 +536,6 @@ table.records {
     }
 }
 
-@media all and (max-width: 480px) {
-  #records div svg {
-    max-height: 120px;
-  }
-}
-
-@media screen, all and (min-width: 600px) {
-  #records div {
-    width: 32%;
-    padding: 0;
-  }
-}
 
 
 

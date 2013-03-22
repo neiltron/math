@@ -49,6 +49,7 @@
       <![endif]-->
 
       %script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
+      %script{ :type => 'text/javascript', :src => '/js/FastClick.js' }
       %script{ :type => 'text/javascript', :src => '/js/d3.v2.min.js' }
       %script{ :type => 'text/javascript', :src => '/js/nv.d3.js' }
       %script{ :type => 'text/javascript', :src => '/js/utils.js' }
@@ -64,6 +65,10 @@
         var items = [];
         var records = {};
 
+        window.addEventListener('load', function() {
+          new FastClick(document.body);
+        }, false);
+
         $(document).ready(function ($) {
           key.filter = function (event) {
             var tagName = (event.target || event.srcElement).tagName;
@@ -71,11 +76,10 @@
           }
 
           function showSidebar() {
-            $('#sidebar').addClass('active');
-            $('#item_name').focus();
+            $('body').addClass('sidebar');
           }
           function closeSidebar() {
-            $('#sidebar').removeClass('active');
+            $('body').removeClass('sidebar');
           }
 
           //switch to record form with ` key
@@ -135,7 +139,7 @@
 
 
               $(e).each(function (i, item) {
-                  $("<div><h2><a href='/item/" + item.id + "'>" + item.name + "</a></h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
+                  $("<div><h2><a href='/item/" + item.id + "'>" + item.name + "</a></h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 100px' />").appendTo('#records')
 
                   d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
                     nv.addGraph(function() {
@@ -239,8 +243,9 @@
             }
           }
 
-          var tap_event = (typeof document.body.ontouchstart === "undefined" ? 'click' : 'tap');
-          $('#plus').on(tap_event, function (e) {
+          $('#plus').bind('click', function (e) {
+            e.preventDefault();
+
             toggle_sidebar();
             return false;
           })
