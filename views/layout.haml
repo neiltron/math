@@ -240,7 +240,7 @@
           }
 
           var tap_event = (typeof document.body.ontouchstart === "undefined" ? 'click' : 'tap');
-          $('#plus').bind(tap_event, function (e) {
+          $('#plus').on(tap_event, function (e) {
             toggle_sidebar();
             return false;
           })
