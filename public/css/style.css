@@ -141,8 +141,8 @@ body.sidebar {
   color: #f88;
   text-decoration: none;
 
-  -moz-transition: color .1s ease-in-out;
-  -webkit-transition: color .1s ease-in-out;
+  -moz-transition: color .06s ease-out;
+  -webkit-transition: color .06s ease-out;
 }
 
 #plus:hover, #plus.active {
