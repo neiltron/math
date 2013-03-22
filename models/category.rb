@@ -21,7 +21,7 @@ class Category
   end
 
   def records
-    items.map do |item|
+    items.order_by([[:updated_at, :desc]]).map do |item|
       { values: item.records.map { |record| [record.created_at.to_i, record.amount] } }
     end
   end

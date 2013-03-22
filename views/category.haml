@@ -42,11 +42,11 @@
 
 
     %table.records
-      - @category.items.order_by([[:created_at, :desc]]).each do |item|
+      - @category.items.order_by([[:updated_at, :desc]]).each do |item|
         %tr
           %td
             %a{ :href => '/item/' + item.id.to_s } #{item.name}
-          %td #{item.created_at}
+          %td #{item.updated_at}
           %td
             %a.delete_record{ :href => '#', :rel => "#{item.id.to_s}" } Delete
 
