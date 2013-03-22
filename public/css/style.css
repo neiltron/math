@@ -12,6 +12,15 @@ body {
   min-height: 100%;
   height: 100%;
   position: relative;
+
+
+             -moz-transition: transform .1s ease-in-out;
+  -webkit-transition: -webkit-transform .1s ease-in-out;
+}
+
+body.sidebar {
+          transform: translate3d(277px,0,0);
+  -webkit-transform: translate3d(277px,0,0);
 }
 
 #sidebar {
@@ -83,6 +92,9 @@ body {
     font-weight: 100;
     font-size: 48pt;
     margin: 0;
+  }
+  h1 {
+    margin-left: 12px;
   }
   #oauth h2 {
     font-size: 32pt;
@@ -286,14 +298,6 @@ table.records {
     -webkit-transform: translate3d(-277px,0,0);
     width: 240px;
     z-index: 200;
-
-    -moz-transition: transform .1s ease-in-out;
-    -webkit-transition: -webkit-transform .1s ease-in-out;
-  }
-
-  #sidebar.active {
-    transform: translate3d(0,0,0);
-    -webkit-transform: translate3d(0,0,0);
   }
 
   #plus {
@@ -407,6 +411,10 @@ table.records {
     font-weight: 300;
   }
 
+  #records {
+    margin-left: 4px;
+  }
+
   #records div {
     width: 100%;
     padding: 0;
@@ -518,12 +526,18 @@ table.records {
       text-align: left;
       font-weight: 500;
     }
+}
 
-
-
-@media screen, all and (max-width: 480px) {
+@media all and (max-width: 480px) {
   #records div svg {
     max-height: 120px;
+  }
+}
+
+@media screen, all and (min-width: 600px) {
+  #records div {
+    width: 32%;
+    padding: 0;
   }
 }
 

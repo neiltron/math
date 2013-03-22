@@ -231,12 +231,11 @@
           }
 
 
-          var sidebar = $('#sidebar');
           var toggle_sidebar = function () {
-            if (!sidebar.hasClass('active')) {
-              $('#sidebar').addClass('active');
+            if (!$('body').hasClass('sidebar')) {
+              $('body').addClass('sidebar');
             } else {
-              $('#sidebar').removeClass('active');
+              $('body').removeClass('sidebar');
             }
           }
 
