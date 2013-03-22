@@ -197,7 +197,7 @@
               nv.utils.windowResize(chart.update);
 
               //append legend dots to the items table
-              if (typeof category_id === 'undefined') {
+              if (typeof category_id !== 'undefined') {
                 $('table.records tbody tr').each(function(i, item) {
                   $(item).find('td').first().prepend("<td><span style='height:10px;width:10px;display:block;float:left;border-radius:5px;margin:5px 5px 0 0;background:" + graph_data[i].color + "'></span></td>")
                 });
