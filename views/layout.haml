@@ -133,6 +133,7 @@
               function (e) {
                 var values = '';
 
+
               $(e).each(function (i, item) {
                   $("<div><h2><a href='/item/" + item.id + "'>" + item.name + "</a></h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 200px' />").appendTo('#records')
 
@@ -148,8 +149,9 @@
                       chart.yAxis
                         .tickFormat(d3.format())
 
+                        console.log(return_values(data))
                       d3.select('#chart_' + item.id + ' svg')
-                        .datum(return_values(data))
+                        .datum([return_values(data)])
                         .transition().duration(500)
                         .call(chart);
 
