@@ -199,10 +199,8 @@
                 graph_data = $.map(graph_data, function (item, i) {
                   return return_values(item, i);
                 })
-                console.log('nop', graph_data)
               } else {
                 graph_data = [return_values(graph_data)];
-                console.log('yep', graph_data)
               }
 
               d3.select('#graph svg')
