@@ -132,19 +132,19 @@
 
 
               $(e).each(function (i, item) {
-                  $("<div><h2><a href='/item/" + item.id + "'>" + item.name + "</a></h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 100px' />").appendTo('#records')
+                  $("<div class='record_display'><h2><a href='/item/" + item.id + "'>" + item.name + "</a></h2></div>").attr('id', 'chart_' + item.id).append("<svg style='height: 100px' />").appendTo('#records')
 
                   d3.json('/api/1/users/#{@user.id.to_s}/items/' + item.id + '/records.json?accesskey=#{@user.accesskey.token.to_s}', function(data) {
                     nv.addGraph(function() {
                       chart = nv.models.lineChart()
                                 .tooltipContent(function (key, x, y, e, graph) {
-                                  return y + ' at ' + x;
+                                  return '<p>' + y + ' at ' + x + '</p>';
                                 });
 
 
                       chart.xAxis
                         .tickFormat(function(d) {
-                          return d3.time.format('%x')(new Date(d * 1000))
+                          return d3.time.format('%_m/%d')(new Date(d * 1000))
                         });
 
                       chart.yAxis
@@ -169,16 +169,16 @@
             nv.addGraph(function() {
               chart = nv.models.lineChart()
                         .tooltipContent(function (key, x, y, e, graph) {
-                          return y + ' at ' + x;
+                          return '<p>' + y + ' at ' + x + '</p>';
                         });
 
               chart.xAxis
                 .tickFormat(function(d) {
-                  return d3.time.format('%x')(new Date(d * 1000))
+                  return d3.time.format('%_m/%d')(new Date(d * 1000))
                 });
 
               chart.yAxis
-                .tickFormat(d3.format(',.1f'))
+                .tickFormat(d3.format(',.0f'))
 
               if (typeof graph_data['values'] === 'undefined') {
                 graph_data = $.map(graph_data, function (item, i) {

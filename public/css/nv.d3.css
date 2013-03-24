@@ -17,16 +17,15 @@
 
 .nvtooltip {
   position: absolute;
-  top: -10px;
-  background-color: rgba(255,255,255,.7);
   padding: 15px;
-  border: 1px solid rgba(125,125,125, .2);
-  max-width: 100px;
+  width: 300px;
   text-align: center;
+  letter-spacing: 1px;
+  word-spacing: 2px;
   z-index: 10000;
   display: inline;
-  color: #333;
-  text-shadow: 1px 1px 0 #fff;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(255, 100, 100, .7);
 
   font-family: helvetica neue, helvetica, arial, sans-serif;
   font-size: 12pt;
@@ -39,10 +38,6 @@
   transition-delay: 500ms;
   -moz-transition-delay: 500ms;
   -webkit-transition-delay: 500ms;
-
-      -moz-box-shadow: 0px 1px 1px rgba(125,0,0,.5);
-   -webkit-box-shadow: 0px 1px 1px rgba(125,0,0,.5);
-           box-shadow: 0px 1px 1px rgba(125,0,0,.5);
 
   -moz-border-radius: 10px;
   border-radius: 10px;
@@ -64,8 +59,10 @@
 }
 
 .nvtooltip p {
+  background-color: rgba(255, 100, 100, .5);
+  display: inline;
   margin: 0;
-  padding: 0;
+  padding: 3px 10px;
   text-align: center;
 }
 

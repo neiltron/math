@@ -171,10 +171,12 @@ d3.time.monthEnds = d3_time_range(d3.time.monthEnd, function(date) {
         break;
       case 's':
         left = pos[0] - (width / 2);
-        top = pos[1] - height - dist;
+        top = pos[1] - height - dist - 80;
         if (left < scrollLeft) left = scrollLeft + 5;
         if (left + width > windowWidth) left = windowWidth - width - 5;
-        if (scrollTop > top) top = pos[1] + 20;
+        // if (scrollTop > top) top = pos[1];
+
+        console.log(pos, height, dist, [left, top])
         break;
     }
 
@@ -1834,6 +1836,7 @@ nv.models.cumulativeLineChart = function() {
 */
 
       dispatch.on('tooltipShow', function(e) {
+        console.log(parentNode)
         if (tooltips) showTooltip(e, that.parentNode);
       });
 
