@@ -97,6 +97,10 @@ body.sidebar {
   h1 {
     margin-left: 12px;
   }
+    h1 a {
+      color: inherit;
+      text-decoration: none;
+    }
   #oauth h2 {
     font-size: 32pt;
     margin-bottom: 20px;
