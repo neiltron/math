@@ -35,7 +35,7 @@
               %a{ :href => '/categories/' + category.id.to_s } #{category.name}
 
         %form#board_form{ :action => '/categories' }
-          %input{ :type => 'text', :name => 'board_name', :id => 'board_name'}
+          %input{ :type => 'text', :name => 'board_name', :id => 'board_name', :placeholder => 'Add a board' }
           %input{ :type => 'submit', :value => 'Save' }
 
     = yield

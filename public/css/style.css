@@ -149,7 +149,7 @@ body.sidebar {
 #plus:hover, #plus.active {
   color: #d66;
 }
-  #record_form input {
+  #record_form input,#board_form input {
     margin: 10px 0 0;
     height: 28px;
     border: 1px solid #fbfbfb;
@@ -161,7 +161,7 @@ body.sidebar {
     font-size: 14pt;
     border-radius: 3px;
   }
-  #record_form input:nth-child(1) {
+  #record_form input:nth-child(1), #board_form input:nth-child(1) {
     margin: 10px 0 0;
   }
 
@@ -325,7 +325,7 @@ table.records {
     border-radius: 3px;
   }
 
-  #record_form {
+  #record_form, #board_form {
     clear: both;
     margin-top: 30px;
     position: relative;
@@ -338,7 +338,7 @@ table.records {
     height: 160px;
   }
 
-  #record_form input {
+  #record_form input,#board_form input {
     width: 90%;
     z-index: 20;
     position: absolute;
@@ -354,11 +354,13 @@ table.records {
     -webkit-transition: -webkit-transform .2s ease-in-out;
   }
 
-  #record_form input.disabled {
+  #board_form input { position: relative; }
+
+  #record_form input.disabled,#board_form input.disabled {
     background-color: #d66;
   }
 
-  #record_form input.hide {
+  #record_form input.hide, #board_form input.hide {
     z-index: 10;
   }
 
@@ -377,13 +379,13 @@ table.records {
     -webkit-transform: translate3d(0,116px,0);
   }
 
-  #record_form input#submit_item {
+  #record_form input#submit_item,#board_form input[type='submit'] {
     padding-top: 10px;
     padding-bottom: 30px;
   }
 
-  #record_form input::-webkit-input-placeholder { color: #ddd; }
-  #record_form input::-moz-placeholder { color: #ddd; }
+  #record_form input::-webkit-input-placeholder,#board_form input::-webkit-input-placeholder { color: #ddd; }
+  #record_form input::-moz-placeholder,#board_form input::-moz-placeholder { color: #ddd; }
 
   #sidebar.active #record_form {
     display: block;
