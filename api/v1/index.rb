@@ -95,6 +95,56 @@ module Math
           end
         end
 
+        resource :categories do
+          get do
+            @user.categories
+          end
+
+          post do
+            category = Category.create!( :name => params[:name] )
+
+            #check for item existence, add to category
+            params[:item_ids].each do |item_id|
+              item = Item.find(item_id)
+              category.items.push item unless item.nil?
+            end unless params[:item_ids].nil?
+
+            @user.categories.push category
+            @user.save
+
+            Boxer.ship(:category, category)
+          end
+
+          resource ':category_id' do
+            before { @category = Category.find(params[:category_id]) }
+
+            get do
+              Boxer.ship(:category, @category)
+            end
+
+            put do
+              @category.update_attributes!(params) if @category.user == current_user
+            end
+
+            post 'items' do
+              params[:items].each do |item_id|
+                item = Item.find(item_id)
+                @category.items.push item unless item.nil?
+              end
+
+              @category.save
+            end
+
+            get 'records' do
+              per = (params[:per] || 7).to_i
+              page = (params[:page] || 0).to_i
+              category = Category.find(params[:category_id])
+
+              { values: category.records.to_a }
+            end
+          end
+        end
+
         post '/records' do
           item = Item.find_or_create_by( :name => params[:item_name].downcase )
           @user.items.push item unless @user.items.include? item

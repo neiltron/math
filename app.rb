@@ -66,13 +66,7 @@ module Math
 
       @item = Item.find(item_id)
 
-      if @item.display_type == 'total'
-        records = item.records_total_daily
-      elsif @item.display_type == 'average'
-        records = item.records_avg_daily
-      end
-
-      Boxer.ship(:item, @item, current_user, { view: :oembed, records: records }).to_json
+      Boxer.ship(:item, @item, current_user, { view: :oembed, records: @item.get_records }).to_json
     end
 
     get '/item/:id' do
@@ -80,18 +74,31 @@ module Math
 
       @user = current_user
       @item = Item.find(params[:id])
+      @records = @item.get_records
 
-      if @item.display_type == 'total'
-        @records = @item.records_total_daily
-      elsif @item.display_type == 'average'
-        @records = @item.records_avg_daily
-      end
 
       #return embeddable-specific layout if embed=1
       if params[:embed]
         haml :item_embed, :locals => { item: @item, records: @records }
       else
         haml :item
+      end
+    end
+
+    get '/categories/:id' do
+      redirect '/login' if session[:accesskey].nil? && params[:embed].nil?
+
+      @user = current_user
+      @category = Category.find(params[:id])
+      @records = @category.records.map do |record|
+
+      end
+
+      #return embeddable-specific layout if embed=1
+      if params[:embed]
+        haml :category_embed, :locals => { board: @category }
+      else
+        haml :category
       end
     end
   end

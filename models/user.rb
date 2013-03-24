@@ -22,6 +22,7 @@ class User
 
 	has_one :accesskey, :class_name => 'AccessKey'
 	has_many :items
+  has_many :categories
 
   before_create :process_on_create
   after_save :encrypt_pass

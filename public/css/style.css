@@ -12,6 +12,15 @@ body {
   min-height: 100%;
   height: 100%;
   position: relative;
+
+
+             -moz-transition: transform .1s ease-in-out;
+  -webkit-transition: -webkit-transform .1s ease-in-out;
+}
+
+body.sidebar {
+          transform: translate3d(277px,0,0);
+  -webkit-transform: translate3d(277px,0,0);
 }
 
 #sidebar {
@@ -30,12 +39,12 @@ body {
     left: 10px;
   }
 
-  #sidebar #items {
+  #sidebar #items,#sidebar #boards {
     list-style: none;
     padding: 0 0 0 15px;
     color: #fff;
   }
-    #sidebar #items li a {
+    #sidebar #items li a,#sidebar #boards li a {
       color: #fff;
       text-decoration: none;
     }
@@ -51,9 +60,10 @@ body {
   left: -20px;
 }
 
-  #records div {
+  #records div.record_display {
     float: left;
     display: block;
+    position: relative;
     width: 400px;
     padding: 20px;
     margin: 0 10px 10px 0;
@@ -61,18 +71,18 @@ body {
     border: 1px solid #eee;
     border-radius: 3px;
   }
-    #records div h2 {
+    #records div.record_display h2 {
       text-align: center;
       font-weight: 100;
       font-size: 20pt;
       margin-bottom: 5px;
     }
-      #records div h2 a {
+      #records div.record_display h2 a {
         color: inherit;
         text-decoration: none;
       }
 
-    #records div span.graph {
+    #records div.record_display span.graph {
       display: block;
       width: 100%;
       color: #d88;
@@ -83,6 +93,9 @@ body {
     font-weight: 100;
     font-size: 48pt;
     margin: 0;
+  }
+  h1 {
+    margin-left: 12px;
   }
   #oauth h2 {
     font-size: 32pt;
@@ -128,15 +141,15 @@ body {
   width: 41px;
   color: #f88;
   text-decoration: none;
+  outline: 0;
 
-  -moz-transition: color .1s ease-in-out;
-  -webkit-transition: color .1s ease-in-out;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 #plus:hover, #plus.active {
   color: #d66;
 }
-  #record_form input {
+  #record_form input,#board_form input {
     margin: 10px 0 0;
     height: 28px;
     border: 1px solid #fbfbfb;
@@ -148,7 +161,7 @@ body {
     font-size: 14pt;
     border-radius: 3px;
   }
-  #record_form input:nth-child(1) {
+  #record_form input:nth-child(1), #board_form input:nth-child(1) {
     margin: 10px 0 0;
   }
 
@@ -270,6 +283,13 @@ table.records {
   float: none;
 }
 
+@media screen, all and (min-width: 600px) {
+  #records div.record_display {
+    width: 32%;
+    padding: 0;
+  }
+}
+
 @media screen, all and (min-width: 300px) {
   #container {
     padding-top: 25px;
@@ -285,15 +305,7 @@ table.records {
     transform: translate3d(-277px,0,0);
     -webkit-transform: translate3d(-277px,0,0);
     width: 240px;
-    z-index: 100;
-
-    -moz-transition: transform .1s ease-in-out;
-    -webkit-transition: -webkit-transform .1s ease-in-out;
-  }
-
-  #sidebar.active {
-    transform: translate3d(0,0,0);
-    -webkit-transform: translate3d(0,0,0);
+    z-index: 200;
   }
 
   #plus {
@@ -313,7 +325,7 @@ table.records {
     border-radius: 3px;
   }
 
-  #record_form {
+  #record_form, #board_form {
     clear: both;
     margin-top: 30px;
     position: relative;
@@ -326,7 +338,7 @@ table.records {
     height: 160px;
   }
 
-  #record_form input {
+  #record_form input,#board_form input {
     width: 90%;
     z-index: 20;
     position: absolute;
@@ -342,11 +354,13 @@ table.records {
     -webkit-transition: -webkit-transform .2s ease-in-out;
   }
 
-  #record_form input.disabled {
+  #board_form input { position: relative; }
+
+  #record_form input.disabled,#board_form input.disabled {
     background-color: #d66;
   }
 
-  #record_form input.hide {
+  #record_form input.hide, #board_form input.hide {
     z-index: 10;
   }
 
@@ -365,29 +379,29 @@ table.records {
     -webkit-transform: translate3d(0,116px,0);
   }
 
-  #record_form input#submit_item {
+  #record_form input#submit_item,#board_form input[type='submit'] {
     padding-top: 10px;
     padding-bottom: 30px;
   }
 
-  #record_form input::-webkit-input-placeholder { color: #ddd; }
-  #record_form input::-moz-placeholder { color: #ddd; }
+  #record_form input::-webkit-input-placeholder,#board_form input::-webkit-input-placeholder { color: #ddd; }
+  #record_form input::-moz-placeholder,#board_form input::-moz-placeholder { color: #ddd; }
 
   #sidebar.active #record_form {
     display: block;
     width: 100%;
   }
 
-  #sidebar #items, #record_form input {
+  #sidebar #items, #sidebar #boards, #record_form input {
     font-size: 14pt;
   }
 
-  #sidebar #items {
+  #sidebar #items, #sidebar #boards {
     padding: 0;
     line-height: 24pt;
   }
 
-  #sidebar #items li.hide {
+  #sidebar #items li.hide,#sidebar #boards li.hide {
     height: 0;
     opacity: 0;
     color: #333;
@@ -396,23 +410,27 @@ table.records {
     -webkit-transition: all .2s ease-in-out;
   }
 
-  #sidebar #items.active li.hide {
+  #sidebar #items.active li.hide,#sidebar #boards.active li.hide {
     height: 32px;
     opacity: 1;
     -moz-transition: height .3s ease-in-out, opacity .3s ease-in-out .3s;
     -webkit-transition: height .3s ease-in-out, opacity .3s ease-in-out .3s;
   }
 
-  #sidebar #items {
+  #sidebar #items, #sidebar #boards {
     font-weight: 300;
   }
 
-  #records div {
+  #records {
+    margin-left: 4px;
+  }
+
+  #records div.record_display {
     width: 100%;
     padding: 0;
   }
 
-  #records div .graph {
+  #records div.record_display .graph {
     font-size: 34pt;
     margin: 0 10px;
     display: block;
@@ -518,14 +536,8 @@ table.records {
       text-align: left;
       font-weight: 500;
     }
-
-
-
-@media screen, all and (max-width: 480px) {
-  #records div svg {
-    max-height: 120px;
-  }
 }
+
 
 
 

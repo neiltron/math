@@ -17,9 +17,18 @@ class Item
 
 	has_many :records
 	belongs_to :user, :touch =>  true
+  belongs_to :category, :touch =>  true
 
   def pricy?
     !!privacy
+  end
+
+  def get_records
+    if display_type == 'total'
+      self.records_total_daily
+    elsif display_type == 'average'
+      self.records_avg_daily
+    end
   end
 
   def records_total_daily

@@ -1,0 +1,56 @@
+#container
+  #content
+    %h1 Math
+    %h2 #{@category.name}
+
+    #graph.lines
+      %svg{ :style => 'height: 200px' }
+
+    #options
+      %small
+        This category is
+        %strong#privacy_link{ :href => '#' }
+          #{(@category.privacy? ? 'Private' : 'Public')}
+          %span.arrow &#x25BE;
+          %ul#privacy_menu
+            %li
+              %a{ :href => '#', :'data-privacy' => 'false' } Public
+            %li
+              %a{ :href => '#', :'data-privacy' => 'true' } Private
+
+        - unless @category.privacy?
+          - text = "<iframe frameborder=0 height='400px' width='600px' src='http://mathematics.io/category/#{@category.id.to_s}?embed=1'></iframe>"
+          %span#embed_link{ :href => '#' }
+            Get embed code
+            %span.arrow &#x25BE;
+            %ul#embed_menu
+              %textarea#embed_code #{text}
+              %object{ :classid => "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000", :width => "110", :height => "14", :id => "clippy" }
+                %param{ :name => "movie", :value => "/swf/clippy.swf" }
+                %param{ :name => "allowScriptAccess", :value => "always" }
+                %param{ :name => "quality", :value => "high" }
+                %param{ :name => "scale", :value => "noscale" }
+                %param{ :name => "FlashVars", :value => "text=#{text}" }
+                %param{ :name => "bgcolor", :value => "transparent" }
+                %param{ :name => "wmode", :value => "transparent" }
+                %embed{ :src => "/swf/clippy.swf", :width => "110", :height => "14", :name => "clippy", :quality => "high", :allowScriptAccess => "always", :type => "application/x-shockwave-flash", :pluginspage => "http://www.macromedia.com/go/getflashplayer", :FlashVars => "#{text}", :bgcolor => "transparent", :wmode => 'transparent' }
+
+        %select#add_items
+          %option Add an Item...
+          - @user.items.each do |item|
+            %option{ :value => item.id.to_s} #{item.name}
+
+
+    %table.records
+      - @category.items.order_by([[:updated_at, :desc]]).each do |item|
+        %tr
+          %td
+            %a{ :href => '/item/' + item.id.to_s } #{item.name}
+          %td #{item.updated_at}
+          %td
+            %a.delete_record{ :href => '#', :rel => "#{item.id.to_s}" } Delete
+
+    %script{ :type => 'text/javascript' }
+      :plain
+        var graph_data = #{@category.records.to_a.to_json}
+        var category_id = '#{@category.id.to_s}';
