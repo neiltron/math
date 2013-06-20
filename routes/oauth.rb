@@ -10,7 +10,6 @@ module Math
 
     get '/oauth/apps/:id' do
       @client = OAuth2::Model::Client.find(params[:id])
-      @client_secret = session[:client_secret]
       haml :'clients/show_client'
     end
 
