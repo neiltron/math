@@ -101,7 +101,7 @@ module Math
 
         resource :categories do
           get do
-            categories = @user.categories.map do |categories|
+            categories = @user.categories.map do |category|
                 Boxer.ship(:category, category)
             end
 
