@@ -46,7 +46,7 @@ module Math
       end
 
       get 'profile' do
-        return Boxer.ship(:user, current_user)
+        Boxer.ship(:user, current_user)
       end
 
       resource ':user_id' do
