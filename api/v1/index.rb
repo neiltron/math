@@ -9,9 +9,6 @@ end
 
 module Math
   class API < Grape::API
-    use Garner::Middleware::Cache::Bust
-    helpers Garner::Mixins::Grape::Cache
-
     version '1'
     prefix 'api'
 
