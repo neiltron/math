@@ -90,7 +90,7 @@ module Math
 
       @user = current_user
       @category = Category.find(params[:id])
-      @records = @category.records.map
+      @records = @category.records
 
       #return embeddable-specific layout if embed=1
       if params[:embed]

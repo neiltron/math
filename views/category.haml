@@ -53,5 +53,5 @@
 
     %script{ :type => 'text/javascript' }
       :plain
-        var graph_data = #{@category.records.to_a.to_json}
+        var graph_data = #{@records.to_a.to_json}
         var category_id = '#{@category.id.to_s}';
