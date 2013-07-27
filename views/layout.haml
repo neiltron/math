@@ -174,7 +174,7 @@
             )
           } else if ($('#graph').length) {
             nv.addGraph(function() {
-              chart = nv.models.lineChart()
+              var chart = nv.models.lineChart()
                         .tooltipContent(function (key, x, y, e, graph) {
                           var tooltip = [];
 
@@ -226,7 +226,7 @@
           function return_values (data, i) {
             var key = data.key || '';
 
-            data = $(data.values).map(function(i, value) {
+            var values = $(data.values).map(function(i, value) {
               if (isNumber(value[1])) {
                 return { key: data.name, x: value[0], y: value[1] };
               }
@@ -243,7 +243,7 @@
 
             return {
               area: true,
-              values: data,
+              values: values,
               color: colors[i] || '#faa',
               key: key
             }
