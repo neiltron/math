@@ -9,7 +9,7 @@ ENV['RACK_ENV'] ||= "development"
 require 'rubygems'
 require 'bundler'
 require 'app'
-require 'api/v1/index'
+require 'api/index'
 require 'oauth2/provider'
 
 #configs

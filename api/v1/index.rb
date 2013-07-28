@@ -1,16 +1,6 @@
-require 'rubygems'
-require 'bundler/setup'
-
-%w{
-  grape garner json date uri mongoid boxer
-}.each do |lib|
-  require lib
-end
-
 module Math
-  class API < Grape::API
+  class V1 < Grape::API
     version '1'
-    prefix 'api'
 
     helpers do
       def current_user
@@ -31,9 +21,15 @@ module Math
       end
     end
 
+    before do
+        header['Access-Control-Allow-Origin'] = '*'
+        header['Access-Control-Request-Method'] = '*'
+    end
+
     resource :users do
       before{ authenticate! }
 
+      desc 'Get a list of Users'
       get do
         error!('401 Unauthorized', 401) unless current_user.is_admin
 
@@ -42,6 +38,7 @@ module Math
         end
       end
 
+      desc 'Get the profile for the current user'
       get 'profile' do
         Boxer.ship(:user, current_user)
       end
@@ -53,17 +50,26 @@ module Math
           error!('401 Unauthorized', 401) unless current_user == @user || current_user.is_admin
         end
 
+        desc 'Get profile information for the specified user'
+        params do
+          requires :user_id, type: String, desc: 'User ID'
+        end
         get do
           Boxer.ship(:user, @user)
         end
 
         resource :items do
+          desc 'Get all items belonging to the specified user'
           get do
             @user.items.order_by([[:updated_at, :desc]]).map do |item|
               Boxer.ship(:item, item)
             end
           end
 
+          desc 'Update the specified item'
+          params do
+            requires :id, type: String, desc: 'Item ID'
+          end
           put ':id' do
             item = Item.find(params[:id])
 
@@ -75,6 +81,7 @@ module Math
           end
 
           resource ':id/records' do
+            desc 'Get all records for the specified item'
             get do
               per = (params[:per] || 7).to_i
               page = (params[:page] || 0).to_i
@@ -89,6 +96,7 @@ module Math
               { values: records.to_a }
             end
 
+            desc 'Delete a record'
             delete ':record_id' do
               record = Record.find(params[:record_id])
               record.delete
@@ -97,6 +105,7 @@ module Math
         end
 
         resource :categories do
+          desc 'Get all categories belonging to a user'
           get do
             categories = @user.categories.map do |category|
                 Boxer.ship(:category, category)
@@ -107,6 +116,11 @@ module Math
             }
           end
 
+          desc 'Create a new category'
+          params do
+            requires :name, type: String, desc: 'Category name'
+            optional :item_ids, desc: 'An list of items to be included in this category'
+          end
           post do
             category = Category.create!( :name => params[:name] )
 
@@ -122,17 +136,23 @@ module Math
             Boxer.ship(:category, category)
           end
 
+          params do
+            requires :category_id, desc: 'Category ID'
+          end
           resource ':category_id' do
             before { @category = Category.find(params[:category_id]) }
 
+            desc 'Get category information'
             get do
               Boxer.ship(:category, @category)
             end
 
+            desc 'Update a category'
             put do
               @category.update_attributes!(params) if @category.user == current_user
             end
 
+            desc 'Add items to a category'
             post 'items' do
               params[:items].each do |item_id|
                 item = Item.find(item_id)
@@ -142,6 +162,7 @@ module Math
               @category.save
             end
 
+            desc 'Get all related records for a category'
             get 'records' do
               per = (params[:per] || 7).to_i
               page = (params[:page] || 0).to_i
@@ -152,6 +173,11 @@ module Math
           end
         end
 
+        desc 'Create a new record'
+        params do
+          requires :item_name, type: String, desc: 'Item name'
+          requires :amount, type: Float, desc: 'Record value'
+        end
         post '/records' do
           item = Item.find_or_create_by( :name => params[:item_name].downcase )
           @user.items.push item unless @user.items.include? item

@@ -38,15 +38,16 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.3.2)
-    backports (2.6.4)
+    backports (3.3.3)
     bcrypt-ruby (3.0.1)
     boxer (1.0.2)
       activesupport (>= 3.0.0)
     bson (1.7.0)
     bson_ext (1.7.0)
       bson (~> 1.7.0)
-    builder (3.0.3)
+    builder (3.0.4)
     daemons (1.1.9)
+    descendants_tracker (0.0.1)
     diff-lcs (1.1.3)
     eventmachine (1.0.0)
     excon (0.16.4)
@@ -55,17 +56,21 @@ GEM
       json
       multi_json (>= 1.3.0)
       rack
-    grape (0.2.2)
+    grape (0.5.0)
       activesupport
-      hashie (~> 1.2)
+      builder
+      hashie (>= 1.2.0)
       multi_json (>= 1.3.2)
-      multi_xml
-      rack
+      multi_xml (>= 0.5.2)
+      rack (>= 1.3.0)
       rack-accept
       rack-mount
       virtus
+    grape-swagger (0.6.0)
+      grape (>= 0.2.0)
+      kramdown
     haml (3.1.7)
-    hashie (1.2.0)
+    hashie (2.0.5)
     heroku (2.32.11)
       heroku-api (~> 0.3.5)
       launchy (>= 0.3.2)
@@ -74,8 +79,9 @@ GEM
       rubyzip
     heroku-api (0.3.5)
       excon (~> 0.16.1)
-    i18n (0.6.1)
+    i18n (0.6.4)
     json (1.7.5)
+    kramdown (1.1.0)
     launchy (2.1.2)
       addressable (~> 2.3)
     mail (2.4.4)
@@ -92,15 +98,15 @@ GEM
     mongoid_token (1.1.0)
       mongoid (~> 3.0)
     moped (1.2.7)
-    multi_json (1.3.6)
-    multi_xml (0.5.1)
+    multi_json (1.7.7)
+    multi_xml (0.5.4)
     netrc (0.7.7)
     newrelic_rpm (3.3.0)
     origin (1.0.9)
     polyglot (0.3.3)
     pony (1.4)
       mail (> 2.0)
-    rack (1.4.1)
+    rack (1.5.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-mount (0.8.3)
@@ -134,8 +140,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
-    virtus (0.5.2)
-      backports (~> 2.6.1)
+    virtus (0.5.5)
+      backports (~> 3.3)
+      descendants_tracker (~> 0.0.1)
     warden (1.2.1)
       rack (>= 1.0)
 
@@ -149,6 +156,7 @@ DEPENDENCIES
   bson_ext
   garner
   grape
+  grape-swagger
   haml
   heroku
   json
