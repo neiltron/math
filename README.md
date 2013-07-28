@@ -1,20 +1,25 @@
-Math
+#Math
 ====
 
-# Requirements
+### Requirements
 
   Ruby 1.9.3+
+
   MongoDB
 
 
-# Setup
+### Setup
 
   Clone this repo
+
   Configure via ENV vars
+
   bundle install
+
   bundle exec rackup
 
-# Creating Clients
+
+### Creating Clients
 
   There is a built in web interface, but you can also create external clients that authenticate via OAuth. These can be anything from native mobile apps to command-line scripts that do nothing but harvest data and post to Math.
 
