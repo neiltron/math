@@ -1,5 +1,4 @@
 #Math
-====
 
 ### Requirements
 
@@ -10,14 +9,37 @@
 
 ### Setup
 
-  Clone this repo
+  Clone the repository: `git clone git@github.com:neiltron/math.git`
 
-  Configure via ENV vars
+  Configure via [environment variables](./#configuration).
 
-  bundle install
+  `bundle install && bundle exec rackup`
+  
 
-  bundle exec rackup
+### Configuration
 
+  Math expects the following environment variables to be set.
+
+  `MATH_DOMAIN`  The root host used in links and emails throughout the site. Examples: 'http://yourdomain.com' or 'http://localhost:999'
+  
+  `SESSION_SECRET` A secret key for session cookies. 
+  
+  `SMTP_HOST`
+  
+  `SMTP_PORT`
+  
+  `SMTP_USER`
+  
+  `SMTP_PASS`
+  
+  `SMTP_DOMAIN`
+  
+  `NEW_RELIC_LICENSE_KEY` [optional]
+  
+  `NEW_RELIC_APP_NAME` [optional]
+  
+  `MONGOHQ_URL` Math requires MongoDB and is currently setup to specifically use MongoHQ, but we should be able to abstract this soon.
+  
 
 ### Creating Clients
 
