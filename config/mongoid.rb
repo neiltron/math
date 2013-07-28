@@ -9,8 +9,4 @@ module Mongoid
 end
 
 #mongo connects
-if ENV['RACK_ENV'] == 'production'
-  Mongoid.load!("config/mongoid.yml", :production)
-elsif ENV['RACK_ENV'] == 'development'
-	Mongoid.load!("config/mongoid.yml", :development)
-end
+Mongoid.load!("config/mongoid.yml", ENV['RACK_ENV'].to_sym)
