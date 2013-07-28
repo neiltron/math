@@ -70,10 +70,10 @@ class User
 
   def send_confirmation
     subject = 'Signup confirmation'
-    body = "You recently signed up for Math. <br><br><a href='https://mathematics.io/confirm?key=" + self.confirm_token + "'>Click here to confirm your account</a>."
+    body = "You recently signed up for Math. <br><br><a href='http://" + ENV['MATH_DOMAIN'] + "/confirm?key=" + self.confirm_token + "'>Click here to confirm your account</a>."
 
     Pony.mail :to => email,
-              :from => 'no-reply@mathematics.io',
+              :from => 'no-reply@' + ENV['MATH_DOMAIN'],
               :subject => subject,
               :body => body,
               :headers => { 'Content-Type' => 'text/html' },
@@ -83,10 +83,10 @@ class User
 
   def send_forgot_pass_email
     subject = 'Forgot password'
-    body = "Someone used the forgot password form at Math. <br><br><a href='https://mathematics.io/resetpw?key=" + self.confirm_token + "'>Click here to change your password</a>."
+    body = "Someone used the forgot password form at Math. <br><br><a href='http://" + ENV['MATH_DOMAIN'] + "/resetpw?key=" + self.confirm_token + "'>Click here to change your password</a>."
 
     Pony.mail :to => email,
-              :from => 'no-reply@mathematics.io',
+              :from => 'no-reply@' + ENV['MATH_DOMAIN'],
               :subject => subject,
               :body => body,
               :headers => { 'Content-Type' => 'text/html' },

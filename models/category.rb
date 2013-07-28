@@ -27,8 +27,6 @@ class Category
   end
 end
 
-# embed_template = File.read(File.join(settings.views, 'category_embed.haml'))
-
 Boxer.box(:category) do |box, category|
   box.view(:base) do
     {
@@ -37,20 +35,4 @@ Boxer.box(:category) do |box, category|
       :item_ids => category.items.map { |item| item.id.to_s }
     }
   end
-
-  # box.view(:oembed) do
-  #   html = Haml::Engine.new(embed_template).render(Object.new, { category: category, items: category.items })
-  #   escaped_html = Haml::Helpers.html_escape html
-
-  #   {
-  #     type: 'rich',
-  #     version: '1.0',
-  #     title: category.name,
-  #     provider_name: 'Math',
-  #     provider_url: 'http://www.mathematics.io',
-  #     html: escaped_html,
-  #     width: 400,
-  #     height: 300
-  #   }
-  # end
 end

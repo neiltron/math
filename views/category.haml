@@ -20,7 +20,7 @@
               %a{ :href => '#', :'data-privacy' => 'true' } Private
 
         - unless @category.privacy?
-          - text = "<iframe frameborder=0 height='400px' width='600px' src='http://mathematics.io/category/#{@category.id.to_s}?embed=1'></iframe>"
+          - text = "<iframe frameborder=0 height='400px' width='600px' src='http://" + ENV['MATH_DOMAIN'] + "/category/#{@category.id.to_s}?embed=1'></iframe>"
           %span#embed_link{ :href => '#' }
             Get embed code
             %span.arrow &#x25BE;

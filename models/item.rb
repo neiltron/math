@@ -113,7 +113,7 @@ Boxer.box(:item) do |box, item, viewer, opts|
       version: '1.0',
       title: item.name,
       provider_name: 'Math',
-      provider_url: 'http://www.mathematics.io',
+      provider_url: 'http://' + ENV['MATH_DOMAIN'],
       html: escaped_html,
       width: 400,
       height: 300
