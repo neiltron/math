@@ -2,6 +2,7 @@ ruby '1.9.3'
 source "http://rubygems.org"
 gem "rack"
 gem 'rack-flash', :git => 'https://github.com/chy-causer/rack-flash'
+gem 'rack-cors', :require => 'rack/cors'
 gem 'rake'
 gem "thin"
 gem "sinatra"
@@ -14,6 +15,7 @@ gem "haml"
 gem 'json'
 gem "metaid"
 gem 'grape'
+gem 'grape-swagger'
 gem 'garner'
 gem 'warden'
 gem 'oauth2-provider', :git => 'https://github.com/neiltron/oauth2-provider.git'

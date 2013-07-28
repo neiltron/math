@@ -8,8 +8,19 @@ ENV['RACK_ENV'] ||= "development"
 
 require 'rubygems'
 require 'bundler'
+require 'rack/cors'
+
+use Rack::Cors do
+  allow do
+    origins '*'
+    resource '*',
+      headers: ['Origin', 'Accept', 'Content-Type', 'X-CSRF-Token'],
+      methods: [:get, :post, :put, :delete, :options]
+  end
+end
+
 require 'app'
-require 'api/v1/index'
+require 'api/index'
 require 'oauth2/provider'
 
 #configs
