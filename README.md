@@ -1,4 +1,5 @@
 #Math
+[![Code Climate](https://codeclimate.com/github/neiltron/math.png)](https://codeclimate.com/github/neiltron/math)
 
 ### Requirements
 
