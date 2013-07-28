@@ -21,22 +21,8 @@ module Math
       end
     end
 
-    before do
-        header['Access-Control-Allow-Origin'] = '*'
-        header['Access-Control-Request-Method'] = '*'
-    end
-
     resource :users do
       before{ authenticate! }
-
-      desc 'Get a list of Users'
-      get do
-        error!('401 Unauthorized', 401) unless current_user.is_admin
-
-        User.all.map do |user|
-          Boxer.ship(:user, user)
-        end
-      end
 
       desc 'Get the profile for the current user'
       get 'profile' do
