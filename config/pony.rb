@@ -1,9 +1,9 @@
 PONY_CONFIG = {
-  :address              => 'smtp.gmail.com',
-  :port                 => '587',
+  :address              => ENV['SMTP_HOST'],
+  :port                 => ENV['SMTP_PORT'],
   :enable_starttls_auto => true,
-  :user_name            => 'neil@descend.org',
-  :password             => 'breakneck',
+  :user_name            => ENV['SMTP_USER'],
+  :password             => ENV['SMTP_PASS'],
   :authentication       => :plain,
-  :domain               => "localhost.localdomain"
+  :domain               => ENV['SMTP_DOMAIN']
 }
