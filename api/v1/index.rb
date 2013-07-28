@@ -8,7 +8,7 @@ module Math
 
         if accesskey.nil?
           accesskey = OAuth2::Model.find_access_token( params[:accesskey] )
-          user = accesskey.owner
+          user = accesskey.nil? ? nil : accesskey.owner
         else
           user = accesskey.user
         end
