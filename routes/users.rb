@@ -101,7 +101,7 @@ module Math
     end
 
     post '/login/?' do
-      user = User.authenticate(params['email'],params['password'],params['accesskey'])
+      user = User.authenticate(params['email'],params['password'])
 
       if user
         session[:accesskey] = user.accesskey.token

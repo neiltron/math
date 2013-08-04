@@ -36,28 +36,19 @@ class User
     self.password_hash == encrypt(password)
   end
 
-  def self.authenticate (email = nil, password = nil, accesskey = nil)
+  def self.authenticate (accesskey)
+    key = AccessKey.find_by_token(accesskey)
+
+    key.nil? ? false : key.user
+  end
+
+  def self.authenticate (email, password)
     user = User.where( :email => email.downcase ).first
-    user = nil unless user.nil? || user.authenticated?(password)
-
-    if user.nil?
-      if accesskey.nil?
-        false
-      else
-        key = AccessKey.find_by_token(accesskey)
-
-        if key.nil?
-          false
-        else
-          user = key.user
-        end
-      end
-    else
-      user.remembered_pass! if !user.confirm_token.nil? #clear confirm token if user has logged in
-    end
 
     #give user an access key if they don't have one. this should only really happen on first login
-    if !user.nil? && user.accesskey.nil?
+    if !user.authenticated?(password)
+      user.remembered_pass! #clear confirm token if user has logged in
+
       user.accesskey.reset if user.accesskey.expires.to_i <= Time.new.to_i || user.accesskey.expires.nil?
     end
 
@@ -75,7 +66,7 @@ class User
   end
 
   def remembered_pass!
-    self.confirm_token = nil?
+    self.confirm_token = nil if !user.confirm_token.nil?
     self.save
   end
 
