@@ -68,32 +68,6 @@ class User
     user || nil
   end
 
-  def send_confirmation
-    subject = 'Signup confirmation'
-    body = "You recently signed up for Math. <br><br><a href='http://" + ENV['MATH_DOMAIN'] + "/confirm?key=" + self.confirm_token + "'>Click here to confirm your account</a>."
-
-    Pony.mail :to => email,
-              :from => 'no-reply@' + ENV['MATH_DOMAIN'],
-              :subject => subject,
-              :body => body,
-              :headers => { 'Content-Type' => 'text/html' },
-              :via => :smtp,
-              :via_options => PONY_CONFIG
-  end
-
-  def send_forgot_pass_email
-    subject = 'Forgot password'
-    body = "Someone used the forgot password form at Math. <br><br><a href='http://" + ENV['MATH_DOMAIN'] + "/resetpw?key=" + self.confirm_token + "'>Click here to change your password</a>."
-
-    Pony.mail :to => email,
-              :from => 'no-reply@' + ENV['MATH_DOMAIN'],
-              :subject => subject,
-              :body => body,
-              :headers => { 'Content-Type' => 'text/html' },
-              :via => :smtp,
-              :via_options => PONY_CONFIG
-  end
-
   def confirm!
     self.confirmed = true
     self.save

@@ -19,7 +19,7 @@ module Math
         end
 
         user.save
-        user.send_confirmation
+        TransactionalEmail.send_confirmation(user)
 
         haml :'users/signup/confirmation_sent'
       else
@@ -61,7 +61,7 @@ module Math
       end
 
       user.forgot_pass!
-      user.send_forgot_pass_email
+      TransactionalEmail.send_forgot_pass_email(user)
 
       haml :'users/forgot_pass_sent'
     end
