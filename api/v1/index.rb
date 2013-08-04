@@ -8,7 +8,7 @@ module Math
 
         if accesskey.nil?
           accesskey = OAuth2::Model.find_access_token( params[:accesskey] )
-          user = accesskey.owner
+          user = accesskey.nil? ? nil : accesskey.owner
         else
           user = accesskey.user
         end
@@ -17,7 +17,7 @@ module Math
       end
 
       def authenticate!
-        error!('401 Unauthorized', 401) unless current_user
+        error!('Unauthorized', 401) unless current_user
       end
     end
 

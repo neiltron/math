@@ -91,8 +91,7 @@ class Item
   end
 end
 
-
-embed_template = File.read(File.join(settings.views, 'item_embed.haml'))
+embed_template = File.read(File.expand_path('../../views/item_embed.haml', __FILE__))
 
 Boxer.box(:item) do |box, item, viewer, opts|
   box.view(:base) do
