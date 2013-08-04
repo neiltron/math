@@ -3,25 +3,25 @@ require 'boxer'
 require 'pony'
 
 class User
-	include Mongoid::Document
-	include Mongoid::Timestamps
-	include Mongoid::Paranoia
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Paranoia
   include OAuth2::Model::ResourceOwner
   include OAuth2::Model::ClientOwner
 
-	field :name, :type => String
+  field :name, :type => String
   field :email, :type => String
   field :password_hash, :type => String
   field :confirmed, :type => Boolean
   field :confirm_token, :type => String
-	field :last_update, :type => String
+  field :last_update, :type => String
   field :items_updated_at, :type => DateTime
   field :password_salt, :type => String
 
-	index({ :email => 1 }, { :unique => true })
+  index({ :email => 1 }, { :unique => true })
 
-	has_one :accesskey, :class_name => 'AccessKey'
-	has_many :items
+  has_one :accesskey, :class_name => 'AccessKey'
+  has_many :items
   has_many :categories
 
   before_create :process_on_create
@@ -58,10 +58,6 @@ class User
 
     #give user an access key if they don't have one. this should only really happen on first login
     if !user.nil? && user.accesskey.nil?
-      user.accesskey = AccessKey.new
-      user.accesskey.save
-      user.save
-
       user.accesskey.reset if user.accesskey.expires.to_i <= Time.new.to_i || user.accesskey.expires.nil?
     end
 
@@ -96,6 +92,10 @@ class User
     encrypt_pass
 
     self.confirm_token = new_token
+
+    #create accesskey
+    self.accesskey = AccessKey.new
+    self.accesskey.save
   end
 
   protected

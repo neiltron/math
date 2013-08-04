@@ -7,11 +7,10 @@ describe Math::API do
     Math::API
   end
 
-  before do
+  before(:all) do
     @user = User.create(email: 'fake@email.com', password: 'fakepass')
     @user.confirm!
 
-    @user.accesskey = AccessKey.new
     @accesskey = @user.accesskey.token.to_s
   end
 
