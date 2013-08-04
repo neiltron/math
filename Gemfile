@@ -17,7 +17,6 @@ gem "metaid"
 gem 'grape'
 gem 'grape-swagger'
 gem 'garner'
-gem 'warden'
 gem 'oauth2-provider', :git => 'https://github.com/neiltron/oauth2-provider.git'
 gem 'mongoid_token'
 gem 'boxer'
