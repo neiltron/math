@@ -102,6 +102,7 @@ module Math
   end
 
   require_relative 'models/init'
-  require_relative 'routes/users'
   require_relative 'routes/oauth'
+  require_relative 'routes/signin'
+  require_relative 'routes/signup'
 end
