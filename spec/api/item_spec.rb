@@ -11,7 +11,6 @@ describe Math::API do
     @user = User.create(email: 'fake@email.com', password: 'fakepass')
     @user.confirm!
 
-    @user.accesskey = AccessKey.new
     @accesskey = @user.accesskey.token.to_s
   end
 
