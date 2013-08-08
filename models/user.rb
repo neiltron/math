@@ -46,13 +46,15 @@ class User
     user = User.where( :email => email.downcase ).first
 
     #give user an access key if they don't have one. this should only really happen on first login
-    if !user.authenticated?(password)
+    if user && user.authenticated?(password)
       user.remembered_pass! #clear confirm token if user has logged in
 
       user.accesskey.reset if user.accesskey.expires.to_i <= Time.new.to_i || user.accesskey.expires.nil?
+      user
+    else
+      nil
     end
 
-    user || nil
   end
 
   def confirm!
@@ -66,7 +68,7 @@ class User
   end
 
   def remembered_pass!
-    self.confirm_token = nil if !user.confirm_token.nil?
+    self.confirm_token = nil if !self.confirm_token.nil?
     self.save
   end
 
