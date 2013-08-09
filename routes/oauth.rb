@@ -37,9 +37,13 @@ module Math
     end
 
     get '/developer' do
-      @clients = OAuth2::Model::Client.where( :oauth2_client_owner => current_user.id.to_s )
+      if current_user
+        @clients = OAuth2::Model::Client.where( :oauth2_client_owner => current_user.id.to_s )
 
-      haml :'clients/list_clients'
+        haml :'clients/list_clients'
+      else
+        redirect '/login'
+      end
     end
 
 
