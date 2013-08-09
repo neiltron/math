@@ -6,6 +6,12 @@ $LOAD_PATH.unshift ::File.dirname(__FILE__)
 
 ENV['RACK_ENV'] ||= "development"
 
+if ENV['RACK_ENV'] == 'development'
+  log = File.new("log/development.log", "a+")
+  $stdout.reopen(log)
+  $stderr.reopen(log)
+end
+
 require 'rubygems'
 require 'bundler'
 require 'rack/cors'
