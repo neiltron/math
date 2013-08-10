@@ -40,7 +40,9 @@ module Math
           item = Item.find_or_create_by( :name => params[:item_name].downcase )
           @user.items.push item unless @user.items.include? item
 
-          record = Record.create!( :amount => params[:amount], :user => current_user, :item => item )
+          timestamp = params[:timestamp] || Time.now
+          record = Record.create!( :created_at => timestamp.to_time, :amount => params[:amount], :user => current_user, :item => item )
+
           item.touch
 
           Boxer.ship(:record, record)
