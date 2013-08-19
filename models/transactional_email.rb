@@ -4,14 +4,14 @@ require 'pony'
 class TransactionalEmail
   def self.send_confirmation (user)
     subject = 'Signup confirmation'
-    body = "You recently signed up for Math. <br><br><a href='http://" + ENV['MATH_DOMAIN'] + "/confirm?key=" + user.confirm_token + "'>Click here to confirm your account</a>."
+    body = "You recently signed up for Math. <br><br><a href='#{ENV['MATH_DOMAIN']}/confirm?key=" + user.confirm_token + "'>Click here to confirm your account</a>."
 
     self.send_email(user, subject, body)
   end
 
   def self.send_forgot_pass_email (user)
     subject = 'Forgot password'
-    body = "Someone used the forgot password form at Math. <br><br><a href='http://" + ENV['MATH_DOMAIN'] + "/resetpw?key=" + user.confirm_token + "'>Click here to change your password</a>."
+    body = "Someone used the forgot password form at Math. <br><br><a href='#{ENV['MATH_DOMAIN']}/resetpw?key=" + user.confirm_token + "'>Click here to change your password</a>."
 
     self.send_email(user, subject, body)
   end
