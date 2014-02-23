@@ -2,11 +2,12 @@
 %html
   %head
     %title D#M
-    %link{ :rel => 'stylesheet', :href => '/css/nv.d3.css' }
-    %link{ :rel => 'stylesheet', :href => '/css/style.css' }
+
+    = css :app, :media => 'screen'
+
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
     - unless @item.nil?
-      %link{ :rel => 'alternate', :type => 'application/json+oembed', :href => "http://" + ENV['MATH_DOMAIN'] + "/oembed?url=http://" + ENV['MATH_DOMAIN'] + "/item/#{@item.id.to_s}", :title => 'Math' }
+      %link{ :rel => 'alternate', :type => 'application/json+oembed', :href => ENV['MATH_DOMAIN'] + "/oembed?url=" + ENV['MATH_DOMAIN'] + "/item/#{@item.id.to_s}", :title => 'Math' }
 
   %body
     - unless @user.nil? || @page == 'oauth' || params[:embed]
@@ -40,6 +41,8 @@
     = yield
 
 
+
+    = js :app
     - unless @user.nil?
       <!--[if lt IE 9]>
       <!-- For compatibility with older IEs -->
@@ -47,11 +50,6 @@
       <script src="/js/excanvas.min.js"></script>
       <![endif]-->
 
-      %script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
-      %script{ :type => 'text/javascript', :src => '/js/FastClick.js' }
-      %script{ :type => 'text/javascript', :src => '/js/d3.v2.min.js' }
-      %script{ :type => 'text/javascript', :src => '/js/nv.d3.js' }
-      %script{ :type => 'text/javascript', :src => '/js/keymaster.min.js' }
 
       :javascript
         var items = [];
