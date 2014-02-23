@@ -26,10 +26,11 @@ gem 'pony'
 group :production do
   gem 'rack-ssl'
   gem 'newrelic_rpm'
+  gem 'heroku-deflater'
 end
 
 group :test do
-	gem 'rack-test', :git => 'https://github.com/brynary/rack-test.git'
-	gem 'rspec'
-	gem 'rspec-core'
+  gem 'rack-test', :git => 'https://github.com/brynary/rack-test.git'
+  gem 'rspec'
+  gem 'rspec-core'
 end
