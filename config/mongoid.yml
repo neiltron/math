@@ -68,6 +68,15 @@ test:
         consistency: :strong
 
 
+staging:
+  sessions:
+    default:
+      uri: <%= ENV['MONGO_URL'] %>
+      options:
+        skip_version_check: true
+        safe: true
+
+
 # set these environment variables on your prod server
 production:
   sessions:
