@@ -27,7 +27,7 @@ class User
   before_create :process_on_create
   after_save :encrypt_pass
 
-  #add username method to appease oath2-provider gem
+  #add username method to appease oauth2-provider gem
   def username
     name
   end
