@@ -6,7 +6,6 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'rake'
 gem "thin"
 gem "sinatra"
-gem 'sinatra-assetpack', :require => 'sinatra/assetpack'
 gem "bson"
 gem "bson_ext"
 gem "mongoid"

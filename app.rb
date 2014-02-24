@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 %w{
-  sinatra sinatra/assetpack haml bson mongoid json boxer mongoid_taggable_with_context rack-flash oauth2/provider
+  sinatra haml bson mongoid json boxer mongoid_taggable_with_context rack-flash oauth2/provider
 }.each do |lib|
   require lib
 end
