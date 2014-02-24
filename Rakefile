@@ -5,7 +5,6 @@ require 'rake'
 # require 'rspec/core'
 # require 'rspec/core/rake_task'
 
-require 'sinatra/assetpack/rake'
 
 APP_FILE  = 'app.rb'
 APP_CLASS = 'Web'

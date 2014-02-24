@@ -61,7 +61,6 @@ body.sidebar {
 }
 
   #records div.record_display {
-    float: left;
     display: block;
     position: relative;
     width: 400px;
@@ -94,9 +93,17 @@ body.sidebar {
     font-size: 48pt;
     margin: 0;
   }
+  .item_container h1 {
+    padding-left: 15px;
+  }
     h1 a {
+      padding: 0 30px;
       color: inherit;
       text-decoration: none;
+      font-size: 24pt;
+      height: 49px;
+      line-height: 49px;
+      vertical-align: middle;
     }
   #oauth h2 {
     font-size: 32pt;
@@ -269,16 +276,16 @@ body.sidebar #plus:before {
   color: #d88;
   font-size: 24pt;
   position: relative;
-  left: -60px;
+  left: -13px;
 }
 
 table.records {
-  border: 1px solid #bbb;
+  border: 1px solid #ddd;
   padding: 0;
-  width: 90%;
+  width: 98%;
 }
   table.records tr {
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid #ddd;
     padding: 5px;
     display: block;
   }
@@ -306,12 +313,14 @@ table.records {
 
 @media screen, all and (min-width: 300px) {
   #container {
-    padding-top: 25px;
-    padding-left: 0;
-    padding: 25px 0;
+    padding: 7px 0 50px 0;
   }
+  #container.item_container #content {
+    padding-left: 15px;
+  }
+
   #content {
-    padding-left: 60px;
+    padding-left: 30px;
   }
   #sidebar {
     position: fixed;
@@ -325,23 +334,20 @@ table.records {
   #plus {
     display: block;
     position: absolute;
-    top: 37px;
+    top: 20px;
     right: -42px;
-    font-size: 36pt;
+    font-size: 32pt;
     background-color: #F66;
     color: #FDFDFD;
-    padding: 0 0 10px;
     text-align: center;
-    line-height: 41px;
-    height: auto;
+    height: 54px;
     width: 45px;
-    vertical-align: middle;
     border-radius: 3px;
   }
 
   #record_form, #board_form {
     clear: both;
-    margin-top: 30px;
+    margin-top: 17px;
     position: relative;
     -moz-transition: height .4s ease-in-out;
     -webkit-transition: height .4s ease-in-out;
@@ -436,7 +442,7 @@ table.records {
   }
 
   #records {
-    margin-left: 4px;
+    margin: 4px;
   }
 
   #records div.record_display {
@@ -448,6 +454,10 @@ table.records {
     font-size: 34pt;
     margin: 0 10px;
     display: block;
+  }
+
+  #records div.record_display svg {
+    margin-left: -15px;
   }
 
   #login,#oauth {
@@ -602,7 +612,7 @@ table.records {
 
 #container.embed { padding: 0; }
 #container.embed #content {
-  padding: 25px 0 0;
+  padding: 0;
   position: relative;
 }
 

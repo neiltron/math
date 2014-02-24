@@ -19,7 +19,6 @@ module Math
     set :haml, {:format => :html5 }
     set :protection, :except => :frame_options
 
-    register Sinatra::AssetPack
     enable :methodoverride
 
     helpers do
