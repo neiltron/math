@@ -1,6 +1,7 @@
 require 'uri'
 require 'mongoid'
-require 'garner'
+require "garner/mixins/rack"
+require "garner/mixins/mongoid"
 
 module Mongoid
   module Document
