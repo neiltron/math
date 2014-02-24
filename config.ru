@@ -36,6 +36,8 @@ require 'config/pony'
 use Rack::Session::Cookie, :key => 'rack.session', :secret => ENV['SESSION_SECRET'] || 'octothorps'
 use Rack::Flash
 
+use Rack::Deflater
+
 OAuth2::Provider.realm = 'Mathematics'
 
 PERMISSIONS = {

@@ -3,7 +3,8 @@
   %head
     %title D#M
 
-    = css :app, :media => 'screen'
+    %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/css/style.css' }
+    %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/css/nv.d3.css' }
 
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1' }
     - unless @item.nil?
@@ -42,7 +43,14 @@
 
 
 
-    = js :app
+    %script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
+    %script{ :type => 'text/javascript', :src => '/js/FastClick.js' }
+    %script{ :type => 'text/javascript', :src => '/js/d3.v2.min.js' }
+    %script{ :type => 'text/javascript', :src => '/js/nv.d3.js' }
+    %script{ :type => 'text/javascript', :src => '/js/keymaster.min.js' }
+
+
+
     - unless @user.nil?
       <!--[if lt IE 9]>
       <!-- For compatibility with older IEs -->

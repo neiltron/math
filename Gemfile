@@ -27,7 +27,6 @@ gem 'pony'
 group :production do
   gem 'rack-ssl'
   gem 'newrelic_rpm'
-  gem 'heroku-deflater'
 end
 
 group :test do
