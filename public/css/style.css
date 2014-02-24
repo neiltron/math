@@ -14,8 +14,8 @@ body {
   position: relative;
 
 
-             -moz-transition: transform .1s ease-in-out;
-  -webkit-transition: -webkit-transform .1s ease-in-out;
+             -moz-transition: transform .1s ease;
+  -webkit-transition: -webkit-transform .1s ease;
 }
 
 body.sidebar {
@@ -140,7 +140,6 @@ body.sidebar {
 #plus {
   position: relative;
   top: -100%;
-  display: inline;
   margin: 0 auto;
   width: 41px;
   color: #f88;
@@ -148,6 +147,20 @@ body.sidebar {
   outline: 0;
 
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+#plus:before {
+  content: '+';
+  display: inline-block;
+
+             -moz-transition: transform .25s ease-in-out;
+  -webkit-transition: -webkit-transform .25s ease-in-out;
+}
+
+body.sidebar #plus:before {
+          transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+  -webkit-transform:rotate(45deg);
 }
 
 #plus:hover, #plus.active {

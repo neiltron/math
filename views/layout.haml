@@ -14,7 +14,6 @@
     - unless @user.nil? || @page == 'oauth' || params[:embed]
       #sidebar
         %a#plus{ :href => '#' }
-          +
 
         %form{ :id => 'record_form', :method => 'POST', :action => '/records' }
           %input{ :type => 'text', :name => 'item_name', :id => 'item_name', :autocapitalize => 'off', :placeholder => 'Add an item' }
@@ -263,7 +262,7 @@
             }
           }
 
-          $('#plus').bind('click', function (e) {
+          $('#plus').bind('mousedown touchstart', function (e) {
             e.preventDefault();
 
             toggle_sidebar();
