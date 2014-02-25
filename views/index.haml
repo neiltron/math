@@ -4,3 +4,9 @@
       %a{ :href => '/' } Math
 
     #records
+      - @user.items.order_by([[:updated_at, :desc]]).each do |item|
+        %div{ :class => 'record_display', 'data-item-id' => item.id.to_s, :id => 'chart_' + item.id.to_s }
+          %h2
+            %a{ :href=> '/item/' + item.id.to_s } #{item.name}
+
+          %svg{ :style => 'height: 100px' }

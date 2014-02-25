@@ -2,9 +2,10 @@
   #content
     %h1
       %a{ :href => '/' } Math
-    %h2 #{@item.name}
 
-    #graph.lines
+    .record_display{ :id => 'chart_' + @item.id.to_s, 'data-item-id' => @item.id.to_s }
+      %h2 #{@item.name}
+
       %svg{ :style => 'height: 200px' }
 
     #options
