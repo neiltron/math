@@ -4,7 +4,7 @@
       %a{ :href => '/' } Math
     %h2 #{@category.name}
 
-    #graph.lines
+    .record_display.lines{ 'data-category-id' => @category.id.to_s, :id => 'chart_' + @category.id.to_s }
       %svg{ :style => 'height: 200px' }
 
     #options

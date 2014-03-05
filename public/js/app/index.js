@@ -26,28 +26,41 @@ $(document).ready(function ($) {
 
 function drawGraphs () {
   $('div.record_display').each(function (i, el) {
-    var item_id = $(el).data('item-id');
 
-    d3.json('/api/1/users/' + user_id + '/items/' + item_id + '/records.json?accesskey=' + accesskey, function(data) {
+    var el = $(el),
+        item_id = el.data('item-id'),
+        category_id = el.data('category-id'),
+        item_type = 'items';
+
+    if (item_id === null) {
+      item_id = category_id;
+      item_type = 'categories';
+    }
+
+    d3.json('/api/1/users/' + user_id + '/' + item_type + '/' + item_id + '/records.json?accesskey=' + accesskey, function(data) {
       nv.addGraph(function() {
-        prepareLineGraph([return_values(data)], '#chart_' + item_id + ' svg');
-
         //append legend dots to the items table
-        if (typeof category_id !== 'undefined') {
+        if (category_id !== null) {
           $('table.records tbody tr').each(function(i, item) {
-            $(item).find('td').first().prepend("<td><span style='height:10px;width:10px;display:block;float:left;border-radius:5px;margin:5px 5px 0 0;background:" + graph_data[i].color + "'></span></td>");
+            $(item).find('td').first().prepend("<td><span style='height:10px;width:10px;display:block;float:left;border-radius:5px;margin:5px 5px 0 0;background:" + line_colors[i] + "'></span></td>");
           });
         }
 
-        return chart;
+        d3.select('#chart_' + item_id + ' svg')
+          .datum([return_values(data)[0]])
+          .transition().duration(500)
+          .call(prepareLineGraph());
+
+        //TODO: Figure out a good way to do this automatically
+        nv.utils.windowResize(chart.update);
       });
     });
   });
 }
 
-function prepareLineGraph (data, selector) {
+function prepareLineGraph () {
   chart = nv.models.lineChart()
-            .width($('body').width() - 15)
+            .width($('body').width())
             .tooltipContent(function (key, x, y, e, graph) {
               var tooltip = [];
 
@@ -68,37 +81,34 @@ function prepareLineGraph (data, selector) {
   chart.yAxis
     .tickFormat(d3.format());
 
-  d3.select(selector)
-        .datum(data)
-        .transition().duration(500)
-        .call(chart);
-
-      //TODO: Figure out a good way to do this automatically
-      nv.utils.windowResize(chart.update);
+  return chart;
 }
 
-function return_values (data, i) {
-    var key = data.key || '';
-
-    var values = $(data.values).map(function(i, value) {
+function return_values (data) {
+  return $.map(data.values, function (item, i) {
+    var values = $(item.values).map(function(j, value) {
       if (isNumber(value[1])) {
-        return { key: data.name, x: value[0], y: value[1] };
+        key = typeof data.key === 'undefined' ? data.values[i].key : data.key;
+
+        return { key: key, x: value[0], y: value[1] };
       }
     });
 
-    var colors = [
-      '#faa',
-      '#f66',
-      '#333',
-      '#366',
-      '#399',
-      '#9cc'
-    ];
 
     return {
       area: true,
       values: values,
-      color: colors[i] || '#faa',
-      key: key
+      color: line_colors[i] || '#faa',
+      key: data.values[i].key
     };
-  }
+  })
+}
+
+var line_colors = [
+  '#faa',
+  '#f66',
+  '#333',
+  '#366',
+  '#399',
+  '#9cc'
+];

@@ -62,7 +62,6 @@ body.sidebar {
 
   #records div.record_display {
     display: block;
-    position: relative;
     padding: 20px;
     margin: 0 10px 10px 0;
 
@@ -652,4 +651,16 @@ table.records {
 #container.embed .nv-axis text {
   fill: #fbb;
   font-weight: 100;
+}
+
+
+.nvtooltip {
+  background: #feb1b1;
+  border-radius: 4px;
+  border: 0;
+  font-size: 12pt;
+  font-weight: 100;
+  font-family: helvetica neue, arial, sans-serif;
+  color: #fff;
+  letter-spacing: 1px;
 }

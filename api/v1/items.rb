@@ -37,7 +37,7 @@ module Math
             records = item.records_avg_daily
           end
 
-          { values: records.to_a }
+          { values: [{ values: records.to_a }] }
         end
 
         desc 'Delete a record'
