@@ -40,9 +40,10 @@
 
     = yield
 
-    :javascript
-      var user_id = '#{@user.id.to_s}',
-          accesskey = '#{@user.accesskey.token.to_s}';
+    - unless @user.nil?
+      :javascript
+        var user_id = '#{@user.id.to_s}',
+            accesskey = '#{@user.accesskey.token.to_s}';
 
     %script{ :type => 'text/javascript', :src => '/js/zepto.min.js' }
     %script{ :type => 'text/javascript', :src => '/js/FastClick.js' }
