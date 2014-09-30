@@ -24,7 +24,7 @@ class User
   has_many :items
   has_many :categories
 
-  before_create :process_on_create
+  after_create :process_on_create
   after_save :encrypt_pass
 
   #add username method to appease oauth2-provider gem
