@@ -2,15 +2,13 @@ var items = [];
 var records = {};
 var chart;
 
-window.addEventListener('load', function() {
-  new FastClick(document.body);
-}, false);
-
 Sidebar.bindEvents();
 EntryForm.bindEvents();
 ItemTable.bindEvents();
 
 $(document).ready(function ($) {
+  FastClick.attach(document.body);
+
   isNumber = function (value) {
     if ((undefined === value) || (null === value)) {
       return false;
