@@ -18,8 +18,8 @@ describe Math::API do
   context "unauthenticated" do
     it "users/:user_id/items" do
       get "/api/1/users/#{@user.id.to_s}/items.json"
-      last_response.status.should == 401
-      last_response.body.should == { error: "Unauthorized" }.to_json
+      expect(last_response.status).to eq(401)
+      expect(last_response.body).to eq({ error: "Unauthorized" }.to_json)
     end
   end
 
@@ -27,8 +27,8 @@ describe Math::API do
     it 'users/:user_id/items' do
       get "api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@accesskey}"
 
-      last_response.status.should == 200
-      JSON.parse(last_response.body).should == []
+      expect(last_response.status).to eq(200)
+      expect(JSON.parse(last_response.body)).to eq([])
     end
 
     it 'users/:user_id/records' do
@@ -37,28 +37,28 @@ describe Math::API do
         amount: 5
       }
 
-      last_response.status.should == 201
+      expect(last_response.status).to eq(201)
     end
 
     it 'users/:user_id/items' do
       get "api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@accesskey}"
 
-      last_response.status.should == 200
+      expect(last_response.status).to eq(200)
       json_response = JSON.parse(last_response.body)
-      json_response.count.should == 1
+      expect(json_response.count).to eq(1)
       @item = json_response.first
     end
 
     it 'users/:user_id/items/:item_id/records' do
       get "api/1/users/#{@user.id.to_s}/items.json?accesskey=#{@accesskey}"
 
-      last_response.status.should == 200
+      expect(last_response.status).to eq(200)
       json_response = JSON.parse(last_response.body)
       @item = json_response.first
 
       get "api/1/users/#{@user.id.to_s}/items/#{@item['id'].to_s}/records.json?accesskey=#{@accesskey}"
       json_response = JSON.parse(last_response.body)
-      json_response['values'].last[1].to_i.should > 0
+      expect(json_response['values'].last[1].to_i).to eq(0)
     end
   end
 
