@@ -13,6 +13,13 @@ GIT
       rack
 
 GIT
+  remote: https://github.com/neiltron/mongoid_taggable_with_context.git
+  revision: 8403672d8e0c3f6af2d20bb63c4381a941ff30ee
+  specs:
+    mongoid_taggable_with_context (0.7.2)
+      mongoid
+
+GIT
   remote: https://github.com/neiltron/oauth2-provider.git
   revision: a8a85d6fd557e66cdf3dc4f97e595b5fad20ce26
   specs:
@@ -169,6 +176,7 @@ DEPENDENCIES
   json
   metaid
   mongoid
+  mongoid_taggable_with_context!
   mongoid_token
   newrelic_rpm
   oauth2-provider!

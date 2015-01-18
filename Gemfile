@@ -9,6 +9,7 @@ gem "sinatra"
 gem "bson"
 gem "bson_ext"
 gem "mongoid"
+gem 'mongoid_taggable_with_context', :git => 'https://github.com/neiltron/mongoid_taggable_with_context.git'
 gem 'activesupport'
 gem "haml"
 gem 'json'
